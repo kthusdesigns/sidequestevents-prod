@@ -362,21 +362,21 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
         var active = false;
         var dragging = false;
 
-        sliderEl.addEventListener('mousedown', function (e) {
+        sliderEl.addEventListener('pointerdown', function (e) {
             startX = e.clientX;
             active = true;
             dragging = false;
         });
 
-        window.addEventListener('mousemove', function (e) {
-            if (!active || e.buttons !== 1 || dragging) return;
+        window.addEventListener('pointermove', function (e) {
+            if (!active || dragging) return;
             if (Math.abs(e.clientX - startX) > 5) {
                 dragging = true;
                 cards.forEach(function (c) { c.style.pointerEvents = 'none'; });
             }
         });
 
-        window.addEventListener('mouseup', function () {
+        window.addEventListener('pointerup', function () {
             if (dragging) cards.forEach(function (c) { c.style.pointerEvents = 'all'; });
             active = false;
             dragging = false;
