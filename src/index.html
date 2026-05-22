@@ -362,7 +362,9 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
                 '(min-width: 0px)': { slides: { perView: 1, spacing: 16 } },
                 '(min-width: 992px)': { slides: { perView: 2, spacing: 32 } }
             },
-            created: function (s) { requestAnimationFrame(function () { s.update(); }); }
+            created: function (s) { requestAnimationFrame(function () { s.update(); }); },
+            dragStarted: function () { sliderEl.classList.add('is-dragging'); },
+            dragEnded: function () { sliderEl.classList.remove('is-dragging'); }
         }, [function (slider) {
             new ResizeObserver(function () { slider.update(); }).observe(sliderEl);
             document.querySelector('.slider-nav__arrow--prev').addEventListener('click', function () { slider.prev(); });
