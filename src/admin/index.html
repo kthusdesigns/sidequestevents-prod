@@ -166,8 +166,8 @@
                             <div className="article-content markdown">
                                 {this.props.widgetFor("body")}
                             </div>
-                            {eventExtUrl && (
-                                <div className="button-wrapper">
+                            <div className="button-wrapper">
+                                {eventExtUrl && (
                                     <a className="button primary" href={eventExtUrl} target="_blank" rel="noopener noreferrer">
                                         <span className="button-tl"></span>
                                         <span className="button-tr"></span>
@@ -175,8 +175,15 @@
                                         <span className="button-bl"></span>
                                         <span className="button-br"></span>
                                     </a>
-                                </div>
-                            )}
+                                )}
+                                <a className="button secondary" href="/events/">
+                                    <span className="button-tl"></span>
+                                    <span className="button-tr"></span>
+                                    Go Back to All Events
+                                    <span className="button-bl"></span>
+                                    <span className="button-br"></span>
+                                </a>
+                            </div>
                         </div>
 
                         {googleFormEmbed && (
