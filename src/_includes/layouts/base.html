@@ -54,9 +54,12 @@
     {% endif %}
 
     <!-- Critical styles are loaded first -->
-    <link rel="stylesheet" href="/assets/css/critical.css">
+    <link rel="preload" href="/assets/css/critical.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
 
     {% block head %}{% endblock %}
+
+    <!-- Keen Slider -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-slider@latest/keen-slider.min.css" />
 
     {% if page.url == '/' %}
     <!-- Keen Slider -->
