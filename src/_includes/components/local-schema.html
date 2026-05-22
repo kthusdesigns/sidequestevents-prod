@@ -1,0 +1,36 @@
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": ["NGO", "LocalBusiness"],
+            "@id": "{{ client.domain }}/#organization",
+            "name": "{{ client.name }}",
+            "description": "UCAN is a 501(c)(3) nonprofit empowering North Denver residents through homeownership education, financial literacy, climate advocacy, and community organizing since 2007.",
+            "url": "{{ client.domain }}",
+            "telephone": "{{ client.phoneForTel }}",
+            "email": "{{ client.email }}",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "{{ client.address.lineOne }}{% if client.address.lineTwo %}, {{ client.address.lineTwo }}{% endif %}",
+                "addressLocality": "{{ client.address.city }}",
+                "addressRegion": "{{ client.address.state }}",
+                "postalCode": "{{ client.address.zip }}",
+                "addressCountry": "{{ client.address.country }}"
+            },
+            "areaServed": {
+                "@type": "City",
+                "name": "Denver",
+                "addressRegion": "CO",
+                "addressCountry": "US"
+            },
+            "sameAs": [
+                {%- for platform, url in client.socials %}
+                    {% if not loop.first %},{% endif %}"{{ url }}"
+                {%- endfor %}
+            ]{% if client.domain and page.url %},
+            "mainEntityOfPage": "{{ client.domain }}{{ page.url }}"{% endif %}
+        }
+    ]
+}
+</script>

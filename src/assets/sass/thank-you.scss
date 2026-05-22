@@ -1,0 +1,47 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// PAGE STYLES
+// Interior pages have their own stylesheet for styles that only exist on
+// that page. Any styles shared between pages, including repeated sections,
+// should go into root.scss
+// ─────────────────────────────────────────────────────────────────────────────
+
+/*========================================
+==			     Hero: Thank You   	   	 ==
+=========================================*/
+
+@media screen and (min-width: 0px) {
+   section#thank-you {
+      margin-top: var(--spacing--section-outer-v);
+
+      .container {
+         .inner {
+            grid-template-columns: repeat(1, 1fr);
+
+            .content {
+               max-width: 640px;
+               min-height: unset;
+               margin: 0 auto;
+               display: grid;
+               grid-template-columns: repeat(1, 1fr);
+               gap: 1.5rem;
+
+               h1 {
+                  font-weight: var(--font-weight--semibold);
+                  text-align: center;
+               }
+
+               p {
+                  text-align: center;
+                  max-width: 540px;
+                  margin: 0 auto;
+               }
+
+               .button-wrapper {
+                  justify-content: center;
+                  margin-top: 0.5rem;
+               }
+            }
+         }
+      }
+   }
+}

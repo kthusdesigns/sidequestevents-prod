@@ -1,0 +1,102 @@
+---
+title: "Community Events | UCAN Metro Denver"
+description: "Join UCAN for free, bilingual community events including homeownership workshops, resource fairs, and neighborhood gatherings throughout the Denver metro area."
+permalink: "/events/"
+preloadImg: '/assets/images/PHOTO_Events_000-400w.jpeg'
+image: "OPTIONAL - If an image path is specified here, it will be used for that page's OG image. Useful for blog posts (implemented as standard with this kit)"
+---
+
+{% extends "layouts/base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/assets/css/events.css">
+
+    {% include "components/local-schema.html" %}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "url": "{{ client.domain }}/events/",
+        "name": "Community Events | UCAN Metro Denver",
+        "description": "Upcoming free, bilingual community events hosted by the United Community Action Network of Metro Denver.",
+        "isPartOf": { "@id": "{{ client.domain }}/#organization" }
+    }
+    </script>
+{% endblock %}
+
+{% block body %}
+
+<!-- ============================================ -->
+<!--                    Hero                      -->
+<!-- ============================================ -->
+
+<section id="hero" class="hero news">
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <h1 class="light">Come Join Us</h1>
+                    <p class="light">UCAN gathers the community throughout the year for homeownership workshops, resource fairs, and events that are simply about being together. They are free, bilingual, and everyone is welcome.</p>
+                </div>
+
+                {% image './src/assets/images/PHOTO_Events_000.jpg', 'The UCAN team serving the community at Larimer Street Block Party', 'img-bg', 'eager', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', 'high' %}
+            </div>
+        </div>
+
+        <div class="overlay"></div>
+    </div>    
+</section>
+
+<!-- ============================================ -->
+<!--                 Events (Blog)                -->
+<!-- ============================================ -->
+
+<section id="news">
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <h2 class="dark" style="margin: 0 auto;">Upcoming Events</h2>
+                    <p style="max-width: 800px; text-align: center;">Some events are built around practical information: a real estate professional walking you through the homebuying process, or a partner organization explaining services you may not know you qualify for. Others are community celebrations including live music, food, and the particular energy that comes when a neighborhood chooses to show up for itself.</p>
+                </div>
+
+                {% set upcomingEvents = collections.event | upcomingOnly %}
+                <div class="content__news">
+                    {% if upcomingEvents | length == 0 %}
+                        <h3 class="no-recent-posts">No Upcoming Events</h3>
+                    {% else %}
+                        {%- for event in upcomingEvents -%}
+                            <a class="recent-articles" href="{{ event.url }}">
+                                <!--Article Info-->
+                                <div class="article-group">
+                                    <div class="article-meta">
+                                        <!--Main Article Image-->
+                                        <div class="image-wrapper">
+                                            {% image './src' + event.data.image, event.data.title, 'cover-image img-bg', 'lazy', '(max-width: 850px) 400px, (min-width: 601px) 1680px, 1920px', '' %}
+                                        </div>
+                                        <!-- Event title -->
+                                        <h3 class="post-title">{{ event.data.title }}</h3>
+                                        <!-- Event excerpt -->
+                                        {% if event.data.excerpt %}<p class="post-excerpt">{{ event.data.excerpt }}</p>{% endif %}
+                                    </div>
+                                    <div class="button-wrapper">
+                                        <!-- Event Date -->
+                                        <p class="post-date">{{ event.data.date | postDate }}</p>
+                                        <span class="post-button" name="Read More">
+                                            Read More
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        {%- endfor -%}
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

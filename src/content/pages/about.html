@@ -1,0 +1,530 @@
+---
+title: "About UCAN | United Community Action Network of Metro Denver"
+description: "Learn about UCAN's mission to empower North Denver residents through grassroots organizing, economic empowerment, and community advocacy. A 501(c)(3) nonprofit since 2007."
+permalink: "/about/"
+preloadImg: '/assets/images/PHOTO_About_000-400w.jpeg'
+image: "OPTIONAL - If an image path is specified here, it will be used for that page's OG image. Useful for blog posts (implemented as standard with this kit)"
+---
+
+{% extends "layouts/base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/assets/css/about.css">
+
+    <!-- Keen Slider -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-slider@latest/keen-slider.min.css" />
+
+    {% include "components/local-schema.html" %}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "url": "{{ client.domain }}/about/",
+        "name": "About UCAN | United Community Action Network of Metro Denver",
+        "description": "Learn about UCAN's mission to empower North Denver residents through grassroots organizing, economic empowerment, and community advocacy since 2007.",
+        "isPartOf": { "@id": "{{ client.domain }}/#organization" }
+    }
+    </script>
+{% endblock %}
+
+{% block body %}
+
+<!-- ============================================ -->
+<!--                    Hero                      -->
+<!-- ============================================ -->
+
+<section id="hero" class="hero hfi">
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <h1 class="light">About UCAN</h1>
+                    <p class="light">The United Community Action Network of Metro Denver started as a response to what residents in our community were living with every day. The neighborhood sits at the edge of industrial corridors and major infrastructure projects, and for a long time, the people who called it home had too little say in decisions that directly affected their families, their air quality, and their financial futures. That is still what drives us.</p>
+                    <div class="button-wrapper">
+                        <a href="#" class="button primary dark" data-open-lightbox>Get Involved</a>
+                    </div>
+                </div>
+
+                {% image './src/assets/images/PHOTO_About_000.jpg', 'United Community Action Network team circled up with their hands on top of each other', 'img-bg', 'eager', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', 'high' %}
+            </div>
+        </div>
+
+        <div class="overlay"></div>
+    </div>    
+</section>
+
+<!-- ============================================ -->
+<!--                  Our Mission                 -->
+<!-- ============================================ -->
+
+<section id="our-mission">
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <div class="text-wrapper">
+                        <h2 class="dark">Our Mission</h2>
+                        <p>UCAN brings together residents, property owners, and community partners to build a stronger, healthier, and more resilient neighborhood in North Denver. We work through grassroots organizing, climate advocacy, and economic empowerment to protect local families and ensure that everyone here has access to real opportunities to grow.
+                        <br>
+                        <br>We are a 501(c)(3) nonprofit and registered neighborhood organization whose board has been made up, from the beginning, of people who have lived and worked here for years. Some of them for generations. We connect residents to resources, advocate at a city level, and work with local partners to make sure this community has the ability to shape its own future.
+                        <br>
+                        <br><strong>To volunteer or become a sustaining member, reach out:</strong></p>
+                        <div class="button-wrapper">
+                            <a href="#" class="button primary dark" data-open-lightbox>Get Involved</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content__image-wrapper">
+                    <div class="image-wrapper">
+                        {% image './src/assets/images/PHOTO_About_001.jpg', 'UCAN volunteer in front of crowd giving seminar on home ownership and financial literacy in Denver, CO', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!--                   Our Team                  -->
+<!-- ============================================ -->
+
+<section id="our-team">
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <h2 class="dark">Meet Our Team</h2>
+                </div>
+
+                <div class="content__team-wrapper">
+
+                    <div class="bio">
+                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Armando Payan, President of UCAN" width="96" height="96" decoding="async">
+                        <div class="bio__text-wrapper">
+                            <span>President</span>
+                            <h3>Armando Payan</h3>
+                            <p>Payan Realty</p>
+                        </div>
+                    </div>
+
+                    <div class="bio">
+                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Berta Trujillo, Vice President of UCAN" width="96" height="96" decoding="async">
+                        <div class="bio__text-wrapper">
+                            <span>Vice President</span>
+                            <h3>Berta Trujillo</h3>
+                            <p>Coach B Partners</p>
+                        </div>
+                    </div>
+
+                    <div class="bio">
+                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Brad Aerts, Treasurer of UCAN" width="96" height="96" decoding="async">
+                        <div class="bio__text-wrapper">
+                            <span>Treasurer</span>
+                            <h3>Brad Aerts</h3>
+                            <p>Rapid Services</p>
+                        </div>
+                    </div>
+
+                    <div class="bio">
+                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Shawn Ornelas, Secretary of UCAN" width="96" height="96" decoding="async">
+                        <div class="bio__text-wrapper">
+                            <span>Secretary</span>
+                            <h3>Shawn Ornelas</h3>
+                            <p>Rapid Services</p>
+                        </div>
+                    </div>
+
+                    <div class="bio">
+                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Danielle Gomez, Program Officer and Grant Writer of UCAN" width="96" height="96" decoding="async">
+                        <div class="bio__text-wrapper">
+                            <span>Program Officer/Grant Writer</span>
+                            <h3>Danielle Gomez</h3>
+                        </div>
+                    </div>
+
+                    <div class="bio">
+                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Inecia Tillman, Program Staff Administrator of UCAN" width="96" height="96" decoding="async">
+                        <div class="bio__text-wrapper">
+                            <span>Program Staff Administrator</span>
+                            <h3>Inecia Tillman</h3>
+                        </div>
+                    </div>
+
+                    <div class="bio">
+                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Ailiyanah Nikole, Program Staff Administrator of UCAN" width="96" height="96" decoding="async">
+                        <div class="bio__text-wrapper">
+                            <span>Programm Staff Administrator</span>
+                            <h3>Ailiyanah Nikole</h3>
+                        </div>
+                    </div>
+
+                    <div class="bio">
+                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Sienna Payan, Support Staff of UCAN" width="96" height="96" decoding="async">
+                        <div class="bio__text-wrapper">
+                            <span>Support Staff</span>
+                            <h3>Sienna Payan</h3>
+                        </div>
+                    </div>
+
+                    <div class="bio">
+                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Milenna Payan, Support Staff of UCAN" width="96" height="96" decoding="async">
+                        <div class="bio__text-wrapper">
+                            <span>Support Staff</span>
+                            <h3>Milenna Payan</h3>
+                        </div>
+                    </div>
+
+                    <div class="bio">
+                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Peyton Furr, Associate Director of Trades Work Ready Program and a Collaborator with UCAN" width="96" height="96" decoding="async">
+                        <div class="bio__text-wrapper">
+                            <span>Collaborator</span>
+                            <h3>Peyton Furr</h3>
+                            <p>Associate Director, Trades Work Ready Program</p>
+                        </div>
+                    </div>
+
+                    <div class="bio">
+                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Abril Arenales Fernandez, CEO of Environmental Innovation Academic Learning Lab and a Collaborator with UCAN" width="96" height="96" decoding="async">
+                        <div class="bio__text-wrapper">
+                            <span>Collaborator</span>
+                            <h3>Abril Arenales Fernandez</h3>
+                            <p>CEO, Environmental Innovation Academic Learning Lab</p>
+                        </div>
+                    </div>
+
+                    <div class="bio">
+                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Brad Buchanan, CEO of National Western Center Authority and a Collaborator with UCAN" width="96" height="96" decoding="async">
+                        <div class="bio__text-wrapper">
+                            <span>Collaborator</span>
+                            <h3>Brad Buchanan</h3>
+                            <p>CEO, National Western Center Authority</p>
+                        </div>
+                    </div>
+
+                    <div class="bio">
+                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Wes Allison, CEO of National Western Stock Show and a Collaborator with UCAN" width="96" height="96" decoding="async">
+                        <div class="bio__text-wrapper">
+                            <span>Collaborator</span>
+                            <h3>Wes Allison</h3>
+                            <p>CEO, National Western Stock Show</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!--                  Our Partners                -->
+<!-- ============================================ -->
+
+<section id="our-partners">
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <h2 class="light">Our Partners</h2>
+                    <p class="light">UCAN's work touches many different areas of community life—housing, clean energy, transportation, workforce development, environmental health—and so does our partner network. These relationships are how UCAN is able to connect residents to resources that go well beyond what any single organization could provide on its own.</p>
+                </div>
+
+                <!-- Keen Slider -->
+                <div id="partners__slider" class="keen-slider">
+
+                    <!-- Slide -->
+                    <div class="keen-slider__slide">
+                        <div class="partner-wrapper">
+                            <img loading="lazy" decoding="async" src="/assets/svgs/LOGO_PayanConstruction_Inverse.svg" alt="Payan Construction logo in white">
+                        </div>
+                    </div>
+
+                    <!-- Slide -->
+                    <div class="keen-slider__slide">
+                        <div class="partner-wrapper">
+                            <img loading="lazy" decoding="async" src="/assets/svgs/LOGO_NDH_Inverse.svg" alt="New Day Hydrogen logo in white">
+                        </div>
+                    </div>
+
+                    <!-- Slide -->
+                    <div class="keen-slider__slide">
+                        <div class="partner-wrapper">
+                            <img loading="lazy" decoding="async" src="/assets/svgs/LOGO_NWC_Inverse.svg" alt="National Western Center logo in white">
+                        </div>
+                    </div>
+
+                    <!-- Slide -->
+                    <div class="keen-slider__slide">
+                        <div class="partner-wrapper">
+                            <img loading="lazy" decoding="async" src="/assets/images/LOGO_RapidServices_Inverse.png" alt="Rapid Services LLC logo in white" width="100%" height="143px">
+                        </div>
+                    </div>
+
+                    <!-- Slide -->
+                    <div class="keen-slider__slide">
+                        <div class="partner-wrapper">
+                            <img loading="lazy" decoding="async" src="/assets/images/LOGO_Groundwork-Denver_Inverse.png" alt="Groundwork Denver logo in white">
+                        </div>
+                    </div>
+
+                    <!-- Slide -->
+                    <div class="keen-slider__slide">
+                        <div class="partner-wrapper">
+                            <img loading="lazy" decoding="async" src="/assets/images/LOGO_JSI_Inverse.jpg" alt="JSI logo in white">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="button-wrapper">
+                    <a href="#" class="button primary dark" data-open-lightbox>Become a Partner</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!--                   Our Story                  -->
+<!-- ============================================ -->
+
+<section id="ucan-history">
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <h2 class="dark">Our Story</h2>
+                    <p>A lot has changed in this community since 2007, and UCAN has been in the middle of most of it. The timeline below traces our work: The organizing, the events, the advocacy battles, and the programs that grew out of what residents said they actually needed.</p>
+                </div>
+
+                <div class="content__timeline-wrapper">
+
+                    <div class="image-column__left">
+                        <!-- Big Blue Bear -->
+                        <img src="/assets/images/PHOTO_About-Timeline_000-compressed.jpg" alt="Photo of the Big Blue Bear art installation outside the Denver Convention Center" loading="lazy" decoding="async" style="position: absolute; top: 48px; left: 0;" width="100%;">
+                        <!-- Latin Fest #1 -->
+                        <img src="/assets/images/PHOTO_About-Timeline_003-compressed.jpg" alt="Latin heritage dancers at Latin Fest, co-hosted by UCAN and GlobeHall" loading="lazy" decoding="async" style="position: absolute; top: 41.35%; left: 0;" width="100%;">
+                        <!-- Latin Fest #2 -->
+                        <img src="/assets/images/PHOTO_About-Timeline_005-compressed.jpg" alt="Latin Fest dancers, co-hosted by UCAN and GlobeHall once again" loading="lazy" decoding="async" style="position: absolute; top: 76.1%; left: 0;" width="100%;">
+                    </div>
+
+                    <div class="timeline">
+
+                        <!-- Delimiter: Start -->
+                        <svg width="16" height="48" viewBox="0 0 16 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 16V48" stroke="#0D53D0"/>
+                            <rect x="4" y="4" width="8" height="8" rx="2" fill="#0D53D0"/>
+                            <rect x="0.5" y="0.5" width="15" height="15" rx="3.5" stroke="#0D53D0"/>
+                        </svg>
+
+                        <div class="card">
+                            <h3>2007</h3>
+                            <p>UCAN is established, rooted in a corner of North Denver that had long needed organized commmunity representation.</p>
+                        </div>
+
+                        <span class="delimiter"></span>
+
+                        <div class="card">
+                            <h3>2012</h3>
+                            <p>Community members, with support from the University of Denver, formalize UCAN's bylaws.</p>
+                        </div>
+
+                        <span class="delimiter"></span>
+
+                        <div class="card">
+                            <h3>2014</h3>
+                            <p>The IRS awards UCAN its 501(c)(3) tax&#8209;exempt status.</p>
+                        </div>
+
+                        <span class="delimiter"></span>
+
+                        <div class="card">
+                            <h3>2014-2019</h3>
+                            <p>As the I-70 rebuild moved forward, UCAN spent years working with residents and partner organizations to ensure the community had a voice in a process with serious consequences for people living nearby. Sustained advocacy helped carve out space for neighborhood input that might otherwise not have existed.</p>
+                        </div>
+
+                        <span class="delimiter"></span>
+
+                        <div class="card">
+                            <h3>2018-2019</h3>
+                            <p>Three UCAN board members trained with Groundwork Denver and National Jewish Hospital to become certified Air Quality Community Experts. They produced bilingual educational materials on air quality, organized community events, and brought local research findings directly to residents throughout the neighborhood.</p>
+                        </div>
+
+                        <span class="delimiter"></span>
+
+                        <div class="card">
+                            <h3>January 2019</h3>
+                            <p>UCAN organized an open community forum at the Globeville Recreation Center, bringing candidates for state and city office to the neighborhood for a direct Q&A with residents.</p>
+                        </div>
+
+                        <span class="delimiter"></span>
+
+                        <div class="card">
+                            <h3>July 2019</h3>
+                            <p>In partnership with GlobeHall, UCAN co-hosted Latin Fest, a community celebration that drew representatives from more than ten local organizations.</p>
+                        </div>
+
+                        <span class="delimiter"></span>
+
+                        <div class="card">
+                            <h3>November 2019</h3>
+                            <p>UCAN received a PS U Are Here Public Art Grant from Denver Public Art, funding a project to transform a neglected public space with art made by local residents.</p>
+                        </div>
+
+                        <span class="delimiter"></span>
+
+                        <div class="card">
+                            <h3>2019-2020</h3>
+                            <p>Partnering with NETC and the Stapleton Foundation, UCAN helped develop a community shuttle program to maintain transportation access for residents during the disruptions caused by the I-70 construction and COVID&#8209;19.</p>
+                        </div>
+
+                        <span class="delimiter"></span>
+
+                        <div class="card">
+                            <h3>April 2021</h3>
+                            <p>UCAN led an Earth Day cleanup and community event at Garden Place Academy, supported by CDOT, KIEWIT, and the Sierra Club. Volunteers repainted the playground, added community artwork, and cleaned up the school garden.</p>
+                        </div>
+
+                        <span class="delimiter"></span>
+
+                        <div class="card">
+                            <h3>May 2021</h3>
+                            <p>With support from the Suncor Settlement and a partnership with PurpleAir, UCAN completed a deep clean of three neighborhood schools and the Valdez-Perry Library. Local residents were hired to carry out the work, and continuous air quality monitoring stations were installed at all four locations.</p>
+                        </div>
+
+                        <span class="delimiter"></span>
+
+                        <div class="card">
+                            <h3>June 2021</h3>
+                            <p>UCAN partnered with the Globeville Riverfront Art Center (GRACe) to support local artists and raise funds through a community event.</p>
+                        </div>
+
+                        <span class="delimiter"></span>
+
+                        <div class="card">
+                            <h3>March 2022</h3>
+                            <p>Latin Fest returned to GlobeHall with a focus on community feedback: presentations on developer proposals, resource tables from local organizations, and residents sharing updates on their own environmental initiatives.</p>
+                        </div>
+
+                        <span class="delimiter"></span>
+
+                        <div class="card">
+                            <h3>June & July 2022</h3>
+                            <p>UCAN hosted Environmental and Health Fiestas in partnership with CASR, combining community survey collection with education and resources for neighborhood residents.</p>
+                        </div>
+
+                        <span class="delimiter"></span>
+
+                        <div class="card">
+                            <h3>2023–<i>present</i></h3>
+                            <p>Coming soon!</p>
+                        </div>
+
+                    </div>
+
+                    <div class="image-column__right">
+                        <!-- Social Advocacy March -->
+                        <img src="/assets/images/PHOTO_About-Timeline_001-compressed.jpg" alt="UCAN table with branded table cloth set up outdoors in Denver during a block party" loading="lazy" decoding="async" style="position: absolute; top: 18.5%; left: 0;" width="100%;">
+                         <!-- Paint Buckets -->
+                        <img src="/assets/images/PHOTO_About-Timeline_004-compressed.jpg" alt="Photo of paint buckets used by UCAN to repaint the Garden Place Academy playground" loading="lazy" decoding="async" style="position: absolute; top: 61.4%; left: 0;" width="100%;">
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!--                   Prefooter                  -->
+<!-- ============================================ -->
+
+
+<script src="https://cdn.jsdelivr.net/npm/keen-slider@latest/keen-slider.js"></script>
+
+<script>
+    const slider = document.querySelector('#partners__slider');
+
+    if (slider) {
+        var animation = { duration: 85000, easing: (t) => t }
+
+        const testimonialsSlider = new KeenSlider(
+            slider,
+            {
+                loop: true,
+                mode: "free",
+                breakpoints: {
+                    "(min-width: 0px)": {
+                        slides: {
+                            perView: 1,
+                            spacing: 16,
+                        }
+                    },
+                    "(min-width: 560px)": {
+                        slides: {
+                            perView: 1.5,
+                            spacing: 24,
+                        }
+                    },
+                    "(min-width: 767px)": {
+                        slides: {
+                            perView: 1.5,
+                            spacing: 32,
+                        }
+                    },
+                    "(min-width: 800px)": {
+                        slides: {
+                            perView: 2,
+                            spacing: 32,
+                        }
+                    },
+                    "(min-width: 992px)": {
+                        slides: {
+                            perView: 2.5,
+                            spacing: 32,
+                        }
+                    },
+                    "(min-width: 1080px)": {
+                        slides: {
+                            perView: 2.5,
+                            spacing: 32,
+                        }
+                    },
+                    "(min-width: 1080px)": {
+                        slides: {
+                            perView: 3,
+                            spacing: 32,
+                        }
+                    },
+                    "(min-width: 1681px)": {
+                        slides: {
+                            perView: 4,
+                            spacing: 32,
+                        }
+                    }
+                },
+                created(s) {
+                    s.moveToIdx(5, true, animation)
+                },
+                updated(s) {
+                    s.moveToIdx(s.track.details.abs + 5, true, animation)
+                },
+                animationEnded(s) {
+                    s.moveToIdx(s.track.details.abs + 5, true, animation)
+                },
+            },
+        );
+    }
+</script>
+
+{% endblock %}

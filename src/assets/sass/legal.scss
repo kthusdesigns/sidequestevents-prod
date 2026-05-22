@@ -1,0 +1,69 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// PAGE STYLES
+// Interior pages have their own stylesheet for styles that only exist on
+// that page. Any styles shared between pages, including repeated sections,
+// should go into root.scss
+// ─────────────────────────────────────────────────────────────────────────────
+
+/*========================================
+==			    Hero: Legal   	   	    ==
+=========================================*/
+
+@media screen and (min-width: 0px) {
+   section#legal {
+      margin-top: var(--spacing--section-outer-v);
+      
+      .container {
+         .inner {
+            grid-template-columns: repeat(1, 1fr);
+
+            .content {
+               max-width: 1080px;
+               margin: 0 auto;
+               display: grid;
+               grid-template-columns: repeat(1, 1fr);
+               gap: 1rem;
+
+               h1, h2, h3, h4, h5, h6 {
+                  font-weight: var(--font-weight--semibold);
+                  padding-top: 0.75em;
+               }
+
+               h2 {
+                  font-size: var(--font-size--h3);
+               }
+               h3 {
+                  font-size: var(--font-size--h4);
+               }
+
+               strong {
+                  font-weight: var(--font-weight--semibold);
+               }
+            }
+
+            .sitemap-section {
+               margin-bottom: 2rem;
+            }
+            .sitemap-section h2 {
+               font-size: 1.5rem;
+               margin-bottom: 1rem;
+               color: var(--primary);
+            }
+            .sitemap-list {
+               padding-left: 0;
+            }
+            .sitemap-list li {
+               margin-bottom: 0.5rem;
+            }
+            .sitemap-list a {
+               color: var(--bodyTextColor);
+               transition: all var(--transition--standard);
+               text-decoration: underline;
+               text-decoration-color: var(--color--green-500);
+               text-decoration-thickness: 2px;
+               text-underline-offset: 2px;
+            }
+         }
+      }
+   }
+}

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><metadata><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><rdf:Description><dc:creator>RealFaviconGenerator</dc:creator><dc:source>https://realfavicongenerator.net</dc:source></rdf:Description></rdf:RDF></metadata><g clip-path="url(#clip0_15420_582)">
+<path d="M16 9.17798V0.190404C16 -0.00120509 15.8181 0.00241018 15.8181 0.00241018H11.4842C11.4072 0.0253069 11.2941 0.0867666 11.2941 0.259095V8.3091C11.3676 9.68532 10.6538 10.9097 9.5972 11.5375C9.08988 11.8412 8.50558 12.0087 7.89445 11.9895C6.09141 11.9328 4.59975 10.2794 4.70472 8.31995V0.26994C4.70472 0.00843563 4.44347 0 4.44347 0H0.127123C0.074641 0.0144611 0 0.0566393 0 0.179559V9.16713C0 13.244 3.49063 15.9988 8.05773 15.9988C8.36562 15.9988 8.67235 15.9855 8.97558 15.959C8.99541 15.9566 9.0164 15.9554 9.03623 15.953C9.10037 15.947 9.16335 15.941 9.2275 15.9337C13.1485 15.4673 16 12.8631 16 9.17677V9.17798Z" fill="url(#paint0_linear_15420_582)"></path>
+</g><defs>
+<linearGradient id="paint0_linear_15420_582" x1="7.99942" y1="16" x2="7.99942" y2="0" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0A4CC3"></stop>
+<stop offset="1" stop-color="#60DB30"></stop>
+</linearGradient>
+<clipPath id="clip0_15420_582">
+<rect width="16" height="16" fill="white"></rect>
+</clipPath>
+</defs></svg>

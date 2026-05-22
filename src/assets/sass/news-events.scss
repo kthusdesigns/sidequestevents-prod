@@ -1,0 +1,115 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// PAGE STYLES
+// Interior pages have their own stylesheet for styles that only exist on
+// that page. Any styles shared between pages, including repeated sections,
+// should go into root.scss
+// ─────────────────────────────────────────────────────────────────────────────
+
+/*========================================
+==               Articles               ==
+=========================================*/
+
+@media screen and (min-width: 0px) {
+    section#single-article {
+        .article__content-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing--gutter);
+            max-width: 1080px;
+            margin: 0 auto;
+
+            .article-content {
+                display: flex;
+                flex-direction: column;
+                gap: calc(var(--spacing--gutter) * 0.5);
+
+                a:not(.button) {
+                    text-decoration: underline;
+                    text-underline-offset: 4px;
+                    text-decoration-thickness: 2px;
+                    text-decoration-color: var(--color--green-500);
+                }
+            }
+
+            h1 {
+                color: var(--color--blue-500);
+            }
+            
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                margin-top: 0.5em;
+                color: var(--color--blue-500);
+            }
+
+            .image-wrapper {
+                aspect-ratio: 2 / 1;
+            }
+
+            img {
+                width: 100%;
+                border-radius: var(--border-radius--8);
+            }
+
+            span.post-date {
+                padding: 0.5em 0.75em;
+                background-color: var(--color--blue-50);
+                border-radius: var(--border-radius--4);
+            }
+
+            .event-meta {
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+
+                .event-meta__item {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.25rem;
+                    padding: 0.75em 1em;
+                    background-color: var(--color--blue-50);
+                    border-radius: var(--border-radius--4);
+                }
+
+                .event-meta__label {
+                    font-size: var(--font-size--legal);
+                    font-weight: var(--font-weight--bold);
+                    color: var(--color--blue-500);
+                }
+
+                .event-meta__value {
+                    font-size: 1rem;
+                    color: var(--color--dark);
+                }
+            }
+
+            blockquote {
+                padding: 0.5em 0.75em;
+                background-color: var(--color--blue-50);
+                border-left: solid 2px var(--color--blue-500);
+                font-style: italic;
+            }
+            
+            code {
+                padding: 0.5em 0.75em;
+                background-color: var(--color--blue-50);
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 600px) {
+    section#single-article {
+        .article__content-wrapper {
+            .event-meta {
+                flex-direction: row;
+
+                .event-meta__item {
+                    flex: 1;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,42 @@
+---
+title: "Thank You | UCAN Metro Denver"
+description: "Thank you for reaching out to the United Community Action Network of Metro Denver! We will be in touch soon."
+permalink: "/thank-you/"
+image: "OPTIONAL - If an image path is specified here, it will be used for that page's OG image. Useful for blog posts (implemented as standard with this kit)"
+eleventyExcludeFromCollections: true
+---
+
+{% extends "layouts/base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/assets/css/thank-you.css">
+{% endblock %}
+
+{% block body %}
+
+<!-- ============================================ -->
+<!--                Hero: Thank You               -->
+<!-- ============================================ -->
+
+<section id="thank-you" class="hero">
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <h1>We have received your message!</h1>
+                <p>Thank you for getting in touch with the United Community Action Network (UCAN) of Metro Denver! We will be in touch soon regarding your message.</p>
+
+                <div class="button-wrapper">
+                    {% set umamiSection = 'Hero' %}
+                    {% set ctaColor = 'dark' %}
+                    {% set ctaCopy = 'Return to Homepage' %}
+                    {% set ctaLink = '/' %}
+                    {% include "components/cta-secondary--button.html" %}
+                </div>
+
+            </div>
+        </div>
+    </div>   
+</section>
+
+{% endblock %}

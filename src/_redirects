@@ -1,0 +1,32 @@
+# -------------------------
+# FORCE HTTPS + CANONICAL DOMAIN
+# -------------------------
+
+https://ucanmetrodenver-prod.netlify.app/*  https://ucanmetrodenver.org/:splat  301!
+http://ucanmetrodenver.org/*               https://ucanmetrodenver.org/:splat  301!
+
+# -------------------------
+# OLD SITE PAGE REDIRECTS
+# Add more here as you discover old URLs that need to be preserved
+# -------------------------
+
+# Trailing-slash normalisation (in case old site omitted slashes)
+/about              /about/                                                     301
+/events             /events/                                                    301
+/news               /news/                                                      301
+/contact            /contact/                                                   301
+/programs           /our-programs/homeownership-and-financial-literacy/         301
+/programs/*         /our-programs/homeownership-and-financial-literacy/         301
+/homeownership      /our-programs/homeownership-and-financial-literacy/         301
+/financial-literacy /our-programs/homeownership-and-financial-literacy/         301
+/youth              /our-programs/youth-workforce-development/                  301
+/workforce          /our-programs/youth-workforce-development/                  301
+/get-involved       /                                                           301
+/donate             /                                                           301
+/volunteer          /                                                           301
+
+# -------------------------
+# SPA CATCH-ALL (keeps Eleventy pages working)
+# -------------------------
+
+/*  /index.html  200

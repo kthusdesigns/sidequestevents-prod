@@ -1,0 +1,244 @@
+<!-- A fully fleshed-out <head>, dynamically changing based on client.json and the page front matter -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Standard meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ excerpt or description }}">
+    <link rel="canonical" href="{{ client.domain }}{{ page.url }}">
+    <meta name="generator" content="{{ eleventy.generator }}">
+    {% if page.url == '/thank-you/' %}
+        <meta name="robots" content="noindex">
+    {% endif %}
+
+    <!--Social Media Display-->
+    <meta property="og:title" content="{{ title }}" />
+    <meta property="og:description" content="{{ excerpt or description }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ client.domain }}{{ page.url }}" />
+    <meta property="og:image"
+        content="https://res.cloudinary.com/dxave0gy0/image/upload/v1776991037/UCAN_OG_Image-1200x630_ofewce.jpg" />
+    <meta property="og:image:secure_url"
+        content="https://res.cloudinary.com/dxave0gy0/image/upload/v1776991037/UCAN_OG_Image-1200x630_ofewce.jpg" />
+
+    <!--Favicons-->
+    <!-- https://realfavicongenerator.net/ -->
+    <link rel="icon" type="image/png" href="/assets/favicons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicons/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="UCAN Metro Denver" />
+    <link rel="manifest" href="/assets/favicons/site.webmanifest" />
+
+    <!-- Browser theme color -->
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="theme-color" content="#FFFFFF">
+
+    <!-- Preloads -->
+    <link rel="preload" as="image" href="/assets/svgs/LOGO_Primary_FullColor.svg">
+    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/InclusiveSans-Regular.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/InclusiveSans-SemiBold.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/InclusiveSans-Bold.woff2" crossorigin>
+
+    <!-- Sitewide Stylesheets and Scripts -->
+    <link rel="stylesheet" href="/assets/css/root.css">
+    <script defer src="/assets/js/nav.js"></script>
+
+    <!-- preloadImg -->
+    {% if preloadImg != '' %}
+        <link rel="preload" as="image" href="{{ preloadImg }}" />
+    {% endif %}
+
+    <!-- Critical styles are loaded first -->
+    <link rel="preload" href="/assets/css/critical.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+
+    {% block head %}{% endblock %}
+
+    <!-- Keen Slider -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-slider@latest/keen-slider.min.css" />
+
+    <!-- Page Title -->
+    <title>{{ title }}</title>
+</head>
+
+<body>
+    <!--Screen reader skip main nav-->
+    <a class="skip" aria-label="skip to main content" href="#main">Click To Skip To Main Content</a>
+
+    {% include "sections/header.html" %}
+
+    <main id="main">
+        <!--
+        <a class="banner" href="/news/your-voice-shapes-the-triangles-future-survey-deadline-is-may-9-april-22-2026/">
+            <div class="container">
+                <div class="inner">
+                    <strong>YOUR VOICE MATTERS! Take the Triangle Community Vision Plan Survey by May 9. ➔</strong>
+                </div>
+            </div>
+        </a>
+        -->
+
+        {% block body %}{% endblock %}
+
+        {% if page.url == '/' or page.url == '/about/' %}
+        <!-- ============================================ -->
+        <!--                Form Lightbox                 -->
+        <!-- ============================================ -->
+
+        <div id="form-lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Get Involved">
+            <div class="lightbox__backdrop"></div>
+            <div class="lightbox__panel">
+                <button class="lightbox__close" aria-label="Close form">&times;</button>
+
+                <section class="form">
+                    <div class="container">
+                        <div class="inner">
+                            <div class="content">
+
+                                <div class="content__text-wrapper">
+                                    <h2>Get Involved with UCAN</h2>
+                                    <p>Fill out the form below if you're interested in volunteering your time or partnering with UCAN!</p>
+                                </div>
+
+                                <div class="content__form-wrapper">
+                                    <form id="get-involved-form" class="form" name="Form: Get Involved" method="post" action="/thank-you/" netlify-honeypot="bot-field" data-netlify="true">
+
+                                        <!-- Honeypot field -->
+                                        <div class="hidden">
+                                            <label>
+                                                <p>Don't fill this out if you're human:</p>
+                                                <input name="bot-field">
+                                            </label>
+                                        </div>
+
+                                        <div class="form__split-columns">
+                                            <div class="form__field-group first-name">
+                                                <label>
+                                                    <p>First Name<sup>(required)</sup></p>
+                                                    <input required type="text" id="first-name" name="firstName" placeholder="First name">
+                                                </label>
+                                            </div>
+                                            <div class="form__field-group last-name">
+                                                <label>
+                                                    <p>Last Name<sup>(required)</sup></p>
+                                                    <input required type="text" id="last-name" name="lastName" placeholder="Last name">
+                                                </label>
+                                            </div>
+                                            <div class="form__field-group email-address">
+                                                <label>
+                                                    <p>Email<sup>(required)</sup></p>
+                                                    <input required type="email" id="email-address" name="emailAddress" placeholder="Email">
+                                                </label>
+                                            </div>
+                                            <div class="form__field-group phone-number">
+                                                <label>
+                                                    <p>Phone<sup>(required)</sup></p>
+                                                    <div class="wrapper__phone">
+                                                        <input required type="tel" id="phone-number" name="phoneNumber" placeholder="Phone">
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form__field-group checkboxes">
+                                            <fieldset>
+                                                <legend>I'm Interested In:</legend>
+                                                <div class="fieldset__inner">
+                                                    <label class="checkbox__label">
+                                                        <input type="checkbox" name="interest[]" value="Volunteering My Time">
+                                                        Volunteering My Time
+                                                    </label>
+                                                    <label class="checkbox__label">
+                                                        <input type="checkbox" name="interest[]" value="Becoming a Partner">
+                                                        Becoming a Partner
+                                                    </label>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+
+                                        <div class="form__field-group textarea">
+                                            <label>
+                                                <p>Message<sup>(required)</sup></p>
+                                                <textarea id="message" name="message" placeholder="Please include any other information that you would like to provide."></textarea>
+                                            </label>
+                                        </div>
+
+                                        <div class="form-field-group submit">
+                                            <button class="button primary" type="submit">Submit</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <script>
+        (function () {
+            var lightbox = document.getElementById('form-lightbox');
+            if (!lightbox) return;
+
+            function openLightbox() {
+                lightbox.classList.add('is-open');
+                lightbox.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('lightbox-open');
+                lightbox.querySelector('.lightbox__close').focus();
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('is-open');
+                lightbox.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('lightbox-open');
+            }
+
+            document.querySelectorAll('[data-open-lightbox]').forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    openLightbox();
+                });
+            });
+
+            lightbox.querySelector('.lightbox__close').addEventListener('click', closeLightbox);
+            lightbox.querySelector('.lightbox__backdrop').addEventListener('click', closeLightbox);
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && lightbox.classList.contains('is-open')) {
+                    closeLightbox();
+                }
+            });
+        }());
+        </script>
+        {% endif %}
+    </main>
+
+    {% include "sections/footer.html" %}
+
+    <!-- Add class="scroll" to body after scrolling 100px -->
+    <script>
+        document.addEventListener('scroll', (e) => {
+            const scroll = document.documentElement.scrollTop;
+            if (scroll >= 94) {
+                document
+                    .querySelector('body')
+                    .classList
+                    .add('scroll')
+            } else {
+                document
+                    .querySelector('body')
+                    .classList
+                    .remove('scroll')
+            }
+        });
+    </script>
+</body>
+
+</html>

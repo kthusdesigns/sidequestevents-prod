@@ -1,0 +1,279 @@
+/* Styles for the Decap CMS preview pane. Class names match the JSX in admin/index.html. */
+
+:root {
+    /* Colors */
+    --color--blue-500: #0D53D0;
+    --color--blue-50: #E7EFFD;
+    --color--green-500: #60DB30;
+    --color--black-400: #303030;
+    --color--black-300: #616161;
+    --color--border: #C2C2C2;
+    --color--white: #FFFFFF;
+
+    /* Font families */
+    --font--inclusive-sans: 'InclusiveSans', sans-serif;
+
+    /* Font weights */
+    --font-weight--regular: 400;
+    --font-weight--semibold: 600;
+    --font-weight--bold: 700;
+
+    /* Font sizes */
+    --font-size--h1: clamp(2rem, 4vw, 4rem);
+    --font-size--h2: clamp(1.75rem, 3.5vw, 3.5rem);
+    --font-size--h3: clamp(1.5rem, 3vw, 2.25rem);
+    --font-size--h4: clamp(1.25rem, 2.5vw, 2rem);
+    --font-size--h5: clamp(1rem, 2vw, 1.5rem);
+    --font-size--h6: clamp(1rem, 2vw, 1.25rem);
+    --font-size--body: clamp(1rem, 2vw, 1.125rem);
+
+    /* Spacing */
+    --spacing--gutter: clamp(1.5rem, 2.5vw, 2rem);
+    --spacing--gutter-section: clamp(3rem, 7vw, 6rem);
+
+    /* Border Radius */
+    --border-radius--4: 0.25rem;
+    --border-radius--8: 0.5rem;
+
+    /* Transitions */
+    --transition--standard: 0.15s ease-in-out;
+}
+
+/* Font imports */
+@font-face {
+    font-family: 'InclusiveSans';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''), url('/assets/fonts/InclusiveSans-Regular.woff2') format('woff2'),
+        url('/assets/fonts/InclusiveSans-Regular.woff') format('woff');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'InclusiveSans';
+    font-style: normal;
+    font-weight: 600;
+    src: local(''), url('/assets/fonts/InclusiveSans-SemiBold.woff2') format('woff2'),
+        url('/assets/fonts/InclusiveSans-SemiBold.woff') format('woff');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'InclusiveSans';
+    font-style: normal;
+    font-weight: 700;
+    src: local(''), url('/assets/fonts/InclusiveSans-Bold.woff2') format('woff2'),
+        url('/assets/fonts/InclusiveSans-Bold.woff') format('woff');
+    font-display: swap;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font--inclusive-sans);
+    font-size: var(--font-size--body);
+    color: var(--color--black-400);
+    background-color: var(--color--white);
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Wrapper ── */
+.blog {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing--gutter);
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: var(--spacing--gutter-section) var(--spacing--gutter);
+    font-family: var(--font--inclusive-sans);
+}
+
+/* ── Title (h1.title) ── */
+.blog .title {
+    color: var(--color--blue-500);
+    font-size: var(--font-size--h1);
+    font-weight: var(--font-weight--semibold);
+    line-height: 1.15;
+    margin: 0;
+}
+
+/* ── Metadata ── */
+.blog .metadata {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.blog .metadata-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.blog .metadata-inner .author {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--font-size--body);
+    font-weight: var(--font-weight--semibold);
+}
+
+/* .date mirrors span.post-date in news.scss */
+.date {
+	align-self: start;
+    display: inline-block;
+    padding: 0.5em 0.75em;
+    background-color: var(--color--blue-50);
+    border-radius: var(--border-radius--4);
+    font-size: var(--font-size--body);
+}
+
+/* ── Cover image ── mirrors .image-wrapper aspect-ratio + img border-radius in news.scss */
+.blog .cover {
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+    border-radius: var(--border-radius--8);
+}
+
+/* ── Markdown body ── mirrors .article-content in news.scss */
+.blog .markdown {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing--gutter) * 0.5);
+}
+
+.blog .markdown > div {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing--gutter) * 0.5);
+}
+
+.blog .markdown p {
+    font-size: var(--font-size--body);
+    line-height: 1.7;
+    color: var(--color--black-400);
+}
+
+.blog .markdown h1,
+.blog .markdown h2,
+.blog .markdown h3,
+.blog .markdown h4,
+.blog .markdown h5,
+.blog .markdown h6 {
+    color: var(--color--blue-500);
+    font-weight: var(--font-weight--semibold);
+    line-height: 1.2;
+    margin-top: 0.5em;
+}
+
+.blog .markdown h2 { font-size: var(--font-size--h2); }
+.blog .markdown h3 { font-size: var(--font-size--h3); }
+.blog .markdown h4 { font-size: var(--font-size--h4); }
+.blog .markdown h5 { font-size: var(--font-size--h5); }
+.blog .markdown h6 { font-size: var(--font-size--h6); }
+
+.blog .markdown a {
+    color: var(--color--black-400);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--color--green-500);
+}
+
+.blog .markdown ul,
+.blog .markdown ol {
+    padding-left: 1.5rem;
+}
+
+.blog .markdown li {
+    line-height: 1.7;
+}
+
+/* mirrors blockquote in news.scss */
+.blog .markdown blockquote {
+    padding: 0.5em 0.75em;
+    background-color: var(--color--blue-50);
+    border-left: solid 2px var(--color--blue-500);
+    font-style: italic;
+}
+
+/* mirrors code in news.scss */
+.blog .markdown code {
+    padding: 0.25em 0.5em;
+    background-color: var(--color--blue-50);
+    border-radius: var(--border-radius--4);
+    font-size: 0.9em;
+}
+
+.blog .markdown pre {
+    padding: 1rem;
+    background-color: var(--color--black-400);
+    color: #e1e4e8;
+    overflow-x: auto;
+    border-radius: var(--border-radius--8);
+}
+
+.blog .markdown img {
+    max-width: 100%;
+    border-radius: var(--border-radius--8);
+}
+
+/* ── Event meta row ── mirrors .event-meta in news.scss */
+.blog .event-meta {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.blog .event-meta__item {
+    flex: 1;
+    min-width: 10rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.75em 1em;
+    background-color: var(--color--blue-50);
+    border-radius: var(--border-radius--4);
+}
+
+.blog .event-meta__label {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight--semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color--blue-500);
+}
+
+.blog .event-meta__value {
+    font-size: 1rem;
+    color: var(--color--black-400);
+}
+
+/* ── Eventbrite button ── mirrors .button.primary.dark */
+.blog .eventbrite-btn {
+    display: inline-block;
+    padding: 0.75em 1.5em;
+    background-color: var(--color--green-500);
+    color: var(--color--black-400);
+    font-weight: var(--font-weight--semibold);
+    text-decoration: none;
+    border-radius: var(--border-radius--4);
+    transition: opacity var(--transition--standard);
+}
+
+.blog .eventbrite-btn:hover {
+    opacity: 0.85;
+}

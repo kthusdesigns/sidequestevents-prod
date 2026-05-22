@@ -1,0 +1,127 @@
+<!-- ============================================ -->
+<!--                 Navigation                   -->
+<!-- ============================================ -->
+
+{% set navPages = collections.all | eleventyNavigation %}
+
+<header id="navigation">
+    <div class="container">
+        <!-- Logo-->
+        <a href="/" class="nav-logo" aria-label="Go to homepage" data-umami-event="{{ page.url | truncate(24) }}: Nav: Logo (Home)">
+            <img src="/assets/svgs/LOGO_Primary_FullColor.svg" alt="{{client.name}} logo" width="162" height="48" aria-hidden="true" decoding="async">
+        </a>
+        <!-- Nav links -->
+        <nav class="nav-wrapper" role="navigation">
+            <!-- Mobile hamburger menu toggle -->
+            <button class="hamburger-menu" type="button" aria-label="nav-hamburger-menu" aria-expanded="false" aria-controls="navbar-menu" data-umami-event="{{ page.url | truncate(24) }}: Nav: Hamburger">
+                <div class="box" aria-hidden="true">
+                    <span class="visually-hidden">Menu</span>
+                    <span class="line" aria-hidden="true"></span>
+                </div>
+            </button>
+
+            <!-- Main nav links -->
+            <div class="nav-list">
+                <div class="nav-list__inner">
+                    <ul id="expanded" aria-expanded="false">
+
+                        <!-- Our Programs -->
+                        <li class="nav-li dropdown">
+                            <div class="submenu-toggle">
+                                <a class="nav-link" href="/our-programs/homeownership-and-financial-literacy/">Our Programs</a>
+                                <button class="submenu-button" aria-expanded="false" aria-label="Toggle Services submenu" type="button">
+                                    <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M0.944803 0.00952117L12.738 -7.62939e-06C13.7172 0.147879 14.0785 1.24903 13.4245 1.97893L7.75142 7.65009C7.31347 8.06174 6.70744 8.10938 6.19593 7.79455C4.16173 5.85296 2.17097 3.84544 0.214135 1.8238C-0.272215 1.1202 0.111605 0.176466 0.944803 0.00952117Z" fill="#60DB30"/>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <ul class="dropdown__ul">
+                                <li class="dropdown__li">
+                                    <a href="/our-programs/homeownership-and-financial-literacy/" class="dropdown__li-link">Homeownership & Financial Literacy</a>
+                                </li>
+                                <li class="dropdown__li">
+                                    <a href="/our-programs/youth-workforce-development/" class="dropdown__li-link">Youth Workforce Development</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- About UCAN -->
+                         <li class="nav-li dropdown">
+                            <div class="submenu-toggle">
+                                <a class="nav-link" href="/about/">About UCAN</a>
+                                <button class="submenu-button" aria-expanded="false" aria-label="Toggle Services submenu" type="button">
+                                    <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M0.944803 0.00952117L12.738 -7.62939e-06C13.7172 0.147879 14.0785 1.24903 13.4245 1.97893L7.75142 7.65009C7.31347 8.06174 6.70744 8.10938 6.19593 7.79455C4.16173 5.85296 2.17097 3.84544 0.214135 1.8238C-0.272215 1.1202 0.111605 0.176466 0.944803 0.00952117Z" fill="#60DB30"/>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <ul class="dropdown__ul">
+                                <li class="dropdown__li">
+                                    <a href="/about/#our-mission" class="dropdown__li-link">Our Mission</a>
+                                </li>
+                                <li class="dropdown__li">
+                                    <a href="/about/#our-team" class="dropdown__li-link">Our Team</a>
+                                </li>
+                                <li class="dropdown__li">
+                                    <a href="/about/#our-partners" class="dropdown__li-link">Our Partners</a>
+                                </li>
+                                <li class="dropdown__li">
+                                    <a href="/about/#ucan-history" class="dropdown__li-link">UCAN History</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Events -->
+                        <li class="nav-li">
+                            <a class="nav-link" href="/events/">Events</a>
+                        </li>
+
+                        <!-- News -->
+                        <li class="nav-li">
+                            <a class="nav-link" href="/news/">News</a>
+                        </li>
+
+                        <!-- Social media links -->
+                        <div class="social-media-list">
+                            <a href="{{ client.socials.facebook }}" target="_blank">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="1" y="1" width="30" height="30" rx="5.4" stroke-width="2"/>
+                                    <path d="M20.0001 7.99998H17.6001C16.5392 7.99998 15.5218 8.4214 14.7716 9.17155C14.0215 9.9217 13.6001 10.9391 13.6001 12V14.4H11.2001V17.6H13.6001V24H16.8001V17.6H19.2001L20.0001 14.4H16.8001V12C16.8001 11.7878 16.8844 11.5843 17.0344 11.4343C17.1844 11.2843 17.3879 11.2 17.6001 11.2H20.0001V7.99998Z"/>
+                                </svg>
+                            </a>
+
+                            <a href="{{ client.socials.instagram }}" target="_blank">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="1" y="1" width="30" height="30" rx="5.4" stroke-width="2"/>
+                                    <path d="M16.0001 9.4C12.1355 9.4 9.00012 12.5354 9.00012 16.4C9.00012 20.2646 12.1355 23.4 16.0001 23.4C19.8648 23.4 23.0001 20.2646 23.0001 16.4C23.0001 12.5354 19.8648 9.4 16.0001 9.4ZM16.0001 20.9407C13.4929 20.9407 11.4594 18.9072 11.4594 16.4C11.4594 13.8928 13.4929 11.8593 16.0001 11.8593C18.5073 11.8593 20.5408 13.8928 20.5408 16.4C20.5408 18.9072 18.5073 20.9407 16.0001 20.9407Z"/>
+                                    <path d="M25.0001 8.9C25.0001 9.73062 24.3259 10.4 23.5001 10.4C22.6695 10.4 22.0001 9.72573 22.0001 8.9C22.0001 8.06938 22.6744 7.4 23.5001 7.4C24.3259 7.4 25.0001 8.07427 25.0001 8.9Z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Social media links -->
+            <div class="social-media-list">
+                <a href="{{ client.socials.facebook }}" target="_blank">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1" y="1" width="30" height="30" rx="5.4" stroke-width="2"/>
+                        <path d="M20.0001 7.99998H17.6001C16.5392 7.99998 15.5218 8.4214 14.7716 9.17155C14.0215 9.9217 13.6001 10.9391 13.6001 12V14.4H11.2001V17.6H13.6001V24H16.8001V17.6H19.2001L20.0001 14.4H16.8001V12C16.8001 11.7878 16.8844 11.5843 17.0344 11.4343C17.1844 11.2843 17.3879 11.2 17.6001 11.2H20.0001V7.99998Z"/>
+                    </svg>
+                </a>
+
+                <a href="{{ client.socials.instagram }}" target="_blank">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1" y="1" width="30" height="30" rx="5.4" stroke-width="2"/>
+                        <path d="M16.0001 9.4C12.1355 9.4 9.00012 12.5354 9.00012 16.4C9.00012 20.2646 12.1355 23.4 16.0001 23.4C19.8648 23.4 23.0001 20.2646 23.0001 16.4C23.0001 12.5354 19.8648 9.4 16.0001 9.4ZM16.0001 20.9407C13.4929 20.9407 11.4594 18.9072 11.4594 16.4C11.4594 13.8928 13.4929 11.8593 16.0001 11.8593C18.5073 11.8593 20.5408 13.8928 20.5408 16.4C20.5408 18.9072 18.5073 20.9407 16.0001 20.9407Z"/>
+                        <path d="M25.0001 8.9C25.0001 9.73062 24.3259 10.4 23.5001 10.4C22.6695 10.4 22.0001 9.72573 22.0001 8.9C22.0001 8.06938 22.6744 7.4 23.5001 7.4C24.3259 7.4 25.0001 8.07427 25.0001 8.9Z"/>
+                    </svg>
+                </a>
+            </div>
+
+        </nav>
+    </div>
+</header>

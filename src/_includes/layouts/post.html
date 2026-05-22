@@ -1,0 +1,79 @@
+{% extends "layouts/base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/assets/css/news-events.css">
+{% endblock %}
+
+{% block body %}
+
+<section id="single-article" class="hero">
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+                <article class="article-post">
+                    <div class="article-group">
+                        <div class="article__content-wrapper">
+                            <div class="author-group">
+                                <div class="meta">
+                                    {% if 'event' not in tags %}
+                                        <span class="post-date">Published on: <strong>{{ date | postDate }}</strong></span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <h1 class="article-title">{{ title }}</h1>
+
+                            {% if 'event' in tags %}
+                                <div class="event-meta">
+                                    <div class="event-meta__item">
+                                        <span class="event-meta__label">Date</span>
+                                        <span class="event-meta__value">{{ date | eventDate }}{% if timeRange %}&nbsp;&nbsp;•&nbsp;&nbsp;{{ timeRange }}{% endif %}</span>
+                                    </div>
+                                    {% if location %}
+                                        <div class="event-meta__item">
+                                            <span class="event-meta__label">Venue</span>
+                                            <span class="event-meta__value">{{ location }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if address %}
+                                        <div class="event-meta__item">
+                                            <span class="event-meta__label">Address</span>
+                                            <span class="event-meta__value">{{ address }}</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+
+                            <div class="image-wrapper">
+                                <!-- Featured Image -->
+                                {% image './src' + image, title, 'img-bg', 'lazy', '(max-width: 850px) 400px, (min-width: 601px) 1680px, 1920px', '' %}
+                            </div>
+                            <div class="article-content">
+                                {{ content | safe }}
+
+                                {% if eventbriteUrl %}
+                                    <div class="button-wrapper">
+                                        <a href="{{ eventbriteUrl }}" class="button primary dark" target="_blank" rel="noopener noreferrer">Get Tickets</a>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="button-wrapper">
+                                {% if '/events/' in page.url %}
+                                    {% set ctaLink = '/events/' %}
+                                    {% set ctaCopy = 'Go Back to All Events' %}
+                                {% else %}
+                                    {% set ctaLink = '/news/' %}
+                                    {% set ctaCopy = 'Go Back to All Articles' %}
+                                {% endif %}
+                                {% set ctaColor = 'dark' %}
+                                {% include "components/cta-secondary--button.html" %}
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
