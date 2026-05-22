@@ -6,7 +6,7 @@ excerpt: Join us for Brews & Braids, a hands-on braiding class for parents
   in Lone Tree. Whether you've always wrestled with a simple ponytail or you're
   ready to level up to a French braid, this class meets you exactly where you
   are — no experience required.
-date: 2026-06-16T23:09:48.849Z
+date: 2026-07-21T23:09:48.849Z
 startTime: 2026-05-22T00:00:48.853Z
 endTime: 2026-05-22T01:30:48.856Z
 location: Great Divide Brewery & Roadhouse
