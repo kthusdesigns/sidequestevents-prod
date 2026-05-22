@@ -2,7 +2,7 @@
 # FORCE HTTPS + CANONICAL DOMAIN
 # -------------------------
 
-# https://sidequesteventsco-prod.netlify.app/*  https://sidequesteventsco.com/:splat  301!
+https://sidequesteventsco-prod.netlify.app/*  https://sidequesteventsco.com/:splat  301!
 http://sidequesteventsco.com/*               https://sidequesteventsco.com/:splat  301!
 
 # -------------------------
