@@ -180,6 +180,7 @@
 
         span.pill {
             display: block;
+            width: fit-content;
             padding: 0.9rem 1.25rem 0.75rem;
             margin: 0 0 clamp(1.5rem, 2.5vw, 2rem);
             color: var(--color--cyan-500);
