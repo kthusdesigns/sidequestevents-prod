@@ -47,12 +47,12 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
                     </div>
                 </div>
 
-                <img src="/assets/svgs/ILLUSTRATION_Home_000.svg" alt="Illustrated mountains with a dotted path flowing through them" class="hero-img" width="877px" height="244px" decoding="async">
+                <img src="/assets/svgs/ILLUSTRATION_Home_000.svg" alt="Illustrated mountains with a dotted path flowing through them" class="hero-img" width="877px" height="244px" decoding="async" fetchpriority="high">
             </div>
         </div>
     </div>    
 
-    {% image './src/assets/images/gradients/GRADIENT_Home_000.jpg', 'Grainy mesh gradient in purple and black', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', 'high' %}
+    {% image './src/assets/images/gradients/GRADIENT_Home_000.jpg', 'Grainy mesh gradient in purple and black', 'img-bg', 'eager', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', 'high' %}
 
     <div class="overlay lower"></div>
 

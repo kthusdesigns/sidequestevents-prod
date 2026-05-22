@@ -63,6 +63,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-slider@latest/keen-slider.min.css" />
     {% endif %}
 
+    <!-- Analytics: Umami -->
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="ede211db-22ce-4c8d-99cf-3336b793808e"></script>
+
     <!-- Page Title -->
     <title>{% if tags and 'event' in tags %}{{ title }} | {{ city }}, {{ state }} | {{ date | eventDate }} | SideQuest Events{% else %}{{ title }}{% endif %}</title>
 </head>
