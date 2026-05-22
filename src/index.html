@@ -357,14 +357,37 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
     var loaded = false;
 
     function initSlider() {
+        var cards = sliderEl.querySelectorAll('.event-card');
+        var startX = 0;
+        var active = false;
+        var dragging = false;
+
+        sliderEl.addEventListener('mousedown', function (e) {
+            startX = e.clientX;
+            active = true;
+            dragging = false;
+        });
+
+        window.addEventListener('mousemove', function (e) {
+            if (!active || e.buttons !== 1 || dragging) return;
+            if (Math.abs(e.clientX - startX) > 5) {
+                dragging = true;
+                cards.forEach(function (c) { c.style.pointerEvents = 'none'; });
+            }
+        });
+
+        window.addEventListener('mouseup', function () {
+            if (dragging) cards.forEach(function (c) { c.style.pointerEvents = 'all'; });
+            active = false;
+            dragging = false;
+        });
+
         new KeenSlider(sliderEl, {
             breakpoints: {
                 '(min-width: 0px)': { slides: { perView: 1, spacing: 16 } },
                 '(min-width: 992px)': { slides: { perView: 2, spacing: 32 } }
             },
-            created: function (s) { requestAnimationFrame(function () { s.update(); }); },
-            dragStarted: function () { sliderEl.classList.add('is-dragging'); },
-            dragEnded: function () { sliderEl.classList.remove('is-dragging'); }
+            created: function (s) { requestAnimationFrame(function () { s.update(); }); }
         }, [function (slider) {
             new ResizeObserver(function () { slider.update(); }).observe(sliderEl);
             document.querySelector('.slider-nav__arrow--prev').addEventListener('click', function () { slider.prev(); });

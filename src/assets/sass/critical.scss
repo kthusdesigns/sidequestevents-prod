@@ -748,10 +748,6 @@
 
                         .keen-slider {
                             overflow: visible;
-
-                            &.is-dragging .event-card {
-                                pointer-events: none;
-                            }
                         }
 
                         .keen-slider__slide {

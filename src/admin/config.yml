@@ -62,14 +62,14 @@ collections:
                 name: "excerpt",
                 widget: "text",
                 required: true,
-                hint: "Write a short summary (1-2 sentences) that will appear on the events listing page. You can copy and paste the first few sentences from the blog post's content so long as it completes a thought."
+                hint: "Write a short summary (1-2 sentences) that will be used as the webpage's meta description. You can copy and paste the first few sentences from the blog post's content so long as it completes a thought."
             }
           - { # Event Date
                 label: "Event Date (required)",
                 name: "date",
                 widget: "date",
                 required: true,
-                hint: "The date the event takes place. Events are automatically hidden from the feed after this date."
+                hint: "The date the event takes place. Events are automatically hidden from the feed after this date at 11:59p PM."
             }
           - { # Start Time
                 label: "Start Time (required)",
