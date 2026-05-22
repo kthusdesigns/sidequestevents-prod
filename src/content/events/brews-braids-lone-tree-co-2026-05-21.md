@@ -21,10 +21,7 @@ googleFormUrl: <iframe
   marginwidth="0">Loading…</iframe>
 tags:
   - event
-googleFormEmbed: <iframe
-  src="https://docs.google.com/forms/d/e/1FAIpQLSf5Wm9IHWy8QW73YbPpd-Ssrd42mOp1sSOvrMpYspZEyqXA_g/viewform?embedded=true"
-  width="640" height="2827" frameborder="0" marginheight="0"
-  marginwidth="0">Loading…</iframe>
+googleFormEmbed: ""
 ---
 ## Finally learn to do your kid's hair — with a beer in hand.
 
