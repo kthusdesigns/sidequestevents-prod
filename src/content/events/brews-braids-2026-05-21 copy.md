@@ -1,5 +1,5 @@
 ---
-image: /assets/images/blog/event_brews-braids_000.jpg
+image: /assets/images/blog/event_brews-braids_001.jpg
 title: "Brews & Braids "
 excerpt: Join us for Brews & Braids, a hands-on braiding class for parents
   taught by a licensed hair stylist, hosted at Great Divide Brewery & Roadhouse
