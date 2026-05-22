@@ -294,10 +294,9 @@
 
 @media screen and (min-width: 0px) {
     span.pill {
-        justify-self: start;
         display: block;
         width: fit-content;
-        align-self: flex-start;
+        margin-right: auto;
         padding: 0.9rem 1.25rem 0.75rem;
         margin: 0 0 var(--spacing--gutter-column);
         color: var(--color--cyan-500);
