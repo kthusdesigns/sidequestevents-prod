@@ -6,9 +6,6 @@ backend:
 # change url to a link to the image you want to use, no file paths, must be a URL
 logo_url: https://codestitch.app/frontend/images/logo.png
 
-# Better Decap + Bridge logo (optional)
-logo_url: https://res.cloudinary.com/dxave0gy0/image/upload/v1777485308/UCAN_Logo_Admin_dhufpi.svg
-
 # Add site links in Decap CMS (optional)
 site_url: https://sidequesteventsco.com
 
@@ -25,7 +22,7 @@ collections:
       label: "Event"
       folder: "src/content/events"
       create: true
-      slug: "{{slug}}-{{year}}-{{month}}-{{day}}"
+      slug: "{{slug}}-{{fields.city | lower}}-{{fields.state | lower}}-{{year}}-{{month}}-{{day}}"
       summary: "{{date | date('YYYY-MM-DD')}} | {{title}}"
       view_filters:
         - label: "Events"

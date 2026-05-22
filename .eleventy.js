@@ -163,6 +163,16 @@ module.exports = function (eleventyConfig) {
     eleventyConfig.addFilter("isoDate", filterIsoDate);
 
     /*
+     * 🔢 toNumber Filter
+     * Coerces a value to a number for JSON-LD (prevents minification turning integers into strings)
+     * Usage: {{ value | toNumber }}
+     */
+    eleventyConfig.addFilter("toNumber", function (value) {
+        const n = Number(value);
+        return Number.isFinite(n) ? n : 0;
+    });
+
+    /*
      * 📅 Month Name Filter
      * Converts a date to lowercase month name (e.g., "january", "february")
      * Usage: {{ page.date | monthName }}

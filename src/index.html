@@ -96,16 +96,16 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
 
                     <div class="content__grid-wrapper" data-count="{{ upcomingEvents | length }}">
                         {% for event in upcomingEvents %}
-                        <a class="event-card" href="{{ event.url }}">
+                        <a class="event-card" href="{{ event.url }}" data-umami-event="{{ page.url | truncate(16) }}: Event: {{ event.data.title | truncate(24) }}">
                             {% image './src' + event.data.image, event.data.title, 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
                             <div class="event-card__content">
                                 <div class="event-card__text">
                                     <h3>{{ event.data.title }}</h3>
                                     <p class="event-date">{{ event.data.date | eventDate }}</p>
-                                    <p class="event-time">{{ event.data.timeRange }}</p>
+                                    <p class="event-time">{{ event.data.startTime | eventTime }} – {{ event.data.endTime | eventTime }}</p>
                                 </div>
                                 <div class="event-card__footer">
-                                    <p class="event-location">{{ event.data.location }}</p>
+                                    <p class="event-location">{{ event.data.city }}, {{ event.data.state }}</p>
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M16.6667 12.4999V18.3333H15.8334V19.1666H1.66671V18.3333H0.833374V4.16659H1.66671V3.33325H9.16671V4.99992H2.50004V17.4999H15V12.4999H16.6667Z" />
                                         <path d="M19.1667 0.833252V7.49992H17.5V4.16659H16.6667V4.99992H15.8334V5.83325H15V6.66659H14.1667V7.49992H13.3334V8.33325H12.5V9.16659H11.6667V9.99992H10.8334V10.8333H10V11.6666H9.16671V12.4999H8.33337V13.3333H7.50004V14.1666H5.83337V12.4999H6.66671V11.6666H7.50004V10.8333H8.33337V9.99992H9.16671V9.16659H10V8.33325H10.8334V7.49992H11.6667V6.66659H12.5V5.83325H13.3334V4.99992H14.1667V4.16659H15V3.33325H15.8334V2.49992H12.5V0.833252H19.1667Z" />
@@ -125,16 +125,16 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
                             {% for event in upcomingEvents %}
                                 {%- if loop.index <= 5 -%}
                                 <div class="keen-slider__slide">
-                                    <a class="event-card" href="{{ event.url }}">
+                                    <a class="event-card" href="{{ event.url }}" data-umami-event="{{ page.url | truncate(16) }}: Event: {{ event.data.title | truncate(24) }}">
                                         {% image './src' + event.data.image, event.data.title, 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
                                         <div class="event-card__content">
                                             <div class="event-card__text">
                                                 <h3>{{ event.data.title }}</h3>
                                                 <p class="event-date">{{ event.data.date | eventDate }}</p>
-                                                <p class="event-time">{{ event.data.timeRange }}</p>
+                                                <p class="event-time">{{ event.data.startTime | eventTime }} – {{ event.data.endTime | eventTime }}</p>
                                             </div>
                                             <div class="event-card__footer">
-                                                <p class="event-location">{{ event.data.location }}</p>
+                                                <p class="event-location">{{ event.data.city }}, {{ event.data.state }}</p>
                                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M16.6667 12.4999V18.3333H15.8334V19.1666H1.66671V18.3333H0.833374V4.16659H1.66671V3.33325H9.16671V4.99992H2.50004V17.4999H15V12.4999H16.6667Z" />
                                                     <path d="M19.1667 0.833252V7.49992H17.5V4.16659H16.6667V4.99992H15.8334V5.83325H15V6.66659H14.1667V7.49992H13.3334V8.33325H12.5V9.16659H11.6667V9.99992H10.8334V10.8333H10V11.6666H9.16671V12.4999H8.33337V13.3333H7.50004V14.1666H5.83337V12.4999H6.66671V11.6666H7.50004V10.8333H8.33337V9.99992H9.16671V9.16659H10V8.33325H10.8334V7.49992H11.6667V6.66659H12.5V5.83325H13.3334V4.99992H14.1667V4.16659H15V3.33325H15.8334V2.49992H12.5V0.833252H19.1667Z" />
@@ -149,12 +149,12 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
                         </div>
 
                         <div class="slider-nav">
-                            <button class="slider-nav__arrow slider-nav__arrow--prev" aria-label="Previous slide">
+                            <button class="slider-nav__arrow slider-nav__arrow--prev" aria-label="Previous slide" data-umami-event="{{ page.url | truncate(16) }}: Event Slider: Prev">
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M19.1666 9.16671V10.8334H4.16665V11.6667H4.99998V12.5H5.83331V13.3334H6.66665V14.1667H7.49998V15H8.33331V15.8334H9.16665V16.6667H9.99998V17.5H10.8333V18.3334H9.99998V19.1667H9.16665V18.3334H8.33331V17.5H7.49998V16.6667H6.66665V15.8334H5.83331V15H4.99998V14.1667H4.16665V13.3334H3.33331V12.5H2.49998V11.6667H1.66665V10.8334H0.833313V9.16671H1.66665V8.33337H2.49998V7.50004H3.33331V6.66671H4.16665V5.83337H4.99998V5.00004H5.83331V4.16671H6.66665V3.33337H7.49998V2.50004H8.33331V1.66671H9.16665V0.833374H9.99998V1.66671H10.8333V2.50004H9.99998V3.33337H9.16665V4.16671H8.33331V5.00004H7.49998V5.83337H6.66665V6.66671H5.83331V7.50004H4.99998V8.33337H4.16665V9.16671H19.1666Z" />
                                 </svg>
                             </button>
-                            <button class="slider-nav__arrow slider-nav__arrow--next" aria-label="Next slide">
+                            <button class="slider-nav__arrow slider-nav__arrow--next" aria-label="Next slide" data-umami-event="{{ page.url | truncate(16) }}: Event Slider: Next">
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M19.1666 9.16671V10.8334H18.3333V11.6667H17.5V12.5H16.6666V13.3334H15.8333V14.1667H15V15H14.1666V15.8334H13.3333V16.6667H12.5V17.5H11.6666V18.3334H10.8333V19.1667H9.99998V18.3334H9.16665V17.5H9.99998V16.6667H10.8333V15.8334H11.6666V15H12.5V14.1667H13.3333V13.3334H14.1666V12.5H15V11.6667H15.8333V10.8334H0.833313V9.16671H15.8333V8.33337H15V7.50004H14.1666V6.66671H13.3333V5.83337H12.5V5.00004H11.6666V4.16671H10.8333V3.33337H9.99998V2.50004H9.16665V1.66671H9.99998V0.833374H10.8333V1.66671H11.6666V2.50004H12.5V3.33337H13.3333V4.16671H14.1666V5.00004H15V5.83337H15.8333V6.66671H16.6666V7.50004H17.5V8.33337H18.3333V9.16671H19.1666Z" />
                                 </svg>

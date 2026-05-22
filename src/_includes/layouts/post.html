@@ -2,6 +2,10 @@
 
 {% block head %}
     <link rel="stylesheet" href="/assets/css/events.css">
+
+    {% if 'event' in tags %}
+        {% include "components/event-schema.html" %}
+    {% endif %}
 {% endblock %}
 
 {% block body %}

@@ -1,0 +1,43 @@
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "{{ title | escape }}",
+    "description": "{{ excerpt | escape }}",
+    "startDate": "{{ startTime | isoDate }}",
+    "endDate": "{{ endTime | isoDate }}",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "location": {
+        "@type": "Place",
+        {% if streetAddress %}"name": "{{ streetAddress | escape }}",{% endif %}
+        "address": {
+            "@type": "PostalAddress",
+            {% if streetAddress %}"streetAddress": "{{ streetAddress | escape }}",{% endif %}
+            "addressLocality": "{{ city | escape }}",
+            "addressRegion": "{{ state | escape }}",
+            "postalCode": "{{ zip }}",
+            "addressCountry": "US"
+        }
+    },
+    "organizer": {
+        "@type": "Organization",
+        "name": "{{ client.name | escape }}",
+        "url": "{{ client.domain }}"
+    },
+    "url": "{{ client.domain }}{{ page.url }}"
+    {% if image %},
+    "image": "{{ client.domain }}{{ image }}"
+    {% endif %}
+    {% if eventExtUrl %},
+    "offers": {
+        "@type": "Offer",
+        "url": "{{ eventExtUrl | escape }}",
+        "price": 0,
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "validFrom": "{{ date | isoDate }}"
+    }
+    {% endif %}
+}
+</script>
