@@ -1,0 +1,242 @@
+---
+title: "Become a Vendor | Denver Area Festivals & Community Markets | SideQuest Events"
+description: "Apply to become a vendor at SideQuest Events' festivals and markets near Denver, Littleton, and Centennial, CO. Learn about VIP Vendor membership and category-exclusive vendor spots."
+permalink: "/vendors/"
+preloadImg: '/assets/images/GRADIENT_Vendors_000-400w.jpeg'
+tags: "sitemap" # content/content.json will make sure that all pages in content/ are marked with a "sitemap" tag, for automatic sitemap generation. As index.html is not in content/, we need to add it here to ensure the root page is included in the sitemap generation
+---
+
+{% extends "layouts/base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/assets/css/vendors.css">
+
+    {% include "components/local-schema.html" %}
+{% endblock %}
+
+{% block body %}
+
+<!-- ============================================ -->
+<!--                    Hero                      -->
+<!-- ============================================ -->
+
+<section id="hero" class="hero">
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <h1 class="text-align--center"><span class="pill odd center text-align--center">VENDOR INFO</span> APPLY TO BECOME A VENDOR AT EVENTS IN SOUTH METRO DENVER</h1>
+                    <p class="text-align--center">SideQuest Events hosts community markets and festivals across southern Denver, and each one is built to give vendors meaningful exposure to a local crowd already in the mindset to explore and discover.</p>
+                    <div class="button-wrapper">
+                        {% set ctaLink = '/events/' %}
+                        {% set ctaCopy = 'View Upcoming Events' %}
+                        {% set umamiSection = 'Hero' %}
+                        {% set umamiAction = 'View Events' %}
+                        {% include "components/cta-primary--button.html" %}
+
+                        {% set ctaLink = '/contact/' %}
+                        {% set ctaCopy = 'Contact SideQuest Events' %}
+                        {% set umamiSection = 'Hero' %}
+                        {% set umamiAction = 'Contact' %}
+                        {% include "components/cta-secondary--button.html" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+    {% image './src/assets/images/gradients/GRADIENT_Vendors_000.jpg', 'Grainy mesh gradient in purple and black', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', 'high' %}
+
+    <div class="overlay lower"></div>
+
+</section>
+
+<!-- ============================================ -->
+<!--                 How It Works                 -->
+<!-- ============================================ -->
+
+<section id="how-it-works" class="body split-columns">
+
+    <div class="overlay upper"></div>
+
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <div class="text-wrapper">
+                        <h2><span class="pill even left">HOW IT WORKS</span> VENDOR APPLICATIONS & EVENT AVAILABILITY</h2>
+                        <p>Applications open on a per-event basis and spots fill quickly. To apply as a vendor to any given event, fill out the vendor application on that event's page and submit it when you're ready. We review applications on a rolling basis and will reach out with a decision.</p>
+                    </div>
+
+                    <div class="button-wrapper">
+                        {% set ctaLink = '/events/' %}
+                        {% set ctaCopy = 'View Upcoming Events' %}
+                        {% set umamiSection = 'How It Works' %}
+                        {% set umamiAction = 'View Events' %}
+                        {% include "components/cta-primary--button.html" %}
+
+                        {% set ctaLink = '/contact/' %}
+                        {% set ctaCopy = 'Contact SideQuest Events' %}
+                        {% set umamiSection = 'How It Works' %}
+                        {% set umamiAction = 'Contact' %}
+                        {% include "components/cta-secondary--button.html" %}
+                    </div>
+                </div>
+
+                <div class="content__image-wrapper">
+                    <div class="image-wrapper">
+                        {% image './src/assets/images/PHOTO_Vendors_001.jpg', 'Large crowd of people browsing through vendor tents at a SideQuest Events-organized fair', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+                        <svg class="icon tl" width="32" height="29" viewBox="0 0 32 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19.2 12.8H9.6V28.8H6.4V22.4H3.2V28.8H0V9.6H19.2V12.8ZM28.8 22.4H12.8V19.2H28.8V22.4ZM32 19.2H28.8V6.4H32V19.2ZM8 6.4H1.6V0H8V6.4ZM28.8 6.4H11.2V3.2H28.8V6.4Z" fill="#FF007F"/>
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Body.jpg', 'Grainy mesh gradient in pink and black', 'img-bg rev', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+    <div class="overlay lower"></div>
+
+</section>
+
+<!-- ============================================ -->
+<!--                   Our Model                  -->
+<!-- ============================================ -->
+
+<section id="our-model" class="body split-columns">
+
+    <div class="overlay upper"></div>
+
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__image-wrapper">
+                    <div class="image-wrapper">
+                        {% image './src/assets/images/PHOTO_Vendors_002.jpg', 'Three women placing orders in front of a food truck parked at a South Metro Denver event', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+                        <svg class="icon tr" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.4 32H0V17.6H14.4V32ZM28.8 32H20.8V28.8H28.8V32ZM3.2 28.8H11.2V20.8H3.2V28.8ZM20.8 28.8H17.6V20.8H20.8V28.8ZM32 28.8H28.8V20.8H32V28.8ZM28.8 20.8H20.8V17.6H28.8V20.8ZM11.2 11.2H20.8V8H24V14.4H8V8H11.2V11.2ZM14.4 8H11.2V3.2H14.4V8ZM20.8 8H17.6V3.2H20.8V8ZM17.6 3.2H14.4V0H17.6V3.2Z" fill="#FF007F"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="content__text-wrapper">
+                    <div class="text-wrapper">
+                        <h2><span class="pill odd left">Our Model</span> Category-Exclusive Vendor Spots At Every Event</h2>
+                        <p>Every SideQuest event limits applications by category. Once a slot in your category is filled, it closes. No direct competitors to share the same floor. Your booth has full ownership of its niche in the room, and the people who stop by are making a choice rather than making a comparison.</p>
+                    </div>
+
+                    <div class="button-wrapper">
+                        {% set ctaLink = '/events/' %}
+                        {% set ctaCopy = 'View Upcoming Events' %}
+                        {% set umamiSection = 'Our Model' %}
+                        {% set umamiAction = 'View Events' %}
+                        {% include "components/cta-primary--button.html" %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Body.jpg', 'Grainy mesh gradient in pink and black', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+    <div class="overlay lower"></div>
+
+</section>
+
+<!-- ============================================ -->
+<!--                VIP Membership                -->
+<!-- ============================================ -->
+
+<section id="vip-membership" class="body split-columns">
+
+    <div class="overlay upper"></div>
+
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <div class="text-wrapper">
+                        <h2><span class="pill even left">VIP Membership</span> First-Refusal Rights for Returning Event Vendors</h2>
+                        <p>Every event we produce runs on the same goal: give people a reason to show up, and give local businesses a platform to grow from it. Networking, discovery, entertainment, and community support are the structure underneath every gathering we plan.</p>
+                    </div>
+
+                    <div class="button-wrapper">
+                        {% set ctaLink = '/vendors/' %}
+                        {% set ctaCopy = 'Browse Vendor Info & Applications' %}
+                        {% set umamiSection = 'Our Mission' %}
+                        {% set umamiAction = 'Vendor Info' %}
+                        {% include "components/cta-primary--button.html" %}
+                    </div>
+                </div>
+
+                <div class="content__image-wrapper">
+                    <div class="image-wrapper">
+                        {% image './src/assets/images/PHOTO_Vendors_003.jpg', 'Small business owner in the Denver Metro Area on the phone with SideQuest Events, discussing VIP Membership as an event vendor', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+                        <svg class="icon tl" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1.90735e-05 32H31.2358V28.4444H1.90735e-05V32ZM3.47066 24.8889H27.7652V21.3333H3.47066V24.8889ZM27.7652 3.55556H24.2945V7.11111H27.7652V21.3333H31.2358V0H27.7652V3.55556ZM1.90735e-05 21.3333H3.47066V7.11111H6.94131V3.55556H3.47066V0H1.90735e-05V21.3333ZM20.8239 10.6667H24.2945V7.11111H20.8239V10.6667ZM6.94131 10.6667H10.412V7.11111H6.94131V10.6667ZM17.3533 7.11111H20.8239V3.55556H17.3533V7.11111ZM10.412 7.11111H13.8826V3.55556H10.412V7.11111ZM13.8826 3.55556H17.3533V0H13.8826V3.55556Z" fill="#FF007F"/>
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Early Access</h3>
+                    <p>To event dates, locations, and logistical details before public announcements.</p>
+                </div>
+
+                <div class="card">
+                    <h3>First-Refusal Rights</h3>
+                    <p>On available spots at every SideQuest event, offered before public applications open. Want the spot? It’s yours. Can’t make it? No obligation.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Category-Exclusive Placement</h3>
+                    <p>At every event booked through our program.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Body.jpg', 'Grainy mesh gradient in pink and black', 'img-bg rev', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+    <div class="overlay lower"></div>
+
+</section>
+
+<!-- ============================================ -->
+<!--                   Prefooter                  -->
+<!-- ============================================ -->
+
+{% set pfPill = 'Let’s Make It Happen' %}
+{% set headingMW = '780px' %}
+{% set pfHeading = 'Your Next Side Quest Event Starts Here' %}
+{% set bodyMW = '760px' %}
+{% set pfCopy = 'Check the events calendar and reach out before your category closes.' %}
+{% set umamiPriSection = 'Prefooter' %}
+{% set umamiPriAction = 'View Events' %}
+{% set ctaPriCopy = 'View Upcoming Events' %}
+{% set ctaLink1 = '/events/' %}
+{% set umamiSecSection = 'Prefooter' %}
+{% set umamiSecAction = 'Contact' %}
+{% set ctaSecCopy = 'Contact SideQuest Events' %}
+{% set ctaLink2 = '/contact/' %}
+{% include "sections/prefooter.html" %}
+
+
+
+{% endblock %}

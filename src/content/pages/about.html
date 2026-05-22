@@ -1,9 +1,9 @@
 ---
-title: "About UCAN | United Community Action Network of Metro Denver"
-description: "Learn about UCAN's mission to empower North Denver residents through grassroots organizing, economic empowerment, and community advocacy. A 501(c)(3) nonprofit since 2007."
+title: "About SideQuest Events | Event Planning & Production Company in Denver, CO"
+description: "SideQuest Events is a Centennial, CO-based event planning and production company serving Denver Littleton, Highlands Ranch, Lone Tree, and surrounding southern suburbs."
 permalink: "/about/"
-preloadImg: '/assets/images/PHOTO_About_000-400w.jpeg'
-image: "OPTIONAL - If an image path is specified here, it will be used for that page's OG image. Useful for blog posts (implemented as standard with this kit)"
+preloadImg: '/assets/images/GRADIENT_About_000-400w.jpeg'
+tags: "sitemap" # content/content.json will make sure that all pages in content/ are marked with a "sitemap" tag, for automatic sitemap generation. As index.html is not in content/, we need to add it here to ensure the root page is included in the sitemap generation
 ---
 
 {% extends "layouts/base.html" %}
@@ -11,20 +11,7 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
 {% block head %}
     <link rel="stylesheet" href="/assets/css/about.css">
 
-    <!-- Keen Slider -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-slider@latest/keen-slider.min.css" />
-
     {% include "components/local-schema.html" %}
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "AboutPage",
-        "url": "{{ client.domain }}/about/",
-        "name": "About UCAN | United Community Action Network of Metro Denver",
-        "description": "Learn about UCAN's mission to empower North Denver residents through grassroots organizing, economic empowerment, and community advocacy since 2007.",
-        "isPartOf": { "@id": "{{ client.domain }}/#organization" }
-    }
-    </script>
 {% endblock %}
 
 {% block body %}
@@ -33,498 +20,253 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
 <!--                    Hero                      -->
 <!-- ============================================ -->
 
-<section id="hero" class="hero hfi">
+<section id="hero" class="hero">
     <div class="container">
         <div class="inner">
             <div class="content">
 
                 <div class="content__text-wrapper">
-                    <h1 class="light">About UCAN</h1>
-                    <p class="light">The United Community Action Network of Metro Denver started as a response to what residents in our community were living with every day. The neighborhood sits at the edge of industrial corridors and major infrastructure projects, and for a long time, the people who called it home had too little say in decisions that directly affected their families, their air quality, and their financial futures. That is still what drives us.</p>
+                    <h1 class="text-align--center"><span class="pill odd center text-align--center">ABOUT SIDEQUEST EVENTS</span> EVENT PLANNING & PRODUCTION COMPANY</h1>
+                    <p class="text-align--center">SideQuest Events is a Centennial-based event planning and production company serving Denver and South Metro Denver. From community festivals and vendor markets to private celebrations, we plan and produce gatherings that give people a real reason to show up.</p>
                     <div class="button-wrapper">
-                        <a href="#" class="button primary dark" data-open-lightbox>Get Involved</a>
+                        {% set ctaLink = '/events/' %}
+                        {% set ctaCopy = 'View Upcoming Events' %}
+                        {% set umamiSection = 'Hero' %}
+                        {% set umamiAction = 'View Events' %}
+                        {% include "components/cta-primary--button.html" %}
                     </div>
                 </div>
-
-                {% image './src/assets/images/PHOTO_About_000.jpg', 'United Community Action Network team circled up with their hands on top of each other', 'img-bg', 'eager', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', 'high' %}
             </div>
         </div>
-
-        <div class="overlay"></div>
     </div>    
+
+    {% image './src/assets/images/gradients/GRADIENT_About_000.jpg', 'Grainy mesh gradient in purple and black', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', 'high' %}
+
+    <div class="overlay lower"></div>
+
 </section>
 
 <!-- ============================================ -->
-<!--                  Our Mission                 -->
+<!--               Where We Operate               -->
 <!-- ============================================ -->
 
-<section id="our-mission">
+<section id="where-we-operate" class="body split-columns">
+
+    <div class="overlay upper"></div>
+
     <div class="container">
         <div class="inner">
             <div class="content">
 
                 <div class="content__text-wrapper">
                     <div class="text-wrapper">
-                        <h2 class="dark">Our Mission</h2>
-                        <p>UCAN brings together residents, property owners, and community partners to build a stronger, healthier, and more resilient neighborhood in North Denver. We work through grassroots organizing, climate advocacy, and economic empowerment to protect local families and ensure that everyone here has access to real opportunities to grow.
-                        <br>
-                        <br>We are a 501(c)(3) nonprofit and registered neighborhood organization whose board has been made up, from the beginning, of people who have lived and worked here for years. Some of them for generations. We connect residents to resources, advocate at a city level, and work with local partners to make sure this community has the ability to shape its own future.
-                        <br>
-                        <br><strong>To volunteer or become a sustaining member, reach out:</strong></p>
-                        <div class="button-wrapper">
-                            <a href="#" class="button primary dark" data-open-lightbox>Get Involved</a>
-                        </div>
+                        <h2><span class="pill even left">WHERE WE OPERATE</span> EVENTS IN SOUTH METRO DENVER AND ITS SURROUNDING COMMUNITIES</h2>
+                        <p>We’re based in Centennial and produce festivals, markets, and gatherings throughout South Metro Denver, including Littleton, Highlands Ranch, Lone Tree, and the neighborhoods in between. Our events are curated to the people who live and work here.</p>
+                    </div>
+
+                    <div class="button-wrapper">
+                        {% set ctaLink = '/events/' %}
+                        {% set ctaCopy = 'View Upcoming Events' %}
+                        {% set umamiSection = 'Where We Op' %}
+                        {% set umamiAction = 'View Events' %}
+                        {% include "components/cta-primary--button.html" %}
                     </div>
                 </div>
 
                 <div class="content__image-wrapper">
                     <div class="image-wrapper">
-                        {% image './src/assets/images/PHOTO_About_001.jpg', 'UCAN volunteer in front of crowd giving seminar on home ownership and financial literacy in Denver, CO', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+                        {% image './src/assets/images/PHOTO_About_001.jpg', 'Vendor at outdoor event selling various plants in Greenwood Village, CO', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+                        <svg class="icon tl" width="32" height="31" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_17426_983)">
+                                <path d="M5.81881 18.9039C4.84979 18.9055 3.87757 18.9039 2.91016 18.9039C2.91016 19.8729 2.91336 20.8435 2.91016 21.8125C3.87917 21.8109 4.8514 21.8125 5.81881 21.8125C5.81881 20.8435 5.81721 19.8729 5.81881 18.9039Z" fill="#FF007F"/>
+                                <path d="M20.3638 15.9968V18.9055C22.3018 18.9087 24.243 18.9007 26.1827 18.9055C26.1811 17.9365 26.1827 16.9658 26.1827 15.9968H20.3638Z" fill="#FF007F"/>
+                                <path d="M11.6363 18.9038V15.9952H5.81738C5.81738 16.9642 5.81899 17.9348 5.81738 18.9038C7.75542 18.899 9.69666 18.907 11.6363 18.9038Z" fill="#FF007F"/>
+                                <path d="M0 21.8125V24.7212C0.969016 24.7212 1.93964 24.7195 2.90865 24.7212C2.90705 23.7521 2.90705 22.7815 2.90865 21.8125C1.93964 21.8141 0.969016 21.8125 0 21.8125Z" fill="#FF007F"/>
+                                <path d="M20.3638 11.633C21.3328 11.6314 22.3034 11.6346 23.2724 11.633V2.90867C22.3034 2.90706 21.3328 2.91027 20.3638 2.90867C20.3702 5.81572 20.3702 8.72597 20.3638 11.6346V11.633Z" fill="#FF007F"/>
+                                <path d="M11.6362 11.633C11.6298 8.72599 11.6298 5.81573 11.6362 2.90708C10.6672 2.90868 9.69656 2.90548 8.72754 2.90708V11.633C9.69656 11.6346 10.6672 11.6314 11.6362 11.633Z" fill="#FF007F"/>
+                                <path d="M20.3638 2.90865C20.3622 1.93964 20.3654 0.969016 20.3638 0H11.6362C11.6346 0.969016 11.6378 1.93964 11.6362 2.90865C14.5449 2.90224 17.4551 2.90224 20.3638 2.90865Z" fill="#FF007F"/>
+                                <path d="M11.6361 11.633C11.6377 12.602 11.6345 13.5726 11.6361 14.5416H14.5448V23.2676H17.4534V14.5416H20.3621C20.3637 13.5726 20.3605 12.602 20.3621 11.633C17.455 11.6394 14.5432 11.6394 11.6345 11.633H11.6361Z" fill="#FF007F"/>
+                                <path d="M2.90869 24.7211C2.9103 25.6901 2.90869 26.6608 2.90869 27.6298C3.87771 27.6298 4.84993 27.6266 5.81734 27.6298C5.81574 26.6608 5.81734 25.6901 5.81734 24.7211C4.84833 24.7211 3.8761 24.7227 2.90869 24.7211Z" fill="#FF007F"/>
+                                <path d="M29.0913 18.9039C28.1223 18.9039 27.15 18.9071 26.1826 18.9039C26.1842 19.8729 26.1826 20.8435 26.1826 21.8125C27.1516 21.8125 28.1239 21.8109 29.0913 21.8125C29.0897 20.8435 29.0913 19.8729 29.0913 18.9039Z" fill="#FF007F"/>
+                                <path d="M5.81885 27.6298C5.82045 28.5988 5.81885 29.5695 5.81885 30.5385H26.1826C26.1826 29.5695 26.181 28.5988 26.1826 27.6298C19.3963 27.6459 12.6052 27.6459 5.81885 27.6298Z" fill="#FF007F"/>
+                                <path d="M32 21.8125C31.0309 21.8125 30.0603 21.8141 29.0913 21.8125C29.0929 22.7815 29.0929 23.7521 29.0913 24.7212C30.0603 24.7195 31.0309 24.7212 32 24.7212V21.8125Z" fill="#FF007F"/>
+                                <path d="M26.1812 24.7211C26.1812 25.6901 26.1828 26.6608 26.1812 27.6298C27.1502 27.6282 28.1224 27.6298 29.0898 27.6298C29.0898 26.6608 29.0866 25.6901 29.0898 24.7211C28.1208 24.7227 27.1486 24.7211 26.1812 24.7211Z" fill="#FF007F"/>
+                            </g>
+                        </svg>
                     </div>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ============================================ -->
-<!--                   Our Team                  -->
-<!-- ============================================ -->
-
-<section id="our-team">
-    <div class="container">
-        <div class="inner">
-            <div class="content">
-
-                <div class="content__text-wrapper">
-                    <h2 class="dark">Meet Our Team</h2>
-                </div>
-
-                <div class="content__team-wrapper">
-
-                    <div class="bio">
-                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Armando Payan, President of UCAN" width="96" height="96" decoding="async">
-                        <div class="bio__text-wrapper">
-                            <span>President</span>
-                            <h3>Armando Payan</h3>
-                            <p>Payan Realty</p>
-                        </div>
-                    </div>
-
-                    <div class="bio">
-                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Berta Trujillo, Vice President of UCAN" width="96" height="96" decoding="async">
-                        <div class="bio__text-wrapper">
-                            <span>Vice President</span>
-                            <h3>Berta Trujillo</h3>
-                            <p>Coach B Partners</p>
-                        </div>
-                    </div>
-
-                    <div class="bio">
-                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Brad Aerts, Treasurer of UCAN" width="96" height="96" decoding="async">
-                        <div class="bio__text-wrapper">
-                            <span>Treasurer</span>
-                            <h3>Brad Aerts</h3>
-                            <p>Rapid Services</p>
-                        </div>
-                    </div>
-
-                    <div class="bio">
-                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Shawn Ornelas, Secretary of UCAN" width="96" height="96" decoding="async">
-                        <div class="bio__text-wrapper">
-                            <span>Secretary</span>
-                            <h3>Shawn Ornelas</h3>
-                            <p>Rapid Services</p>
-                        </div>
-                    </div>
-
-                    <div class="bio">
-                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Danielle Gomez, Program Officer and Grant Writer of UCAN" width="96" height="96" decoding="async">
-                        <div class="bio__text-wrapper">
-                            <span>Program Officer/Grant Writer</span>
-                            <h3>Danielle Gomez</h3>
-                        </div>
-                    </div>
-
-                    <div class="bio">
-                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Inecia Tillman, Program Staff Administrator of UCAN" width="96" height="96" decoding="async">
-                        <div class="bio__text-wrapper">
-                            <span>Program Staff Administrator</span>
-                            <h3>Inecia Tillman</h3>
-                        </div>
-                    </div>
-
-                    <div class="bio">
-                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Ailiyanah Nikole, Program Staff Administrator of UCAN" width="96" height="96" decoding="async">
-                        <div class="bio__text-wrapper">
-                            <span>Programm Staff Administrator</span>
-                            <h3>Ailiyanah Nikole</h3>
-                        </div>
-                    </div>
-
-                    <div class="bio">
-                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Sienna Payan, Support Staff of UCAN" width="96" height="96" decoding="async">
-                        <div class="bio__text-wrapper">
-                            <span>Support Staff</span>
-                            <h3>Sienna Payan</h3>
-                        </div>
-                    </div>
-
-                    <div class="bio">
-                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Milenna Payan, Support Staff of UCAN" width="96" height="96" decoding="async">
-                        <div class="bio__text-wrapper">
-                            <span>Support Staff</span>
-                            <h3>Milenna Payan</h3>
-                        </div>
-                    </div>
-
-                    <div class="bio">
-                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Peyton Furr, Associate Director of Trades Work Ready Program and a Collaborator with UCAN" width="96" height="96" decoding="async">
-                        <div class="bio__text-wrapper">
-                            <span>Collaborator</span>
-                            <h3>Peyton Furr</h3>
-                            <p>Associate Director, Trades Work Ready Program</p>
-                        </div>
-                    </div>
-
-                    <div class="bio">
-                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Abril Arenales Fernandez, CEO of Environmental Innovation Academic Learning Lab and a Collaborator with UCAN" width="96" height="96" decoding="async">
-                        <div class="bio__text-wrapper">
-                            <span>Collaborator</span>
-                            <h3>Abril Arenales Fernandez</h3>
-                            <p>CEO, Environmental Innovation Academic Learning Lab</p>
-                        </div>
-                    </div>
-
-                    <div class="bio">
-                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Brad Buchanan, CEO of National Western Center Authority and a Collaborator with UCAN" width="96" height="96" decoding="async">
-                        <div class="bio__text-wrapper">
-                            <span>Collaborator</span>
-                            <h3>Brad Buchanan</h3>
-                            <p>CEO, National Western Center Authority</p>
-                        </div>
-                    </div>
-
-                    <div class="bio">
-                        <img src="/assets/svgs/ICON_Profile.svg" alt="Portrait of Wes Allison, CEO of National Western Stock Show and a Collaborator with UCAN" width="96" height="96" decoding="async">
-                        <div class="bio__text-wrapper">
-                            <span>Collaborator</span>
-                            <h3>Wes Allison</h3>
-                            <p>CEO, National Western Stock Show</p>
-                        </div>
-                    </div>
-
                 </div>
 
             </div>
         </div>
     </div>
-</section>
 
-<!-- ============================================ -->
-<!--                  Our Partners                -->
-<!-- ============================================ -->
+    {% image './src/assets/images/gradients/GRADIENT_Body.jpg', 'Grainy mesh gradient in pink and black', 'img-bg rev', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
 
-<section id="our-partners">
-    <div class="container">
-        <div class="inner">
-            <div class="content">
+    <div class="overlay lower"></div>
 
-                <div class="content__text-wrapper">
-                    <h2 class="light">Our Partners</h2>
-                    <p class="light">UCAN's work touches many different areas of community life—housing, clean energy, transportation, workforce development, environmental health—and so does our partner network. These relationships are how UCAN is able to connect residents to resources that go well beyond what any single organization could provide on its own.</p>
-                </div>
-
-                <!-- Keen Slider -->
-                <div id="partners__slider" class="keen-slider">
-
-                    <!-- Slide -->
-                    <div class="keen-slider__slide">
-                        <div class="partner-wrapper">
-                            <img loading="lazy" decoding="async" src="/assets/svgs/LOGO_PayanConstruction_Inverse.svg" alt="Payan Construction logo in white">
-                        </div>
-                    </div>
-
-                    <!-- Slide -->
-                    <div class="keen-slider__slide">
-                        <div class="partner-wrapper">
-                            <img loading="lazy" decoding="async" src="/assets/svgs/LOGO_NDH_Inverse.svg" alt="New Day Hydrogen logo in white">
-                        </div>
-                    </div>
-
-                    <!-- Slide -->
-                    <div class="keen-slider__slide">
-                        <div class="partner-wrapper">
-                            <img loading="lazy" decoding="async" src="/assets/svgs/LOGO_NWC_Inverse.svg" alt="National Western Center logo in white">
-                        </div>
-                    </div>
-
-                    <!-- Slide -->
-                    <div class="keen-slider__slide">
-                        <div class="partner-wrapper">
-                            <img loading="lazy" decoding="async" src="/assets/images/LOGO_RapidServices_Inverse.png" alt="Rapid Services LLC logo in white" width="100%" height="143px">
-                        </div>
-                    </div>
-
-                    <!-- Slide -->
-                    <div class="keen-slider__slide">
-                        <div class="partner-wrapper">
-                            <img loading="lazy" decoding="async" src="/assets/images/LOGO_Groundwork-Denver_Inverse.png" alt="Groundwork Denver logo in white">
-                        </div>
-                    </div>
-
-                    <!-- Slide -->
-                    <div class="keen-slider__slide">
-                        <div class="partner-wrapper">
-                            <img loading="lazy" decoding="async" src="/assets/images/LOGO_JSI_Inverse.jpg" alt="JSI logo in white">
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="button-wrapper">
-                    <a href="#" class="button primary dark" data-open-lightbox>Become a Partner</a>
-                </div>
-
-            </div>
-        </div>
-    </div>
 </section>
 
 <!-- ============================================ -->
 <!--                   Our Story                  -->
 <!-- ============================================ -->
 
-<section id="ucan-history">
+<section id="our-story" class="body split-columns">
+
+    <div class="overlay upper"></div>
+
     <div class="container">
         <div class="inner">
             <div class="content">
 
-                <div class="content__text-wrapper">
-                    <h2 class="dark">Our Story</h2>
-                    <p>A lot has changed in this community since 2007, and UCAN has been in the middle of most of it. The timeline below traces our work: The organizing, the events, the advocacy battles, and the programs that grew out of what residents said they actually needed.</p>
+                <div class="content__image-wrapper">
+                    <div class="image-wrapper">
+                        {% image './src/assets/images/PHOTO_About_002.jpg', 'Members of SideQuest events and other small businesses all gathered at Top Golf in Centennial, CO as part of a fun networking event', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+                        <svg class="icon tr" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2.66667 4H14.6667V6.66667H2.66667V4ZM0 25.3333H14.6667V28H0V25.3333ZM17.3333 4H29.3333V6.66667H17.3333V4ZM17.3333 25.3333H32V28H17.3333V25.3333ZM14.6667 6.66667H17.3333V30.6667H14.6667V6.66667ZM0 6.66667H2.66667V25.3333H0V6.66667ZM29.3333 6.66667H32V25.3333H29.3333V6.66667ZM20 9.33333H26.6667V12H20V9.33333ZM20 14.6667H26.6667V17.3333H20V14.6667ZM20 20H22.6667V22.6667H20V20Z" fill="#FF007F"/>
+                        </svg>
+                    </div>
                 </div>
 
-                <div class="content__timeline-wrapper">
-
-                    <div class="image-column__left">
-                        <!-- Big Blue Bear -->
-                        <img src="/assets/images/PHOTO_About-Timeline_000-compressed.jpg" alt="Photo of the Big Blue Bear art installation outside the Denver Convention Center" loading="lazy" decoding="async" style="position: absolute; top: 48px; left: 0;" width="100%;">
-                        <!-- Latin Fest #1 -->
-                        <img src="/assets/images/PHOTO_About-Timeline_003-compressed.jpg" alt="Latin heritage dancers at Latin Fest, co-hosted by UCAN and GlobeHall" loading="lazy" decoding="async" style="position: absolute; top: 41.35%; left: 0;" width="100%;">
-                        <!-- Latin Fest #2 -->
-                        <img src="/assets/images/PHOTO_About-Timeline_005-compressed.jpg" alt="Latin Fest dancers, co-hosted by UCAN and GlobeHall once again" loading="lazy" decoding="async" style="position: absolute; top: 76.1%; left: 0;" width="100%;">
+                <div class="content__text-wrapper">
+                    <div class="text-wrapper">
+                        <h2><span class="pill odd left">Our Story</span> Why We Started Throwing Community Events</h2>
+                        <p>The name SideQuest Events comes from gaming culture. The best moments in any story tend to happen when you step off the beaten path. South Metro Denver’s local makers, small businesses, and community connectors tend to exist a little off the main road. We build events that put them front and center.</p>
                     </div>
 
-                    <div class="timeline">
-
-                        <!-- Delimiter: Start -->
-                        <svg width="16" height="48" viewBox="0 0 16 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8 16V48" stroke="#0D53D0"/>
-                            <rect x="4" y="4" width="8" height="8" rx="2" fill="#0D53D0"/>
-                            <rect x="0.5" y="0.5" width="15" height="15" rx="3.5" stroke="#0D53D0"/>
-                        </svg>
-
-                        <div class="card">
-                            <h3>2007</h3>
-                            <p>UCAN is established, rooted in a corner of North Denver that had long needed organized commmunity representation.</p>
-                        </div>
-
-                        <span class="delimiter"></span>
-
-                        <div class="card">
-                            <h3>2012</h3>
-                            <p>Community members, with support from the University of Denver, formalize UCAN's bylaws.</p>
-                        </div>
-
-                        <span class="delimiter"></span>
-
-                        <div class="card">
-                            <h3>2014</h3>
-                            <p>The IRS awards UCAN its 501(c)(3) tax&#8209;exempt status.</p>
-                        </div>
-
-                        <span class="delimiter"></span>
-
-                        <div class="card">
-                            <h3>2014-2019</h3>
-                            <p>As the I-70 rebuild moved forward, UCAN spent years working with residents and partner organizations to ensure the community had a voice in a process with serious consequences for people living nearby. Sustained advocacy helped carve out space for neighborhood input that might otherwise not have existed.</p>
-                        </div>
-
-                        <span class="delimiter"></span>
-
-                        <div class="card">
-                            <h3>2018-2019</h3>
-                            <p>Three UCAN board members trained with Groundwork Denver and National Jewish Hospital to become certified Air Quality Community Experts. They produced bilingual educational materials on air quality, organized community events, and brought local research findings directly to residents throughout the neighborhood.</p>
-                        </div>
-
-                        <span class="delimiter"></span>
-
-                        <div class="card">
-                            <h3>January 2019</h3>
-                            <p>UCAN organized an open community forum at the Globeville Recreation Center, bringing candidates for state and city office to the neighborhood for a direct Q&A with residents.</p>
-                        </div>
-
-                        <span class="delimiter"></span>
-
-                        <div class="card">
-                            <h3>July 2019</h3>
-                            <p>In partnership with GlobeHall, UCAN co-hosted Latin Fest, a community celebration that drew representatives from more than ten local organizations.</p>
-                        </div>
-
-                        <span class="delimiter"></span>
-
-                        <div class="card">
-                            <h3>November 2019</h3>
-                            <p>UCAN received a PS U Are Here Public Art Grant from Denver Public Art, funding a project to transform a neglected public space with art made by local residents.</p>
-                        </div>
-
-                        <span class="delimiter"></span>
-
-                        <div class="card">
-                            <h3>2019-2020</h3>
-                            <p>Partnering with NETC and the Stapleton Foundation, UCAN helped develop a community shuttle program to maintain transportation access for residents during the disruptions caused by the I-70 construction and COVID&#8209;19.</p>
-                        </div>
-
-                        <span class="delimiter"></span>
-
-                        <div class="card">
-                            <h3>April 2021</h3>
-                            <p>UCAN led an Earth Day cleanup and community event at Garden Place Academy, supported by CDOT, KIEWIT, and the Sierra Club. Volunteers repainted the playground, added community artwork, and cleaned up the school garden.</p>
-                        </div>
-
-                        <span class="delimiter"></span>
-
-                        <div class="card">
-                            <h3>May 2021</h3>
-                            <p>With support from the Suncor Settlement and a partnership with PurpleAir, UCAN completed a deep clean of three neighborhood schools and the Valdez-Perry Library. Local residents were hired to carry out the work, and continuous air quality monitoring stations were installed at all four locations.</p>
-                        </div>
-
-                        <span class="delimiter"></span>
-
-                        <div class="card">
-                            <h3>June 2021</h3>
-                            <p>UCAN partnered with the Globeville Riverfront Art Center (GRACe) to support local artists and raise funds through a community event.</p>
-                        </div>
-
-                        <span class="delimiter"></span>
-
-                        <div class="card">
-                            <h3>March 2022</h3>
-                            <p>Latin Fest returned to GlobeHall with a focus on community feedback: presentations on developer proposals, resource tables from local organizations, and residents sharing updates on their own environmental initiatives.</p>
-                        </div>
-
-                        <span class="delimiter"></span>
-
-                        <div class="card">
-                            <h3>June & July 2022</h3>
-                            <p>UCAN hosted Environmental and Health Fiestas in partnership with CASR, combining community survey collection with education and resources for neighborhood residents.</p>
-                        </div>
-
-                        <span class="delimiter"></span>
-
-                        <div class="card">
-                            <h3>2023–<i>present</i></h3>
-                            <p>Coming soon!</p>
-                        </div>
-
+                    <div class="button-wrapper">
+                        {% set ctaLink = '/events/' %}
+                        {% set ctaCopy = 'View Upcoming Events' %}
+                        {% set umamiSection = 'Our Story' %}
+                        {% set umamiAction = 'View Events' %}
+                        {% include "components/cta-primary--button.html" %}
                     </div>
-
-                    <div class="image-column__right">
-                        <!-- Social Advocacy March -->
-                        <img src="/assets/images/PHOTO_About-Timeline_001-compressed.jpg" alt="UCAN table with branded table cloth set up outdoors in Denver during a block party" loading="lazy" decoding="async" style="position: absolute; top: 18.5%; left: 0;" width="100%;">
-                         <!-- Paint Buckets -->
-                        <img src="/assets/images/PHOTO_About-Timeline_004-compressed.jpg" alt="Photo of paint buckets used by UCAN to repaint the Garden Place Academy playground" loading="lazy" decoding="async" style="position: absolute; top: 61.4%; left: 0;" width="100%;">
-                    </div>
-
                 </div>
 
             </div>
         </div>
     </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Body.jpg', 'Grainy mesh gradient in pink and black', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+    <div class="overlay lower"></div>
+
+</section>
+
+<!-- ============================================ -->
+<!--                  Our Mission                 -->
+<!-- ============================================ -->
+
+<section id="our-mission" class="body split-columns">
+
+    <div class="overlay upper"></div>
+
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <div class="text-wrapper">
+                        <h2><span class="pill even left">Our Mission</span> Local Events That Put Small Businesses Front & Center</h2>
+                        <p>Every event we produce runs on the same goal: give people a reason to show up, and give local businesses a platform to grow from it. Networking, discovery, entertainment, and community support are the structure underneath every gathering we plan.</p>
+                    </div>
+
+                    <div class="button-wrapper">
+                        {% set ctaLink = '/vendors/' %}
+                        {% set ctaCopy = 'Browse Vendor Info & Applications' %}
+                        {% set umamiSection = 'Our Mission' %}
+                        {% set umamiAction = 'Vendor Info' %}
+                        {% include "components/cta-primary--button.html" %}
+                    </div>
+                </div>
+
+                <div class="content__image-wrapper">
+                    <div class="image-wrapper">
+                        {% image './src/assets/images/PHOTO_About_003.jpg', 'A variety of small business owners and employees networking in Denver Tech Center', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+                        <svg class="icon tl" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M25.6 32H6.4V28.8H25.6V32ZM6.4 28.8H3.2V25.6H6.4V28.8ZM28.8 28.8H25.6V25.6H28.8V28.8ZM3.2 25.6H0V6.4H3.2V25.6ZM22.4 25.6H9.6V22.4H22.4V25.6ZM32 25.6H28.8V19.2H32V25.6ZM9.6 22.4H6.4V9.6H9.6V22.4ZM25.6 22.4H22.4V19.2H25.6V22.4ZM22.4 3.2H16V9.6H22.4V12.8H16V19.2H12.8V0H22.4V3.2ZM32 16H22.4V12.8H28.8V6.4H22.4V3.2H32V16ZM6.4 6.4H3.2V3.2H6.4V6.4ZM9.6 3.2H6.4V0H9.6V3.2Z" fill="#FF007F"/>
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Body.jpg', 'Grainy mesh gradient in pink and black', 'img-bg rev', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+    <div class="overlay lower"></div>
+
+</section>
+
+<!-- ============================================ -->
+<!--                Private Events                -->
+<!-- ============================================ -->
+
+<section id="private-events" class="body split-columns">
+
+    <div class="overlay upper"></div>
+
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__image-wrapper">
+                    <div class="image-wrapper">
+                        {% image './src/assets/images/PHOTO_About_004.jpg', 'Elderly woman being congratulated for a milestone birthday by her young adult grand daughter', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+                        <svg class="icon tr" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.81818 32H2.90909V29.0909H5.81818V32ZM17.4545 32H14.5455V26.1818H17.4545V32ZM2.90909 29.0909H0V26.1818H2.90909V29.0909ZM8.72727 29.0909H5.81818V26.1818H8.72727V29.0909ZM5.81818 26.1818H2.90909V23.2727H5.81818V26.1818ZM14.5455 26.1818H11.6364V20.3636H14.5455V26.1818ZM20.3636 26.1818H17.4545V20.3636H20.3636V26.1818ZM11.6364 20.3636H5.81818V17.4545H11.6364V20.3636ZM26.1818 20.3636H20.3636V17.4545H26.1818V20.3636ZM5.81818 17.4545H0V14.5455H5.81818V17.4545ZM32 17.4545H26.1818V14.5455H32V17.4545ZM11.6364 14.5455H5.81818V11.6364H11.6364V14.5455ZM26.1818 14.5455H20.3636V11.6364H26.1818V14.5455ZM14.5455 11.6364H11.6364V5.81818H14.5455V11.6364ZM20.3636 11.6364H17.4545V5.81818H20.3636V11.6364ZM29.0909 2.90909H32V5.81818H29.0909V8.72727H26.1818V5.81818H23.2727V2.90909H26.1818V0H29.0909V2.90909ZM17.4545 5.81818H14.5455V0H17.4545V5.81818Z" fill="#FF007F"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="content__text-wrapper">
+                    <div class="text-wrapper">
+                        <h2><span class="pill odd left">Private Events</span> Parties, Reunions & Personal Celebrations</h2>
+                        <p>Beyond community events, we also plan and produce private gatherings, including birthday parties, family reunions, and celebrations of any size. If you have something in mind, we’d love to hear about it.</p>
+                    </div>
+
+                    <div class="button-wrapper">
+                        {% set ctaLink = '/contact/' %}
+                        {% set ctaCopy = 'Contact SideQuest Events' %}
+                        {% set umamiSection = 'Priv Events' %}
+                        {% set umamiAction = 'Contact' %}
+                        {% include "components/cta-primary--button.html" %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Body.jpg', 'Grainy mesh gradient in pink and black', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+    <div class="overlay lower"></div>
+
 </section>
 
 <!-- ============================================ -->
 <!--                   Prefooter                  -->
 <!-- ============================================ -->
 
+{% set pfPill = 'Your Next Adventure Awaits' %}
+{% set headingMW = '720px' %}
+{% set pfHeading = 'The Best XP Is Found Out Here' %}
+{% set bodyMW = '740px' %}
+{% set pfCopy = 'See what’s on the schedule next. We’d love to see you out there.' %}
+{% set umamiPriSection = 'Prefooter' %}
+{% set umamiPriAction = 'View Events' %}
+{% set ctaPriCopy = 'View Upcoming Events' %}
+{% set ctaLink1 = '/events/' %}
+{% set umamiSecSection = 'Prefooter' %}
+{% set umamiSecAction = 'Contact' %}
+{% set ctaSecCopy = 'Contact SideQuest Events' %}
+{% set ctaLink2 = '/contact/' %}
+{% include "sections/prefooter.html" %}
 
-<script src="https://cdn.jsdelivr.net/npm/keen-slider@latest/keen-slider.js"></script>
 
-<script>
-    const slider = document.querySelector('#partners__slider');
-
-    if (slider) {
-        var animation = { duration: 85000, easing: (t) => t }
-
-        const testimonialsSlider = new KeenSlider(
-            slider,
-            {
-                loop: true,
-                mode: "free",
-                breakpoints: {
-                    "(min-width: 0px)": {
-                        slides: {
-                            perView: 1,
-                            spacing: 16,
-                        }
-                    },
-                    "(min-width: 560px)": {
-                        slides: {
-                            perView: 1.5,
-                            spacing: 24,
-                        }
-                    },
-                    "(min-width: 767px)": {
-                        slides: {
-                            perView: 1.5,
-                            spacing: 32,
-                        }
-                    },
-                    "(min-width: 800px)": {
-                        slides: {
-                            perView: 2,
-                            spacing: 32,
-                        }
-                    },
-                    "(min-width: 992px)": {
-                        slides: {
-                            perView: 2.5,
-                            spacing: 32,
-                        }
-                    },
-                    "(min-width: 1080px)": {
-                        slides: {
-                            perView: 2.5,
-                            spacing: 32,
-                        }
-                    },
-                    "(min-width: 1080px)": {
-                        slides: {
-                            perView: 3,
-                            spacing: 32,
-                        }
-                    },
-                    "(min-width: 1681px)": {
-                        slides: {
-                            perView: 4,
-                            spacing: 32,
-                        }
-                    }
-                },
-                created(s) {
-                    s.moveToIdx(5, true, animation)
-                },
-                updated(s) {
-                    s.moveToIdx(s.track.details.abs + 5, true, animation)
-                },
-                animationEnded(s) {
-                    s.moveToIdx(s.track.details.abs + 5, true, animation)
-                },
-            },
-        );
-    }
-</script>
 
 {% endblock %}

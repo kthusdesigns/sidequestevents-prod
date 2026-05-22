@@ -6,64 +6,39 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 /*========================================
-==			   Our Programs       	    ==
+==			   Split Columns       	    ==
 =========================================*/
 
 @media screen and (min-width: 0px) {
-    section#our-programs {
+    section.split-columns {
         .container {
             .inner {
                 .content {
+                    display: grid !important;
+                    grid-template-columns: repeat(1, 1fr);
+                    align-items: center;
+                    column-gap: calc(var(--spacing--gutter-column) * 2);
+                    row-gap: var(--spacing--gutter-row);
 
-                    .content__cards-wrapper {
-                        .cards__inner {
-                            display: flex;
-                            flex-direction: column;
-                            gap: calc(var(--spacing--gutter) * 1.5);
+                    .content__image-wrapper {
+                        order: 1;
 
-                            .card {
-                                display: grid;
-                                grid-template-columns: repeat(1, 1fr);
-                                align-items: stretch;
-                                background-color: var(--color--blue-50);
-                                border-radius: var(--border-radius--8);
-                                overflow: hidden;
-
-                                .card__content-wrapper {
-                                    display: flex;
-                                    flex-direction: column;
-                                    padding: calc(var(--spacing--card-padding) / 0.6);
-
-                                    .text-wrapper {
-                                        display: flex;
-                                        flex-direction: column;
-                                        gap: calc(var(--spacing--gutter) * 0.5);
-                                        padding-top: calc(var(--spacing--gutter) * 0.75);
-                                        padding-bottom: var(--spacing--gutter);
-                                    }
-
-                                    svg {
-                                        display: inline-flex;
-                                        max-width: 48px;
-                                    }
-                                }
-
-                                .card__image-wrapper {
-                                    .image-wrapper {
-                                        height: 100%;
-                                        aspect-ratio: 690 / 391;
-                                    }
-                                }
-
-                                &:nth-child(even) {
-                                    .card__image-wrapper {
-                                        order: 1;
-                                    }
-                                }
+                        .image-wrapper {
+                            .icon {
+                                position: absolute;
+                                top: calc(var(--spacing--gutter-column) * 0.75);
+                                right: calc(var(--spacing--gutter-column) * 0.75);
+                                width: 2.5rem;
+                                height: 2.5rem;
+                                padding: 0.5rem;
+                                background-color: var(--color--pink-50);
                             }
                         }
                     }
 
+                    .content__text-wrapper {
+                        order: 0;
+                    }
                 }
             }
         }
@@ -71,55 +46,38 @@
 }
 
 @media screen and (min-width: 992px) {
-    section#our-programs {
+    section.split-columns {
         .container {
             .inner {
                 .content {
+                    grid-template-columns: repeat(2, 1fr);
 
-                    .content__cards-wrapper {
-                        .cards__inner {
-                            .card {
-                                grid-template-columns: repeat(2, 1fr);
+                    .content__image-wrapper {
+                        order: unset;
 
-                                .card__image-wrapper {
-                                    .image-wrapper {
-                                        aspect-ratio: unset;
-                                    }
+                        .image-wrapper {
+                            .icon {
+                                width: 4rem;
+                                height: 4rem;
+                                padding: 1rem;
+
+                                &.tl {
+                                    top: calc(var(--spacing--gutter-column) * 0.75);
+                                    left: calc(var(--spacing--gutter-column) * 0.75);
                                 }
 
-                                &:nth-child(even) {
-                                    .card__image-wrapper {
-                                        order: 0;
-                                    }
+                                &.tr {
+                                    top: calc(var(--spacing--gutter-column) * 0.75);
+                                    right: calc(var(--spacing--gutter-column) * 0.75);
                                 }
                             }
                         }
                     }
 
-                }
-            }
-        }
-    }
-}
-
-/*========================================
-==			    News (Blog)       	    ==
-=========================================*/
-
-@media screen and (min-width: 0px) {
-    section#news {
-        .container {
-            .inner {
-                .content {
-
-                    .content__news {
-                        h3.no-recent-posts {
-                            text-align: center;
-                        }
-
-
+                    .content__text-wrapper {
+                        order: unset;
+                        padding: var(--spacing--gutter-column) 0;
                     }
-
                 }
             }
         }

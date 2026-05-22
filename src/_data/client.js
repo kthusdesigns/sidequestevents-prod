@@ -1,23 +1,23 @@
 module.exports = {
-    name: "United Community Action Network",
-    email: "ucanhomeown@gmail.com",
+    name: "SideQuest Events",
+    email: "hello@sidequesteventsco.com",
     phoneForTel: "",
     phoneFormatted: "",
     address: {
-        lineOne: "4707 Pearl St",
+        lineOne: "9200 E Mineral Ave, Suite 100",
         lineTwo: "",
-        city: "Denver",
+        city: "Centennial",
         state: "CO",
-        zip: "80216",
+        zip: "80112",
         country: "USA",
         mapLink: "",
     },
     socials: {
-        facebook: "https://www.facebook.com/people/UCAN-Metro-Denver/61560144546869/#",
-        instragram: "https://www.instagram.com/ucanhomeown/",
+        facebook: "https://www.facebook.com/profile.php?id=61574314058847",
+        instagram: "https://www.instagram.com/sidequest_events_co/",
     },
     //! Make sure you include the file protocol (e.g. https://) and that NO TRAILING SLASH is included
-    domain: "https://ucanmetrodenver.org",
+    domain: "https://sidequesteventsco.com",
     // Passing the isProduction variable for use in HTML templates
     isProduction: process.env.ELEVENTY_ENV === "PROD",
 };

@@ -1,43 +1,60 @@
 {% extends "layouts/base.html" %}
 
 {% block head %}
-    <link rel="stylesheet" href="/assets/css/news-events.css">
+    <link rel="stylesheet" href="/assets/css/events.css">
 {% endblock %}
 
 {% block body %}
 
-<section id="single-article" class="hero">
+<section id="hero" class="hero article">
     <div class="container">
         <div class="inner">
             <div class="content">
                 <article class="article-post">
                     <div class="article-group">
                         <div class="article__content-wrapper">
-                            <div class="author-group">
-                                <div class="meta">
-                                    {% if 'event' not in tags %}
-                                        <span class="post-date">Published on: <strong>{{ date | postDate }}</strong></span>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <h1 class="article-title">{{ title }}</h1>
 
                             {% if 'event' in tags %}
                                 <div class="event-meta">
-                                    <div class="event-meta__item">
-                                        <span class="event-meta__label">Date</span>
-                                        <span class="event-meta__value">{{ date | eventDate }}{% if timeRange %}&nbsp;&nbsp;•&nbsp;&nbsp;{{ timeRange }}{% endif %}</span>
+                                    <div class="event-meta__head">
+                                        <span class="pill odd">{{ city }}, {{ state }} EVENT</span>
+                                        <h1 class="article-title">{{ title }}</h1>
                                     </div>
-                                    {% if location %}
+                                    <div class="event-meta__item">
+                                        <span class="event-meta__label">DATE/TIME</span>
+                                        <span class="event-meta__value">
+                                            {{ date | eventDate }}
+                                            <br>{{ startTime | eventTime }} – {{ endTime | eventTime }}</span>
+                                    </div>
+                                    {% if streetAddress %}
                                         <div class="event-meta__item">
-                                            <span class="event-meta__label">Venue</span>
+                                            <span class="event-meta__label">VENUE/ADDRESS</span>
                                             <span class="event-meta__value">{{ location }}</span>
+                                            <span class="event-meta__value">{{ streetAddress }}
+                                            <br>{{ city }}, {{ state }} {{ zip }}</span>
                                         </div>
                                     {% endif %}
-                                    {% if address %}
-                                        <div class="event-meta__item">
-                                            <span class="event-meta__label">Address</span>
-                                            <span class="event-meta__value">{{ address }}</span>
+                                    {% if eventExtUrl or googleFormEmbed %}
+                                        <div class="button-wrapper">
+                                            {% if eventExtUrl %}
+                                                <a href="{{ eventExtUrl }}" class="button primary" data-umami-event="{{ page.url | truncate(16) }}: Hero: Register" rel="noopener noreferrer" target="_blank">
+                                                    <span class="button-tl"></span>
+                                                    <span class="button-tr"></span>
+                                                    REGISTER ON EVENTBRITE
+                                                    <span class="button-bl"></span>
+                                                    <span class="button-br"></span>
+                                                </a>
+                                            {% endif %}
+
+                                            {% if googleFormEmbed %}
+                                                <a class="button secondary" href="#vendor-form" data-umami-event="{{ page.url | truncate(16) }}: Hero: Vendor Form">
+                                                    <span class="button-tl"></span>
+                                                    <span class="button-tr"></span>
+                                                    BECOME A VENDOR
+                                                    <span class="button-bl"></span>
+                                                    <span class="button-br"></span>
+                                                </a>
+                                            {% endif %}
                                         </div>
                                     {% endif %}
                                 </div>
@@ -45,35 +62,100 @@
 
                             <div class="image-wrapper">
                                 <!-- Featured Image -->
-                                {% image './src' + image, title, 'img-bg', 'lazy', '(max-width: 850px) 400px, (min-width: 601px) 1680px, 1920px', '' %}
-                            </div>
-                            <div class="article-content">
-                                {{ content | safe }}
-
-                                {% if eventbriteUrl %}
-                                    <div class="button-wrapper">
-                                        <a href="{{ eventbriteUrl }}" class="button primary dark" target="_blank" rel="noopener noreferrer">Get Tickets</a>
-                                    </div>
-                                {% endif %}
+                                {% image './src' + image, title, 'img-bg', 'lazy', '(max-width: 850px) 400px, (min-width: 601px) 1680px, 1920px', 'high' %}
                             </div>
 
-                            <div class="button-wrapper">
-                                {% if '/events/' in page.url %}
-                                    {% set ctaLink = '/events/' %}
-                                    {% set ctaCopy = 'Go Back to All Events' %}
-                                {% else %}
-                                    {% set ctaLink = '/news/' %}
-                                    {% set ctaCopy = 'Go Back to All Articles' %}
-                                {% endif %}
-                                {% set ctaColor = 'dark' %}
-                                {% include "components/cta-secondary--button.html" %}
-                            </div>
                         </div>
                     </div>
                 </article>
             </div>
         </div>
     </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Events-Post_000.jpg', 'Grainy mesh gradient in purple and black', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+    <div class="overlay lower"></div>
+
+</section>
+
+<section id="single-article">
+
+    <div class="overlay upper"></div>
+
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+                <article class="article-post">
+                    <div class="article-group">
+                        <div class="article__content-wrapper">
+
+                            <div class="article-content">
+                                {{ content | safe }}
+
+                                <div class="button-wrapper">
+                                    {% if eventExtUrl %}
+                                        <a href="{{ eventExtUrl }}" class="button primary" data-umami-event="{{ page.url | truncate(16) }}: Body: Register" rel="noopener noreferrer" target="_blank" >
+                                            <span class="button-tl"></span>
+                                            <span class="button-tr"></span>
+                                            Register on Eventbrite
+                                            <span class="button-bl"></span>
+                                            <span class="button-br"></span>
+                                        </a>
+                                    {% endif %}
+                                    <a class="button secondary" href="/events/" data-umami-event="{{ page.url | truncate(16) }}: Body: Go Back">
+                                        <span class="button-tl"></span>
+                                        <span class="button-tr"></span>
+                                        Go Back to All Events
+                                        <span class="button-bl"></span>
+                                        <span class="button-br"></span>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Body-Post.jpg', 'Grainy mesh gradient in pink and black', 'img-bg',
+    'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+    <div class="overlay lower"></div>
+
+</section>
+
+<section id="vendors">
+
+    <div class="overlay upper"></div>
+
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+                <article class="article-post">
+                    <div class="article-group">
+                        <div class="article__content-wrapper">
+
+                            {% if googleFormEmbed %}
+                                <div id="vendor-form">
+                                    <h2>Interested In Being a Vendor For This Event?</h2>
+                                    <p>Fill out the form below to apply to become a vendor. We review applications on a rolling basis and will reach out with a decision.</p>
+                                    
+                                    {{ googleFormEmbed | safe }}
+                                </div>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Body-Post.jpg', 'Grainy mesh gradient in pink and black', 'img-bg rev',
+    'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
 </section>
 
 {% endblock %}

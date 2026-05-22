@@ -206,6 +206,19 @@ module.exports = function (eleventyConfig) {
         return DateTime.fromJSDate(date, { zone: "utc" }).toFormat("cccc, MMMM d, yyyy");
     });
 
+    /*
+     * 🕐 Event Time Filter
+     * Formats a datetime string as a readable time in Mountain Time
+     * Usage: {{ startTime | eventTime }} → "6:00 PM"
+     */
+    eleventyConfig.addFilter("eventTime", function (value) {
+        if (!value) return "";
+        const { DateTime } = require("luxon");
+        return DateTime.fromJSDate(new Date(value), { zone: "America/Denver" })
+            .toFormat("h:mm a")
+            .toUpperCase();
+    });
+
     eleventyConfig.addFilter("upcomingOnly", function (collection) {
         const today = new Date();
         today.setHours(0, 0, 0, 0);

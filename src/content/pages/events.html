@@ -1,27 +1,19 @@
 ---
-title: "Community Events | UCAN Metro Denver"
-description: "Join UCAN for free, bilingual community events including homeownership workshops, resource fairs, and neighborhood gatherings throughout the Denver metro area."
+title: "Upcoming Events in Denver, CO | Festivals & Community Markets | SideQuest Events"
+description: "Browse upcoming community festivals, markets, and events in Denver, Littleton, Centennial, and Highlands
+Ranch, CO. Event details and Eventbrite ticketing links included."
 permalink: "/events/"
-preloadImg: '/assets/images/PHOTO_Events_000-400w.jpeg'
-image: "OPTIONAL - If an image path is specified here, it will be used for that page's OG image. Useful for blog posts (implemented as standard with this kit)"
+preloadImg: '/assets/images/GRADIENT_Events_000-400w.jpeg'
+image: "OPTIONAL - If an image path is specified here, it will be used for that page's OG image. Useful for blog posts
+(implemented as standard with this kit)"
 ---
 
 {% extends "layouts/base.html" %}
 
 {% block head %}
-    <link rel="stylesheet" href="/assets/css/events.css">
+<link rel="stylesheet" href="/assets/css/events.css">
 
-    {% include "components/local-schema.html" %}
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "CollectionPage",
-        "url": "{{ client.domain }}/events/",
-        "name": "Community Events | UCAN Metro Denver",
-        "description": "Upcoming free, bilingual community events hosted by the United Community Action Network of Metro Denver.",
-        "isPartOf": { "@id": "{{ client.domain }}/#organization" }
-    }
-    </script>
+{% include "components/local-schema.html" %}
 {% endblock %}
 
 {% block body %}
@@ -30,73 +22,174 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
 <!--                    Hero                      -->
 <!-- ============================================ -->
 
-<section id="hero" class="hero news">
+<section id="hero" class="hero">
     <div class="container">
         <div class="inner">
             <div class="content">
 
                 <div class="content__text-wrapper">
-                    <h1 class="light">Come Join Us</h1>
-                    <p class="light">UCAN gathers the community throughout the year for homeownership workshops, resource fairs, and events that are simply about being together. They are free, bilingual, and everyone is welcome.</p>
+                    <h1 class="text-align--center"><span class="pill odd center text-align--center">DENVER, CO</span>
+                        UPCOMING FESTIVALS & COMMUNITY EVENTS</h1>
+                    <p class="text-align--center">Every confirmed event is listed here with dates, locations, and
+                        Eventbrite ticketing links where applicable. New events are added throughout the year, so check
+                        back often.</p>
                 </div>
-
-                {% image './src/assets/images/PHOTO_Events_000.jpg', 'The UCAN team serving the community at Larimer Street Block Party', 'img-bg', 'eager', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', 'high' %}
             </div>
         </div>
+    </div>
 
-        <div class="overlay"></div>
-    </div>    
+    {% image './src/assets/images/gradients/GRADIENT_Events_000.jpg', 'Grainy mesh gradient in purple and black',
+    'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', 'high' %}
+
+    <div class="overlay lower"></div>
+
 </section>
 
 <!-- ============================================ -->
-<!--                 Events (Blog)                -->
+<!--                  Events Feed                 -->
 <!-- ============================================ -->
 
-<section id="news">
+<section id="events" class="body">
+
+    <div class="overlay upper"></div>
+
     <div class="container">
         <div class="inner">
             <div class="content">
 
-                <div class="content__text-wrapper">
-                    <h2 class="dark" style="margin: 0 auto;">Upcoming Events</h2>
-                    <p style="max-width: 800px; text-align: center;">Some events are built around practical information: a real estate professional walking you through the homebuying process, or a partner organization explaining services you may not know you qualify for. Others are community celebrations including live music, food, and the particular energy that comes when a neighborhood chooses to show up for itself.</p>
-                </div>
+                <div class="content__events-wrapper">
+                    {% set upcomingEvents = collections.event | upcomingOnly %}
 
-                {% set upcomingEvents = collections.event | upcomingOnly %}
-                <div class="content__news">
                     {% if upcomingEvents | length == 0 %}
-                        <h3 class="no-recent-posts">No Upcoming Events</h3>
+
+                        <div class="events-empty">
+                            <h3 class="text-align--center">No Upcoming Events</h3>
+                            <p class="text-align--center">Please check back soon for new events.</p>
+                        </div>
+
                     {% else %}
-                        {%- for event in upcomingEvents -%}
-                            <a class="recent-articles" href="{{ event.url }}">
-                                <!--Article Info-->
-                                <div class="article-group">
-                                    <div class="article-meta">
-                                        <!--Main Article Image-->
-                                        <div class="image-wrapper">
-                                            {% image './src' + event.data.image, event.data.title, 'cover-image img-bg', 'lazy', '(max-width: 850px) 400px, (min-width: 601px) 1680px, 1920px', '' %}
-                                        </div>
-                                        <!-- Event title -->
-                                        <h3 class="post-title">{{ event.data.title }}</h3>
-                                        <!-- Event excerpt -->
-                                        {% if event.data.excerpt %}<p class="post-excerpt">{{ event.data.excerpt }}</p>{% endif %}
+
+                        <div id="upcoming-events">
+
+                            {% for event in upcomingEvents %}
+                            <a class="event-card" href="{{ event.url }}" data-umami-event="{{ page.url | truncate(16) }}: Event: {{ event.data.title | truncate(24) }}">
+                                {% image './src' + event.data.image, event.data.title, 'img-bg', 'lazy', '(max-width:
+                                850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+                                <div class="event-card__content">
+                                    <div class="event-card__text">
+                                        <h3>{{ event.data.title }}</h3>
+                                        <p class="event-date">{{ event.data.date | eventDate }}</p>
+                                        <p class="event-time">{{ event.data.startTime | eventTime }} – {{ event.data.endTime | eventTime }}</p>
                                     </div>
-                                    <div class="button-wrapper">
-                                        <!-- Event Date -->
-                                        <p class="post-date">{{ event.data.date | postDate }}</p>
-                                        <span class="post-button" name="Read More">
-                                            Read More
-                                        </span>
+                                    <div class="event-card__footer">
+                                        <p class="event-location">{{ event.data.city }}, {{ event.data.state }}</p>
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M16.6667 12.4999V18.3333H15.8334V19.1666H1.66671V18.3333H0.833374V4.16659H1.66671V3.33325H9.16671V4.99992H2.50004V17.4999H15V12.4999H16.6667Z" />
+                                            <path
+                                                d="M19.1667 0.833252V7.49992H17.5V4.16659H16.6667V4.99992H15.8334V5.83325H15V6.66659H14.1667V7.49992H13.3334V8.33325H12.5V9.16659H11.6667V9.99992H10.8334V10.8333H10V11.6666H9.16671V12.4999H8.33337V13.3333H7.50004V14.1666H5.83337V12.4999H6.66671V11.6666H7.50004V10.8333H8.33337V9.99992H9.16671V9.16659H10V8.33325H10.8334V7.49992H11.6667V6.66659H12.5V5.83325H13.3334V4.99992H14.1667V4.16659H15V3.33325H15.8334V2.49992H12.5V0.833252H19.1667Z" />
+                                        </svg>
                                     </div>
                                 </div>
                             </a>
-                        {%- endfor -%}
+
+                            {% endfor %}
+
+                        </div>
+
                     {% endif %}
+
                 </div>
 
             </div>
         </div>
     </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Body.jpg', 'Grainy mesh gradient in pink and black', 'img-bg rev',
+    'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+    <div class="overlay lower"></div>
+
 </section>
+
+<!-- ============================================ -->
+<!--                Follow SQEvents               -->
+<!-- ============================================ -->
+
+<section id="follow-sqe" class="body split-columns">
+
+    <div class="overlay upper"></div>
+
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <div class="text-wrapper">
+                        <h2><span class="pill even left">Don’t Miss An Event</span> Follow SideQuest Events For New Accouncements</h2>
+                        <p>Event announcements, vendor openings, and event-day updates all hit social first. Give us a follow and you'll never wonder what's coming up next.</p>
+                    </div>
+
+                    <div class="button-wrapper">
+                        {% set umamiSection = 'Follow SQE' %}
+                        {% include "components/cta-secondary--social.html" %}
+                    </div>
+                </div>
+
+                <div class="content__image-wrapper">
+                    <div class="image-wrapper">
+                        {% image './src/assets/images/PHOTO_Events_001.jpg', 'Two young ladies receiving a notification on their phone that SideQuest Events has created a new event on social media', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+                        <svg class="icon tl" width="36" height="32" viewBox="0 0 36 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_17426_1002)">
+                                <path d="M14.4043 31.9999H20.8065C20.8082 30.935 20.8049 29.8653 20.8065 28.8004C18.6735 28.8053 16.5373 28.8053 14.4043 28.8004C14.4059 29.8653 14.4027 30.935 14.4043 31.9999Z" fill="#FF007F"/>
+                                <path d="M32.0083 -0.00012207H28.8071V3.19939C29.8736 3.20101 30.9418 3.19777 32.0083 3.19939C32.0066 2.13451 32.0099 1.06476 32.0083 -0.00012207Z" fill="#FF007F"/>
+                                <path d="M28.807 17.6004C28.8038 18.6653 28.8086 19.7351 28.807 20.8H6.40231C6.40069 19.7351 6.40555 18.6653 6.40231 17.6004C5.3358 17.6021 4.26768 17.5988 3.20117 17.6004V24.0011H32.0081V17.6004C30.9416 17.5988 29.8735 17.6021 28.807 17.6004Z" fill="#FF007F"/>
+                                <path d="M9.6021 6.40051C8.53559 6.40213 7.46747 6.40051 6.40096 6.40051C6.40744 10.1333 6.39286 13.8693 6.40096 17.6004C7.46747 17.5988 8.53559 17.6004 9.6021 17.6004C9.60858 13.8677 9.59237 10.1317 9.6021 6.40051Z" fill="#FF007F"/>
+                                <path d="M32.0083 3.19944C32.0099 4.26433 32.0067 5.33407 32.0083 6.39896H35.2094V3.19944C34.1429 3.19782 33.0748 3.20106 32.0083 3.19944Z" fill="#FF007F"/>
+                                <path d="M14.4043 25.5992H11.2031V28.7988C12.2696 28.8004 13.3378 28.7955 14.4043 28.7988C14.4026 27.7339 14.4059 26.6641 14.4043 25.5992Z" fill="#FF007F"/>
+                                <path d="M20.8052 28.8003C21.8717 28.7971 22.9398 28.802 24.0063 28.8003V25.6008H20.8052C20.8035 26.6657 20.8068 27.7355 20.8052 28.8003Z" fill="#FF007F"/>
+                                <path d="M25.6057 17.6004C26.6722 17.6004 27.7403 17.5972 28.8069 17.6004C28.815 13.8677 28.8004 10.1317 28.8069 6.40051C27.7403 6.40051 26.6722 6.40375 25.6057 6.40051C25.6138 10.1333 25.5992 13.8693 25.6057 17.6004Z" fill="#FF007F"/>
+                                <path d="M3.20113 3.19944C2.13463 3.20106 1.0665 3.19782 0 3.19944V6.39896H3.20113C3.20276 5.33407 3.19951 4.26433 3.20113 3.19944Z" fill="#FF007F"/>
+                                <path d="M6.40229 3.19939V-0.00012207H3.20115C3.19953 1.06476 3.20277 2.13451 3.20115 3.19939C4.26766 3.19777 5.33578 3.20101 6.40229 3.19939Z" fill="#FF007F"/>
+                                <path d="M25.6059 6.4006C25.6027 5.33571 25.6059 4.26597 25.6059 3.19946C24.5394 3.19946 23.4713 3.2027 22.4048 3.19946C22.4064 4.26597 22.4048 5.33409 22.4048 6.4006C23.4713 6.4006 24.5394 6.39736 25.6059 6.4006Z" fill="#FF007F"/>
+                                <path d="M12.8032 3.19946C11.7367 3.2027 10.6686 3.19946 9.60205 3.19946C9.60205 4.26435 9.60529 5.33409 9.60205 6.4006C10.6686 6.39898 11.7367 6.4006 12.8032 6.4006C12.8032 5.33409 12.7999 4.26597 12.8032 3.19946Z" fill="#FF007F"/>
+                                <path d="M22.4065 3.19939C22.4048 2.13451 22.4081 1.06476 22.4065 -0.00012207H12.8047C12.803 1.06476 12.8063 2.13451 12.8047 3.19939C16.0042 3.19129 19.2069 3.19129 22.4065 3.19939Z" fill="#FF007F"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Body.jpg', 'Grainy mesh gradient in pink and black', 'img-bg rev', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+    <div class="overlay lower"></div>
+
+</section>
+
+<!-- ============================================ -->
+<!--                   Prefooter                  -->
+<!-- ============================================ -->
+
+{% set pfPill = 'More Quests Incoming' %}
+{% set headingMW = '1020px' %}
+{% set pfHeading = 'Events Added Year-Round in the South Metro Denver Area' %}
+{% set bodyMW = '900px' %}
+{% set pfCopy = 'Browse the calendar for what’s confirmed or reach out and we’ll point you in the right direction.' %}
+{% set umamiPriSection = 'Prefooter' %}
+{% set umamiPriAction = 'View Events' %}
+{% set ctaLink1 = '/events/' %}
+{% set ctaPriCopy = 'View Upcoming Events' %}
+{% set umamiSecSection = 'Prefooter' %}
+{% set umamiSecAction = 'Contact' %}
+{% set ctaLink2 = '/contact/' %}
+{% set ctaSecCopy = 'Contact SideQuest Events' %}
+{% include "sections/prefooter.html" %}
+
+
 
 {% endblock %}

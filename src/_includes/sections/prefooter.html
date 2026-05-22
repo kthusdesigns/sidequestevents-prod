@@ -1,0 +1,44 @@
+<!-- ============================================ -->
+<!--                   Prefooter                  -->
+<!-- ============================================ -->
+
+<section id="prefooter">
+
+    <div class="overlay upper"></div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Prefooter.jpg', 'Grainy mesh gradient in purple and black', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <div class="text-wrapper">
+                        <h2 class="text-align--center" style="max-width: {{ headingMW }};"><span class="pill center odd">{{ pfPill }}</span> {{ pfHeading }}</h2>
+                        <p class="text-align--center" style="max-width: {{ bodyMW }};">{{ pfCopy }}</p>
+                    </div>
+
+                    <div class="button-wrapper">
+                        <!-- Primary CTA -->
+                        <a href="{{ ctaLink1 }}" class="button primary" data-umami-event="{{ page.url | truncate(16) }}: {{ umamiPriSection }}: {{ umamiPriAction }}">
+                            <span class="button-tl"></span>
+                            <span class="button-tr"></span>
+                            {{ ctaPriCopy }}
+                            <span class="button-bl"></span>
+                            <span class="button-br"></span>
+                        </a>
+                        <!-- Secondary CTA -->
+                        <a class="button secondary" href="{{ ctaLink2 }}" data-umami-event="{{ page.url | truncate(16) }}: {{ umamiSecSection }}: {{ umamiSecAction }}">
+                            <span class="button-tl"></span>
+                            <span class="button-tr"></span>
+                            {{ ctaSecCopy }}
+                            <span class="button-bl"></span>
+                            <span class="button-br"></span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

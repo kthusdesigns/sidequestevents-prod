@@ -19,7 +19,7 @@ commit_messages:
 logo_url: https://res.cloudinary.com/dxave0gy0/image/upload/v1777485308/UCAN_Logo_Admin_dhufpi.svg
 
 # Add site links in Decap CMS (optional)
-site_url: https://ucanmetrodenver.org
+site_url: https://sidequesteventsco.com
 
 # Keep this to allow you to edit the cms locally
 local_backend: true
@@ -30,63 +30,6 @@ public_folder: "/assets/images/blog"
 
 # Decap CMS Collections
 collections:
-    - name: "news"
-      label: "Post"
-      folder: "src/content/blog"
-      create: true
-      slug: "{{slug}}-{{year}}-{{month}}-{{day}}"
-      summary: "{{date | date('YYYY-MM-DD')}} | {{title}}"
-      view_filters:
-        - label: "Posts"
-          field: tags
-          pattern: post
-      fields:
-          - { # Featured Image
-                label: "Featured Image (required)",
-                name: "image",
-                widget: "image",
-                required: true,
-                media_folder: "/src/assets/images/blog",
-                public_folder: "/assets/images/blog",
-                default: "/assets/images/blog/blog-placeholder-image.png"
-            }
-          - { # Post Title
-                label: "Post Title",
-                name: "title",
-                widget: "string",
-                required: true,
-                hint: "Input the title of this news post."
-            }
-          - { # Post Excerpt
-                label: "Post Excerpt",
-                name: "excerpt",
-                widget: "text",
-                required: false,
-                hint: "Write a short summary (1-2 sentences) that will appear on the blog listing page."
-            }
-          - { # Date
-                label: "Post Date",
-                name: "date",
-                widget: "date",
-                required: true,
-                hint: "The selected date does not need to reflect actual date that you publish your post."
-            }
-          - { # Tags (hidden — auto-set to "post")
-                label: "Tags",
-                name: "tags",
-                widget: "hidden",
-                default: ["post"]
-            }
-          - { # Blog Post Content/Body
-                label: "Post Content",
-                name: "body",
-                widget: "markdown",
-                required: true,
-                default: "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                <p>Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.</p>",
-                hint: "Replace the placeholder text with your content."
-            }
-
     - name: "events"
       label: "Event"
       folder: "src/content/events"
@@ -119,7 +62,7 @@ collections:
                 name: "excerpt",
                 widget: "text",
                 required: true,
-                hint: "Write a short summary (1-2 sentences) that will appear on the events listing page."
+                hint: "Write a short summary (1-2 sentences) that will appear on the events listing page. You can copy and paste the first few sentences from the blog post's content so long as it completes a thought."
             }
           - { # Event Date
                 label: "Event Date (required)",
@@ -128,30 +71,113 @@ collections:
                 required: true,
                 hint: "The date the event takes place. Events are automatically hidden from the feed after this date."
             }
-          - { # Time Range
-                label: "Event Time (required)",
-                name: "timeRange",
-                widget: "string",
+          - { # Start Time
+                label: "Start Time (required)",
+                name: "startTime",
+                widget: "datetime",
+                date_format: false,
+                time_format: "h:mm A",
                 required: true,
-                hint: "e.g. 11 AM - 12 PM"
+                hint: "e.g. 10:00 AM"
+            }
+          - { # End Time
+                label: "End Time (required)",
+                name: "endTime",
+                widget: "datetime",
+                date_format: false,
+                time_format: "h:mm A",
+                required: true,
+                hint: "e.g. 2:00 PM"
             }
           - { # Location
-                label: "Location / Venue Name",
+                label: "Venue Name",
                 name: "location",
                 widget: "string",
                 required: false,
                 hint: "e.g. Denver Community Center"
             }
-          - { # Address
-                label: "Event Address (required)",
-                name: "address",
+          - { # Street Address
+                label: "Street Address (required)",
+                name: "streetAddress",
                 widget: "string",
                 required: true,
-                hint: "e.g. 123 Main St, Denver, CO 80203"
+                hint: "e.g. 4850 National Western Drive, Ste 100"
+            }
+          - { # City
+                label: "City (required)",
+                name: "city",
+                widget: "string",
+                required: true,
+                hint: "e.g. Highlands Ranch"
+            }
+          - # State
+            label: "State (required)"
+            name: "state"
+            widget: "select"
+            required: true
+            default: "CO"
+            options:
+              - { label: "Alabama", value: "AL" }
+              - { label: "Alaska", value: "AK" }
+              - { label: "Arizona", value: "AZ" }
+              - { label: "Arkansas", value: "AR" }
+              - { label: "California", value: "CA" }
+              - { label: "Colorado", value: "CO" }
+              - { label: "Connecticut", value: "CT" }
+              - { label: "Delaware", value: "DE" }
+              - { label: "District of Columbia", value: "DC" }
+              - { label: "Florida", value: "FL" }
+              - { label: "Georgia", value: "GA" }
+              - { label: "Hawaii", value: "HI" }
+              - { label: "Idaho", value: "ID" }
+              - { label: "Illinois", value: "IL" }
+              - { label: "Indiana", value: "IN" }
+              - { label: "Iowa", value: "IA" }
+              - { label: "Kansas", value: "KS" }
+              - { label: "Kentucky", value: "KY" }
+              - { label: "Louisiana", value: "LA" }
+              - { label: "Maine", value: "ME" }
+              - { label: "Maryland", value: "MD" }
+              - { label: "Massachusetts", value: "MA" }
+              - { label: "Michigan", value: "MI" }
+              - { label: "Minnesota", value: "MN" }
+              - { label: "Mississippi", value: "MS" }
+              - { label: "Missouri", value: "MO" }
+              - { label: "Montana", value: "MT" }
+              - { label: "Nebraska", value: "NE" }
+              - { label: "Nevada", value: "NV" }
+              - { label: "New Hampshire", value: "NH" }
+              - { label: "New Jersey", value: "NJ" }
+              - { label: "New Mexico", value: "NM" }
+              - { label: "New York", value: "NY" }
+              - { label: "North Carolina", value: "NC" }
+              - { label: "North Dakota", value: "ND" }
+              - { label: "Ohio", value: "OH" }
+              - { label: "Oklahoma", value: "OK" }
+              - { label: "Oregon", value: "OR" }
+              - { label: "Pennsylvania", value: "PA" }
+              - { label: "Rhode Island", value: "RI" }
+              - { label: "South Carolina", value: "SC" }
+              - { label: "South Dakota", value: "SD" }
+              - { label: "Tennessee", value: "TN" }
+              - { label: "Texas", value: "TX" }
+              - { label: "Utah", value: "UT" }
+              - { label: "Vermont", value: "VT" }
+              - { label: "Virginia", value: "VA" }
+              - { label: "Washington", value: "WA" }
+              - { label: "West Virginia", value: "WV" }
+              - { label: "Wisconsin", value: "WI" }
+              - { label: "Wyoming", value: "WY" }
+          - { # ZIP Code
+                label: "ZIP Code (required)",
+                name: "zip",
+                widget: "string",
+                required: true,
+                hint: "e.g. 80112"
             }
           - { # Eventbrite URL
                 label: "Eventbrite Registration Link",
-                name: "eventbriteUrl",
+                name: "eventExtUrl",
                 widget: "string",
                 required: false,
                 hint: "Paste the full Eventbrite event URL. A 'Register on Eventbrite' button will appear on the event page if this is filled in."
@@ -162,11 +188,33 @@ collections:
                 widget: "hidden",
                 default: ["event"]
             }
-          - { # Event Content/Body
-                label: "Event Content (required)",
-                name: "body",
-                widget: "markdown",
-                required: true,
-                default: "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
-                hint: "Replace the placeholder text with your content."
+          - # Event Content/Body
+            label: "Event Content (required)"
+            name: "body"
+            widget: "markdown"
+            required: true
+            buttons:
+              - bold
+              - italic
+              - link
+              - heading-one
+              - heading-two
+              - heading-three
+              - heading-four
+              - heading-five
+              - heading-six
+              - bulleted-list
+              - numbered-list
+            editor_components: ["image"]
+            default: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            hint: "Replace the placeholder text with your content."
+          - { # Google Form Embed
+                label: "Google Form Embed for Vendors",
+                name: "googleFormEmbed",
+                widget: "code",
+                required: false,
+                default_language: "html",
+                allow_language_selection: false,
+                output_code_only: true,
+                hint: "Paste the full iframe embed code from Google Forms (click Send > Embed HTML)."
             }

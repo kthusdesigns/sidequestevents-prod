@@ -64,51 +64,128 @@
         const EventPreview = createClass({
             render: function () {
                 const data = this.props.entry.get("data").toJS();
-                const { title, date: rawDate, timeRange, location, address, eventbriteUrl, image } = data;
+                const {
+                    title,
+                    date: rawDate,
+                    startTime: rawStart,
+                    endTime: rawEnd,
+                    location,
+                    streetAddress,
+                    city,
+                    state,
+                    zip,
+                    eventExtUrl,
+                    googleFormEmbed,
+                    image
+                } = data;
+
                 const date = typeof rawDate === "string" ? new Date(rawDate) : rawDate;
                 let formattedDate = "";
-                if (date) {
+                if (date && !isNaN(date)) {
                     const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
                     const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
                     formattedDate = `${dayNames[date.getUTCDay()]}, ${monthNames[date.getUTCMonth()]} ${date.getUTCDate()}, ${date.getUTCFullYear()}`;
                 }
 
+                function formatTime(raw) {
+                    if (!raw) return "";
+                    const d = new Date(raw);
+                    if (isNaN(d)) return raw;
+                    let hours = d.getHours();
+                    const mins = d.getMinutes();
+                    const ampm = hours >= 12 ? "PM" : "AM";
+                    hours = hours % 12 || 12;
+                    return `${hours}:${mins.toString().padStart(2, "0")} ${ampm}`;
+                }
+
+                const startFormatted = formatTime(rawStart);
+                const endFormatted = formatTime(rawEnd);
                 const cover = this.props.getAsset(image);
+                const cityState = [city, state].filter(Boolean).join(", ");
 
                 return (
-                    <div className="blog">
-                        <h1 className="title">{title}</h1>
+                    <div className="preview">
+                        <div className="preview__hero">
+                            {cityState && (
+                                <span className="pill">{cityState} EVENT</span>
+                            )}
+                            <h1 className="article-title">{title}</h1>
 
-                        <div className="event-meta">
-                            <div className="event-meta__item">
-                                <span className="event-meta__label">Date</span>
-                                <span className="event-meta__value">{formattedDate}{timeRange ? <span> &nbsp;&nbsp;•&nbsp;&nbsp; {timeRange}</span> : null}</span>
-                            </div>
-                            {location && (
+                            <div className="event-meta">
                                 <div className="event-meta__item">
-                                    <span className="event-meta__label">Venue</span>
-                                    <span className="event-meta__value">{location}</span>
+                                    <span className="event-meta__label">DATE/TIME</span>
+                                    <span className="event-meta__value">
+                                        {formattedDate}
+                                        {(startFormatted || endFormatted) && (
+                                            <span><br />{startFormatted}{endFormatted ? ` – ${endFormatted}` : ""}</span>
+                                        )}
+                                    </span>
+                                </div>
+                                {streetAddress && (
+                                    <div className="event-meta__item">
+                                        <span className="event-meta__label">VENUE/ADDRESS</span>
+                                        {location && <span className="event-meta__value">{location}</span>}
+                                        <span className="event-meta__value">
+                                            {streetAddress}<br />{[city, state].filter(Boolean).join(", ")} {zip}
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+
+                            {(eventExtUrl || googleFormEmbed) && (
+                                <div className="button-wrapper">
+                                    {eventExtUrl && (
+                                        <a className="button primary" href={eventExtUrl} target="_blank" rel="noopener noreferrer">
+                                            <span className="button-tl"></span>
+                                            <span className="button-tr"></span>
+                                            REGISTER ON EVENTBRITE
+                                            <span className="button-bl"></span>
+                                            <span className="button-br"></span>
+                                        </a>
+                                    )}
+                                    {googleFormEmbed && (
+                                        <a className="button secondary" href="#vendor-form">
+                                            <span className="button-tl"></span>
+                                            <span className="button-tr"></span>
+                                            BECOME A VENDOR
+                                            <span className="button-bl"></span>
+                                            <span className="button-br"></span>
+                                        </a>
+                                    )}
                                 </div>
                             )}
-                            {address && (
-                                <div className="event-meta__item">
-                                    <span className="event-meta__label">Address</span>
-                                    <span className="event-meta__value">{address}</span>
+
+                            {image && (
+                                <div className="image-wrapper">
+                                    <img src={cover ? cover.toString() : ""} className="cover" alt={title || ""} />
                                 </div>
                             )}
                         </div>
 
-                        {eventbriteUrl && (
-                            <div>
-                                <a className="eventbrite-btn" href={eventbriteUrl} target="_blank" rel="noopener noreferrer">Register on Eventbrite</a>
+                        <div className="preview__body">
+                            <div className="article-content markdown">
+                                {this.props.widgetFor("body")}
+                            </div>
+                            {eventExtUrl && (
+                                <div className="button-wrapper">
+                                    <a className="button primary" href={eventExtUrl} target="_blank" rel="noopener noreferrer">
+                                        <span className="button-tl"></span>
+                                        <span className="button-tr"></span>
+                                        Register on Eventbrite
+                                        <span className="button-bl"></span>
+                                        <span className="button-br"></span>
+                                    </a>
+                                </div>
+                            )}
+                        </div>
+
+                        {googleFormEmbed && (
+                            <div className="preview__vendors" id="vendor-form">
+                                <h2>Interested In Being a Vendor For This Event?</h2>
+                                <p>Fill out the form below to apply to become a vendor. We review applications on a rolling basis and will reach out with a decision.</p>
+                                <div ref={function(node) { if (node) node.innerHTML = googleFormEmbed || ""; }} />
                             </div>
                         )}
-
-                        <img src={cover?.toString()} className="cover" alt={title} />
-
-                        <div className="markdown">
-                            {this.props.widgetFor("body")}
-                        </div>
                     </div>
                 );
             }
@@ -119,81 +196,6 @@
         CMS.registerPreviewTemplate("events", EventPreview);
         CMS.registerPreviewStyle("/admin/decap-preview-styles.css");
 
-        // Video — Google Drive share URL → embeddable iframe
-        CMS.registerEditorComponent({
-            id: "video",
-            label: "Video (Google Drive)",
-            fields: [{
-                name: "url",
-                label: "Google Drive Share URL",
-                widget: "string",
-                hint: "Paste the Google Drive share link for the video (e.g. https://drive.google.com/file/d/.../view?usp=sharing)"
-            }],
-            pattern: /^<iframe src="https:\/\/drive\.google\.com\/file\/d\/([^/]+)\/preview" width="100%" height="480" allow="autoplay" allowfullscreen><\/iframe>$/,
-            fromBlock: function(match) {
-                return { url: "https://drive.google.com/file/d/" + match[1] + "/view?usp=sharing" };
-            },
-            toBlock: function(obj) {
-                var match = obj.url.match(/\/file\/d\/([^/]+)/);
-                var id = match ? match[1] : obj.url;
-                return '<iframe src="https://drive.google.com/file/d/' + id + '/preview" width="100%" height="480" allow="autoplay" allowfullscreen></iframe>';
-            },
-            toPreview: function(obj) {
-                var match = obj.url.match(/\/file\/d\/([^/]+)/);
-                var id = match ? match[1] : obj.url;
-                return '<iframe src="https://drive.google.com/file/d/' + id + '/preview" width="100%" height="480" allow="autoplay" allowfullscreen></iframe>';
-            }
-        });
-
-        // PDF (Upload) — file picker → embedded iframe
-        CMS.registerEditorComponent({
-            id: "pdf-upload",
-            label: "PDF (File Upload)",
-            fields: [{
-                name: "src",
-                label: "PDF File",
-                widget: "file",
-                media_folder: "/src/assets/pdfs",
-                public_folder: "/assets/pdfs",
-                hint: "Upload a PDF from your computer."
-            }],
-            pattern: /^<iframe src="([^"]+\.pdf)" width="100%" height="800px" title="Attached document"><\/iframe>$/,
-            fromBlock: function(match) {
-                return { src: match[1] };
-            },
-            toBlock: function(obj) {
-                return '<iframe src="' + obj.src + '" width="100%" height="800px" title="Attached document"></iframe>';
-            },
-            toPreview: function(obj) {
-                return '<iframe src="' + obj.src + '" width="100%" height="800px" title="Attached document"></iframe>';
-            }
-        });
-
-        // PDF (Google Drive) — share URL → embedded iframe
-        CMS.registerEditorComponent({
-            id: "pdf-google-drive",
-            label: "PDF (Google Drive)",
-            fields: [{
-                name: "url",
-                label: "Google Drive Share URL",
-                widget: "string",
-                hint: "Paste the Google Drive share link for the PDF (e.g. https://drive.google.com/file/d/.../view?usp=sharing)"
-            }],
-            pattern: /^<iframe src="https:\/\/drive\.google\.com\/file\/d\/([^/]+)\/preview\?rm=minimal" width="100%" height="800px" title="Attached document" allowfullscreen><\/iframe>$/,
-            fromBlock: function(match) {
-                return { url: "https://drive.google.com/file/d/" + match[1] + "/view?usp=sharing" };
-            },
-            toBlock: function(obj) {
-                var match = obj.url.match(/\/file\/d\/([^/]+)/);
-                var id = match ? match[1] : obj.url;
-                return '<iframe src="https://drive.google.com/file/d/' + id + '/preview?rm=minimal" width="100%" height="800px" title="Attached document" allowfullscreen></iframe>';
-            },
-            toPreview: function(obj) {
-                var match = obj.url.match(/\/file\/d\/([^/]+)/);
-                var id = match ? match[1] : obj.url;
-                return '<iframe src="https://drive.google.com/file/d/' + id + '/preview?rm=minimal" width="100%" height="800px" title="Attached document" allowfullscreen></iframe>';
-            }
-        });
     </script>
 </body>
 

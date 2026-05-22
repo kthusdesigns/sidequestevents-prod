@@ -1,0 +1,162 @@
+---
+title: "Contact SideQuest Events | Denver, CO Event Planning & Vendor Inquiries"
+description: "Contact SideQuest Events for vendor applications, private event planning, or general questions. Serving Denver and its surrounding neighborhoods, including Centennial, Littleton, and Highlands Ranch, CO."
+permalink: "/contact/"
+preloadImg: '/assets/images/GRADIENT_Contact_000-400w.jpeg'
+tags: "sitemap" # content/content.json will make sure that all pages in content/ are marked with a "sitemap" tag, for automatic sitemap generation. As index.html is not in content/, we need to add it here to ensure the root page is included in the sitemap generation
+---
+
+{% extends "layouts/base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/assets/css/contact.css">
+
+    {% include "components/local-schema.html" %}
+{% endblock %}
+
+{% block body %}
+
+<!-- ============================================ -->
+<!--                    Hero                      -->
+<!-- ============================================ -->
+
+<section id="hero" class="hero">
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <h1 class="text-align--center"><span class="pill odd center text-align--center">START YOUR NEXT SIDE QUEST</span> VENDOR & EVENT INQUIRIES</h1>
+                    <p class="text-align--center">Filling out the form below is the best way to reach us. Or send a direct email to <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#104;&#101;&#108;&#108;&#111;&#064;&#115;&#105;&#100;&#101;&#113;&#117;&#101;&#115;&#116;&#101;&#118;&#101;&#110;&#116;&#115;&#099;&#111;&#046;&#099;&#111;&#109;">&#104;&#101;&#108;&#108;&#111;&#064;&#115;&#105;&#100;&#101;&#113;&#117;&#101;&#115;&#116;&#101;&#118;&#101;&#110;&#116;&#115;&#099;&#111;&#046;&#099;&#111;&#109;</a> and we’ll get back to you as soon as possible.</p>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+    {% image './src/assets/images/gradients/GRADIENT_Contact_000.jpg', 'Grainy mesh gradient in purple and black', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', 'high' %}
+
+    <div class="overlay lower"></div>
+
+</section>
+
+<!-- ============================================ -->
+<!--                 Form Section                 -->
+<!-- ============================================ -->
+
+<section id="contact" class="body split-columns">
+
+    <div class="overlay upper"></div>
+
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <div class="text-wrapper">
+                        <div class="text-wrapper__inner">
+                            <h2><span class="pill even left">HOME BASE</span> WHERE YOU CAN FIND US (SOMETIMES)</h2>
+                            <p>SideQuest Events
+                                <br>9200 E Mineral Ave, Suite 100
+                                <br>Centennial, CO 80112
+                            </p>
+                        </div>
+
+                        <div class="text-wrapper__inner">
+                            <h2><span class="pill even left">FOLLOW THE JOURNEY</span> SIDEQUEST EVENTS ON SOCIAL MEDIA</h2>
+                            <p>Stay up-to-date on upcoming events, open vendor spots, and new announcements.</p>
+                        </div>
+                    </div>
+
+                    <div class="button-wrapper">
+                        {% set umamiSection = 'Follow SQE' %}
+                        {% include "components/cta-secondary--social.html" %}
+                    </div>
+                </div>
+
+                <div class="content__form-wrapper">
+                    <!-- Form -->
+                    <form id="contact" name="Contact Us" method="post" action="/thank-you/" netlify-honeypot="bot-field" data-netlify="true">
+
+                        <div class="hidden">
+                            <label>
+                                <p>Don't fill this out if you're human:</p>
+                                <input name="bot-field">
+                            </label>
+                        </div>
+
+                        <div class="form-field-group">
+                            <label>
+                                <p>First Name<sup>*</sup></p>
+                                <input required type="text" id="first-name" name="firstName" placeholder="Enter your first name">
+                            </label>
+                        </div>
+
+                        <div class="form-field-group">
+                            <label>
+                                <p>Last Name<sup>*</sup></p>
+                                <input required type="text" id="last-name" name="lastName" placeholder="Enter your last name">
+                            </label>
+                        </div>
+
+                        <div class="form-field-group">
+                            <label>
+                                <p>Email Address<sup>*</sup></p>
+                                <input required type="email" id="email" name="email" placeholder="Enter your email address">
+                            </label>
+                        </div>
+
+                        <div class="form-field-group">
+                            <label>
+                                <p>Phone Number<sup>*</sup></p>
+                                <input required type="tel" id="phone-number" name="phoneNumber" placeholder="Enter your phone number">
+                            </label>
+                        </div>
+
+                        <div class="form-field-group select">
+                            <label>
+                                <p>Topic<sup>*</sup></p>
+                                <select required id="topic" name="topic">
+                                    <option value="">Topic of your message</option>
+                                    <option value="General questions or comments">General questions or comments</option>
+                                    <option value="Compliments about my visit">Compliments about your visit</option>
+                                    <option value="Concerns about my visit">Concerns about your visit</option>
+                                    <option value="Catering">Catering</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="form-field-group textarea">
+                            <label>
+                                <p>Message<sup>*</sup></p>
+                                <textarea required id="message" name="message" placeholder="Is there any additional information you would like to provide?"></textarea>
+                            </label>
+                        </div>
+
+                        <div data-netlify-recaptcha="true"></div>
+
+                        <div class="form-field-group submit">
+                            <button class="button primary" type="submit">
+                                <span class="button-tl"></span>
+                                <span class="button-tr"></span>
+                                Send Message
+                                <span class="button-bl"></span>
+                                <span class="button-br"></span>
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Body.jpg', 'Grainy mesh gradient in pink and black', 'img-bg rev', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+    <div class="overlay lower"></div>
+
+</section>
+
+
+
+{% endblock %}

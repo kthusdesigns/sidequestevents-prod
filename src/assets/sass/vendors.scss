@@ -1,0 +1,173 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// PAGE STYLES
+// Interior pages have their own stylesheet for styles that only exist on
+// that page. Any styles shared between pages, including repeated sections,
+// should go into root.scss
+// ─────────────────────────────────────────────────────────────────────────────
+
+/*========================================
+==             Hero Sections            ==
+=========================================*/
+
+@media screen and (min-width: 0px) {
+    section#hero {
+        .container {
+            .inner {
+                .content {
+
+                    .content__text-wrapper {
+                        h1 {
+                            max-width: 1080px;
+                        }
+                        p {
+                            max-width: 910px;
+                            margin: 0 auto;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+/*========================================
+==              How It Works            ==
+=========================================*/
+
+@media screen and (min-width: 0px) {
+    section#how-it-works {
+        .container {
+            .inner {
+                .content {
+
+                    .content__text-wrapper {
+                        h2 {
+                            max-width: 600px;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 0px) {
+    section#vip-membership {
+        .container {
+            .inner {
+                .content {
+                    padding-bottom: calc(var(--spacing--gutter-column) * 2);
+                }
+
+                .cards {
+                    display: grid;
+                    grid-template-columns: repeat(1, 1fr);
+                    gap: var(--spacing--gutter-row);
+                    padding: 0 var(--spacing--section-inner-h) var(--spacing--section-v);
+                    z-index: 2;
+
+                    .card {
+                        display: flex;
+                        flex-direction: column;
+                        gap: calc(var(--spacing--gutter-column) * 0.5);
+                        padding: var(--spacing--gutter-column);
+                        background-color: var(--color--space-400-24a);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 992px) {
+    section#vip-membership {
+        .container {
+            .inner {
+                .cards {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+            }
+        }
+    }
+}
+
+/*========================================
+==			   Split Columns       	    ==
+=========================================*/
+
+@media screen and (min-width: 0px) {
+    section.split-columns {
+        .container {
+            .inner {
+                .content {
+                    display: grid !important;
+                    grid-template-columns: repeat(1, 1fr);
+                    align-items: center;
+                    column-gap: calc(var(--spacing--gutter-column) * 2);
+                    row-gap: var(--spacing--gutter-row);
+
+                    .content__image-wrapper {
+                        order: 1;
+
+                        .image-wrapper {
+                            .icon {
+                                position: absolute;
+                                top: calc(var(--spacing--gutter-column) * 0.75);
+                                right: calc(var(--spacing--gutter-column) * 0.75);
+                                width: 2.5rem;
+                                height: 2.5rem;
+                                padding: 0.5rem;
+                                background-color: var(--color--pink-50);
+                            }
+                        }
+                    }
+
+                    .content__text-wrapper {
+                        order: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 992px) {
+    section.split-columns {
+        .container {
+            .inner {
+                .content {
+                    grid-template-columns: repeat(2, 1fr);
+
+                    .content__image-wrapper {
+                        order: unset;
+
+                        .image-wrapper {
+                            .icon {
+                                width: 4rem;
+                                height: 4rem;
+                                padding: 1rem;
+
+                                &.tl {
+                                    top: calc(var(--spacing--gutter-column) * 0.75);
+                                    left: calc(var(--spacing--gutter-column) * 0.75);
+                                }
+
+                                &.tr {
+                                    top: calc(var(--spacing--gutter-column) * 0.75);
+                                    right: calc(var(--spacing--gutter-column) * 0.75);
+                                }
+                            }
+                        }
+                    }
+
+                    .content__text-wrapper {
+                        order: unset;
+                        padding: var(--spacing--gutter-column) 0;
+                    }
+                }
+            }
+        }
+    }
+}

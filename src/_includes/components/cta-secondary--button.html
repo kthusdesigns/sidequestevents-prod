@@ -1,3 +1,7 @@
-<a class="button secondary {{ ctaColor }}" href="{{ ctaLink }}">
+<a class="button secondary" href="{{ ctaLink }}" data-umami-event="{{ page.url | truncate(16) }}: {{ umamiSection }}: {{ umamiAction }}">
+	<span class="button-tl"></span>
+	<span class="button-tr"></span>
 	{{ ctaCopy }}
+	<span class="button-bl"></span>
+	<span class="button-br"></span>
 </a>

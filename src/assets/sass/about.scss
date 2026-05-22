@@ -16,8 +16,11 @@
                 .content {
 
                     .content__text-wrapper {
+                        h1 {
+                            max-width: 800px;
+                        }
                         p {
-                            max-width: 910px;
+                            max-width: 840px;
                         }
                     }
 
@@ -28,93 +31,38 @@
 }
 
 /*========================================
-==			    Our Mission    		    ==
+==			   Split Columns       	    ==
 =========================================*/
 
 @media screen and (min-width: 0px) {
-    section#our-mission {
-        background-color: var(--color--blue-50);
-
-        .content {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            gap: calc(var(--spacing--gutter) * 2);
-
-            .content__text-wrapper {
-                align-items: unset;
-                gap: calc(var(--spacing--gutter) * 2);
-
-                .text-wrapper {
-                    display: flex;
-                    flex-direction: column;
-                    gap: var(--spacing--gutter);
-                }
-            }
-
-            .content__image-wrapper {
-                display: grid;
-
-                .image-wrapper {
-                    border-radius: var(--border-radius--8);
-                    aspect-ratio: 1 / 1;
-                }
-            }
-        }
-    }
-}
-
-@media screen and (min-width: 992px) {
-    section#our-mission {
-        .content {
-            grid-template-columns: repeat(2, 1fr);
-
-            .content__image-wrapper {
-                .image-wrapper {
-                    aspect-ratio: unset;
-                }
-            }
-        }
-    }
-}
-
-/*========================================
-==			     Our Team    		    ==
-=========================================*/
-
-@media screen and (min-width: 0px) {
-    section#our-team {
+    section.split-columns {
         .container {
-            .content {
-                .content__team-wrapper {
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: center;
-                    column-gap: var(--spacing--gutter);
-                    row-gap: calc(var(--spacing--gutter) * 2);
+            .inner {
+                .content {
+                    display: grid !important;
+                    grid-template-columns: repeat(1, 1fr);
+                    align-items: center;
+                    column-gap: calc(var(--spacing--gutter-column) * 2);
+                    row-gap: var(--spacing--gutter-row);
 
-                    .bio {
-                        flex: 100%;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        gap: var(--spacing--gutter);
+                    .content__image-wrapper {
+                        order: 1;
 
-                        .bio__text-wrapper {
-                            display: flex;
-                            flex-direction: column;
-                            text-align: center;
-
-                            span {
-                                padding-bottom: calc(var(--spacing--gutter) * 0.5);
-                                font-weight: var(--font-weight--semibold);
-                                text-transform: uppercase;
-                            }
-
-                            h3 {
-                                color: var(--color--blue-500);
-                                font-size: var(--font-size--h5);
+                        .image-wrapper {
+                            .icon {
+                                position: absolute;
+                                top: calc(var(--spacing--gutter-column) * 0.75);
+                                right: calc(var(--spacing--gutter-column) * 0.75);
+                                width: 2.5rem;
+                                height: 2.5rem;
+                                padding: 0.5rem;
+                                background-color: var(--color--pink-50);
                             }
                         }
+                    }
+
+                    .content__text-wrapper {
+                        order: 0;
                     }
                 }
             }
@@ -123,142 +71,38 @@
 }
 
 @media screen and (min-width: 992px) {
-    section#our-team {
-        .container {
-            .content {
-                .content__team-wrapper {
-                    .bio {
-                        flex: 0 0 calc(33.33% - calc(var(--spacing--gutter) * 0.7));
-                    }
-                }
-            }
-        }
-    }
-}
-
-/*========================================
-==			    Our Partners   		    ==
-=========================================*/
-
-@media screen and (min-width: 0px) {
-    section#our-partners {
-        background-color: var(--color--blue-500);
-
+    section.split-columns {
         .container {
             .inner {
                 .content {
+                    grid-template-columns: repeat(2, 1fr);
 
-                    .content__text-wrapper {
-                        align-items: center;
-                        text-align: center;
+                    .content__image-wrapper {
+                        order: unset;
 
-                        p {
-                            max-width: 780px;
-                        }
-                    }
+                        .image-wrapper {
+                            .icon {
+                                width: 4rem;
+                                height: 4rem;
+                                padding: 1rem;
 
-                    #partners__slider {
-                        overflow: visible;
+                                &.tl {
+                                    top: calc(var(--spacing--gutter-column) * 0.75);
+                                    left: calc(var(--spacing--gutter-column) * 0.75);
+                                }
 
-                        .keen-slider__slide {
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                        }
-                    }
-
-                    .button-wrapper {
-                        align-self: center;
-                    }
-                }
-            }
-        }
-    }
-}
-
-/*========================================
-==			     Our Story   		    ==
-=========================================*/
-
-@media screen and (min-width: 0px) {
-    section#ucan-history {
-        background-color: var(--color--blue-50);
-
-        .container {
-            .inner {
-                .content {
-
-                    .content__text-wrapper {
-                        align-items: center;
-                        text-align: center;
-
-                        p {
-                            max-width: 778px;
-                        }
-                    }
-
-                    .content__timeline-wrapper {
-                        display: grid;
-                        grid-template-columns: repeat(1, 1fr);
-                        gap: var(--spacing--gutter);
-
-                        .timeline {
-                            display: flex;
-                            flex-direction: column;
-                            align-items: center;
-
-                            .card {
-                                display: flex;
-                                flex-direction: column;
-                                gap: calc(var(--spacing--gutter) * 0.5);
-                                width: 100%;
-                                padding: var(--spacing--gutter);
-                                background-color: var(--color--white);
-                                border-radius: var(--border-radius--8);
-
-                                h3 {
-                                    color: var(--color--blue-500);
-                                    font-size: var(--font-size--h4);
+                                &.tr {
+                                    top: calc(var(--spacing--gutter-column) * 0.75);
+                                    right: calc(var(--spacing--gutter-column) * 0.75);
                                 }
                             }
-
-                            span.delimiter {
-                                width: 1px;
-                                height: clamp(2rem, 3.5vw, 4rem);
-                                background-color: var(--color--blue-500);
-                            }
-                        }
-
-                        .image-column__left,
-                        .image-column__right {
-                            display: none;
                         }
                     }
 
-                }
-            }
-        }
-    }
-}
-
-@media screen and (min-width: 992px) {
-    section#ucan-history {
-        .container {
-            .inner {
-                .content {
-                    .content__timeline-wrapper {
-                        grid-template-columns: 3fr 6fr 3fr;
-
-                        .image-column__left,
-                        .image-column__right {
-                            display: block;
-
-                            img {
-                                border-radius: var(--border-radius--8);
-                            }
-                        }
+                    .content__text-wrapper {
+                        order: unset;
+                        padding: var(--spacing--gutter-column) 0;
                     }
-
                 }
             }
         }
