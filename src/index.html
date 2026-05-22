@@ -15,6 +15,12 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
         <link rel="stylesheet" href="/assets/css/local.css">
     </noscript>
 
+    <!-- Preload LCP hero background image (WebP, responsive) -->
+    <link rel="preload" as="image"
+        href="/assets/images/GRADIENT_Home_000-1920w.webp"
+        imagesrcset="/assets/images/GRADIENT_Home_000-400w.webp 400w, /assets/images/GRADIENT_Home_000-480w.webp 480w, /assets/images/GRADIENT_Home_000-720w.webp 720w, /assets/images/GRADIENT_Home_000-850w.webp 850w, /assets/images/GRADIENT_Home_000-1080w.webp 1080w, /assets/images/GRADIENT_Home_000-1280w.webp 1280w, /assets/images/GRADIENT_Home_000-1440w.webp 1440w, /assets/images/GRADIENT_Home_000-1680w.webp 1680w, /assets/images/GRADIENT_Home_000-1920w.webp 1920w"
+        imagesizes="(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px">
+
     {% include "components/local-schema.html" %}
 {% endblock %}
 
@@ -349,35 +355,53 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
 
 
 {% if upcomingEvents | length > 2 %}
-<!-- Keen Slider: Recent Events -->
-<script src="https://cdn.jsdelivr.net/npm/keen-slider@latest/keen-slider.js"></script>
-
 <script>
-    const eventsSliderEl = document.querySelector('#upcoming-events__slider');
-    if (eventsSliderEl) {
-        let eventsSlider;
+(function () {
+    var sliderEl = document.querySelector('#upcoming-events__slider');
+    if (!sliderEl) return;
 
-        window.addEventListener('load', () => {
-            eventsSlider = new KeenSlider(eventsSliderEl, {
-                breakpoints: {
-                    '(min-width: 0px)': {
-                        slides: { perView: 1, spacing: 16 }
-                    },
-                    '(min-width: 992px)': {
-                        slides: { perView: 2, spacing: 32 }
-                    }
-                },
-                created(slider) {
-                    requestAnimationFrame(() => slider.update());
-                }
-            });
+    var loaded = false;
 
-            new ResizeObserver(() => eventsSlider.update()).observe(eventsSliderEl);
-
-            document.querySelector('.slider-nav__arrow--prev').addEventListener('click', () => eventsSlider.prev());
-            document.querySelector('.slider-nav__arrow--next').addEventListener('click', () => eventsSlider.next());
-        });
+    function initSlider() {
+        new KeenSlider(sliderEl, {
+            breakpoints: {
+                '(min-width: 0px)': { slides: { perView: 1, spacing: 16 } },
+                '(min-width: 992px)': { slides: { perView: 2, spacing: 32 } }
+            },
+            created: function (s) { requestAnimationFrame(function () { s.update(); }); }
+        }, [function (slider) {
+            new ResizeObserver(function () { slider.update(); }).observe(sliderEl);
+            document.querySelector('.slider-nav__arrow--prev').addEventListener('click', function () { slider.prev(); });
+            document.querySelector('.slider-nav__arrow--next').addEventListener('click', function () { slider.next(); });
+        }]);
     }
+
+    function loadKeenSlider() {
+        if (loaded) return;
+        loaded = true;
+
+        var css = document.createElement('link');
+        css.rel = 'stylesheet';
+        css.href = 'https://cdn.jsdelivr.net/npm/keen-slider@latest/keen-slider.min.css';
+        document.head.appendChild(css);
+
+        var js = document.createElement('script');
+        js.src = 'https://cdn.jsdelivr.net/npm/keen-slider@latest/keen-slider.js';
+        js.onload = initSlider;
+        document.head.appendChild(js);
+    }
+
+    if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries, obs) {
+            if (entries[0].isIntersecting) {
+                loadKeenSlider();
+                obs.disconnect();
+            }
+        }, { rootMargin: '300px' }).observe(sliderEl);
+    } else {
+        loadKeenSlider();
+    }
+}());
 </script>
 {% endif %}
 
