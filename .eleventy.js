@@ -183,12 +183,13 @@ module.exports = function (eleventyConfig) {
      * Usage: {{ date | slugDate }} → "july-26-2025"
      */
     eleventyConfig.addFilter("slugDate", function (date) {
+        const { DateTime } = require("luxon");
         const monthNames = [
             "january", "february", "march", "april", "may", "june",
             "july", "august", "september", "october", "november", "december"
         ];
-        const d = new Date(date);
-        return `${monthNames[d.getMonth()]}-${d.getDate()}-${d.getFullYear()}`;
+        const dt = DateTime.fromJSDate(new Date(date), { zone: "America/Denver" });
+        return `${monthNames[dt.month - 1]}-${dt.day}-${dt.year}`;
     });
 
     /*
@@ -203,7 +204,7 @@ module.exports = function (eleventyConfig) {
      */
     eleventyConfig.addFilter("eventDate", function (date) {
         const { DateTime } = require("luxon");
-        return DateTime.fromJSDate(date, { zone: "utc" }).toFormat("cccc, MMMM d, yyyy");
+        return DateTime.fromJSDate(date, { zone: "America/Denver" }).toFormat("cccc, MMMM d, yyyy");
     });
 
     /*
