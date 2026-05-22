@@ -39,13 +39,13 @@
     <meta name="theme-color" content="#0B0E1A">
 
     <!-- Preloads -->
-    <link rel="preload" as="image" href="/assets/images/LOGO_Primary_FullColor.png">
     <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/VCROSDMono.woff2" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/SpaceGrotesk-Regular.woff2" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/SpaceGrotesk-Bold.woff2" crossorigin>
 
     <!-- Sitewide Stylesheets and Scripts -->
-    <link rel="stylesheet" href="/assets/css/root.css">
+    <link rel="preload" href="/assets/css/root.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/assets/css/root.css"></noscript>
     <script defer src="/assets/js/nav.js"></script>
 
     {% if preloadImg %}
