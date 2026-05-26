@@ -114,6 +114,53 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
 </section>
 
 <!-- ============================================ -->
+<!--               Vendor Callout                 -->
+<!-- ============================================ -->
+
+<section id="vendor-callout" class="body split-columns">
+
+    <div class="overlay upper"></div>
+
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <div class="text-wrapper">
+                        <h2><span class="pill even left">For Small Businesses</span> Want a Vendor Spot at One of These Events?</h2>
+                        <p>Vendor spots are open on a per-event basis. Click into any event listing above to find the vendor application for that event. Spots fill quickly and categories close once claimed.</p>
+                    </div>
+
+                    <div class="button-wrapper">
+                        {% set ctaLink = '#events' %}
+                        {% set ctaCopy = 'View Upcoming Events' %}
+                        {% set umamiSection = 'Small Biz' %}
+                        {% set umamiAction = 'View Events' %}
+                        {% include "components/cta-primary--button.html" %}
+                    </div>
+                </div>
+
+                <div class="content__image-wrapper">
+                    <div class="image-wrapper">
+                        {% image './src/assets/images/marquee/PHOTO_Marquee_001.jpg', 'Multiple event vendors at a SideQuest Events-hosted event in Centennial, CO', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+                        <svg class="icon tl" width="32" height="29" viewBox="0 0 32 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19.2 12.8H9.6V28.8H6.4V22.4H3.2V28.8H0V9.6H19.2V12.8ZM28.8 22.4H12.8V19.2H28.8V22.4ZM32 19.2H28.8V6.4H32V19.2ZM8 6.4H1.6V0H8V6.4ZM28.8 6.4H11.2V3.2H28.8V6.4Z" fill="#FF007F"/>
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Body.jpg', 'Grainy mesh gradient in pink and black', 'img-bg rev', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+    <div class="overlay lower"></div>
+
+</section>
+
+<!-- ============================================ -->
 <!--                Follow SQEvents               -->
 <!-- ============================================ -->
 
@@ -125,23 +172,11 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
         <div class="inner">
             <div class="content">
 
-                <div class="content__text-wrapper">
-                    <div class="text-wrapper">
-                        <h2><span class="pill even left">Don’t Miss An Event</span> Follow SideQuest Events For New Announcements</h2>
-                        <p>Event announcements, vendor openings, and event-day updates all hit social first. Give us a follow and you'll never wonder what's coming up next.</p>
-                    </div>
-
-                    <div class="button-wrapper">
-                        {% set umamiSection = 'Follow SQE' %}
-                        {% include "components/cta-secondary--social.html" %}
-                    </div>
-                </div>
-
                 <div class="content__image-wrapper">
                     <div class="image-wrapper">
                         {% image './src/assets/images/PHOTO_Events_001.jpg', 'Two young ladies receiving a notification on their phone that SideQuest Events has created a new event on social media', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
 
-                        <svg class="icon tl" width="36" height="32" viewBox="0 0 36 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="icon tr" width="36" height="32" viewBox="0 0 36 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_17426_1002)">
                                 <path d="M14.4043 31.9999H20.8065C20.8082 30.935 20.8049 29.8653 20.8065 28.8004C18.6735 28.8053 16.5373 28.8053 14.4043 28.8004C14.4059 29.8653 14.4027 30.935 14.4043 31.9999Z" fill="#FF007F"/>
                                 <path d="M32.0083 -0.00012207H28.8071V3.19939C29.8736 3.20101 30.9418 3.19777 32.0083 3.19939C32.0066 2.13451 32.0099 1.06476 32.0083 -0.00012207Z" fill="#FF007F"/>
@@ -161,11 +196,23 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
                     </div>
                 </div>
 
+                <div class="content__text-wrapper">
+                    <div class="text-wrapper">
+                        <h2><span class="pill odd left">Don’t Miss An Event</span> Follow SideQuest Events For New Announcements</h2>
+                        <p>Event announcements, vendor openings, and event-day updates all hit social first. Give us a follow and you'll never wonder what's coming up next.</p>
+                    </div>
+
+                    <div class="button-wrapper">
+                        {% set umamiSection = 'Follow SQE' %}
+                        {% include "components/cta-secondary--social.html" %}
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 
-    {% image './src/assets/images/gradients/GRADIENT_Body.jpg', 'Grainy mesh gradient in pink and black', 'img-bg rev', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+    {% image './src/assets/images/gradients/GRADIENT_Body.jpg', 'Grainy mesh gradient in pink and black', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
 
     <div class="overlay lower"></div>
 
@@ -182,7 +229,7 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
 {% set pfCopy = 'Browse the calendar for what’s confirmed or reach out and we’ll point you in the right direction.' %}
 {% set umamiPriSection = 'Prefooter' %}
 {% set umamiPriAction = 'View Events' %}
-{% set ctaLink1 = '/events/' %}
+{% set ctaLink1 = '#events' %}
 {% set ctaPriCopy = 'View Upcoming Events' %}
 {% set umamiSecSection = 'Prefooter' %}
 {% set umamiSecAction = 'Contact' %}

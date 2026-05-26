@@ -41,4 +41,104 @@
             </div>
         </div>
     </div>
+
+    {% if collections.marqueePhoto and collections.marqueePhoto.length > 0 %}
+    <div id="prefooter-marquee">
+        <div id="prefooter-marquee__slider" class="keen-slider">
+            {% for photo in collections.marqueePhoto %}
+            <div class="keen-slider__slide">
+                {% image './src' + photo.data.image, photo.data.alt, 'marquee-img', 'lazy', '(max-width: 991px) 220px, 300px', '' %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
 </section>
+
+{% if collections.marqueePhoto and collections.marqueePhoto.length > 0 %}
+<script>
+(function () {
+    var wrapperEl = document.querySelector('#prefooter-marquee');
+    var sliderEl  = document.querySelector('#prefooter-marquee__slider');
+    if (!wrapperEl || !sliderEl) return;
+
+    var loaded = false;
+
+    function shuffle(el) {
+        var items = Array.from(el.children);
+        for (var i = items.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            el.insertBefore(items[j], items[i]);
+            var tmp = items[i]; items[i] = items[j]; items[j] = tmp;
+        }
+    }
+
+    function initSlider() {
+        shuffle(sliderEl);
+
+        var isPaused = false;
+        var MS_PER_SLIDE = 12000;
+        var animation = { duration: MS_PER_SLIDE * sliderEl.children.length, easing: function (t) { return t; } };
+
+        var slider = new KeenSlider(sliderEl, {
+            loop: true,
+            renderMode: 'performance',
+            drag: true,
+            slides: { perView: 'auto', spacing: 16 }
+        }, [
+            function (s) {
+                function move() {
+                    if (isPaused) return;
+                    s.moveToIdx(s.track.details.abs + s.slides.length, true, animation);
+                }
+                s.on('created', move);
+                s.on('animationEnded', move);
+                s.on('updated', move);
+                s.on('dragStarted', function () {
+                    isPaused = true;
+                    s.animator.stop();
+                });
+                s.on('dragEnded', function () {
+                    isPaused = false;
+                    move();
+                });
+            }
+        ]);
+
+    }
+
+    function loadKeenSlider() {
+        if (loaded) return;
+        loaded = true;
+
+        if (!document.querySelector('link[href*="keen-slider"]')) {
+            var css = document.createElement('link');
+            css.rel = 'stylesheet';
+            css.href = 'https://cdn.jsdelivr.net/npm/keen-slider@latest/keen-slider.min.css';
+            document.head.appendChild(css);
+        }
+
+        if (typeof KeenSlider !== 'undefined') {
+            initSlider();
+        } else {
+            var js = document.createElement('script');
+            js.src = 'https://cdn.jsdelivr.net/npm/keen-slider@latest/keen-slider.js';
+            js.onload = initSlider;
+            document.head.appendChild(js);
+        }
+    }
+
+    if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries, obs) {
+            if (entries[0].isIntersecting) {
+                loadKeenSlider();
+                obs.disconnect();
+            }
+        }, { rootMargin: '300px' }).observe(wrapperEl);
+    } else {
+        loadKeenSlider();
+    }
+}());
+</script>
+{% endif %}

@@ -218,3 +218,43 @@ collections:
                 output_code_only: true,
                 hint: "Paste the full iframe embed code from Google Forms (click Send > Embed HTML)."
             }
+
+    - name: "marquee"
+      label: "Marquee Photos"
+      label_singular: "Marquee Photo"
+      folder: "src/content/marquee"
+      create: true
+      slug: "{{slug}}"
+      summary: "{{filename}}"
+      media_folder: "/src/assets/images/marquee"
+      public_folder: "/assets/images/marquee"
+      editor:
+        preview: false
+      fields:
+          - { # Photo
+                label: "Photo (required)",
+                name: "image",
+                widget: "image",
+                required: true,
+                media_folder: "/src/assets/images/marquee",
+                public_folder: "/assets/images/marquee",
+                hint: "Upload a square photo. Landscape or portrait images will be cropped to a 1:1 ratio."
+            }
+          - { # Alt Text
+                label: "Alt Text (required)",
+                name: "alt",
+                widget: "string",
+                required: true,
+                hint: "Describe the photo for accessibility and SEO. e.g. 'Vendor booth at the Coal Mine Spring Festival in Littleton, CO'"
+            }
+          - { # Tags (hidden)
+                label: "Tags",
+                name: "tags",
+                widget: "hidden",
+                default: ["marqueePhoto"]
+            }
+          - { # Filename (hidden — used as CMS list label)
+                label: "Filename",
+                name: "filename",
+                widget: "hidden"
+            }

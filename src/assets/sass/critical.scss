@@ -582,6 +582,7 @@
                 .content {
                     height: 100vh;
                     min-height: 880px;
+                    max-height: fit-content;
                 }
             }
         }
