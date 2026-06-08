@@ -10,10 +10,10 @@ date: 2026-07-21T23:09:48.849Z
 startTime: 2026-05-22T00:00:48.853Z
 endTime: 2026-05-22T01:30:48.856Z
 location: Great Divide Brewery & Roadhouse
-streetAddress: 9977 Sky Ridge Ave, Ste 240
-city: Lone Tree
+streetAddress: 7260 W Alaska Dr
+city: Lakewood
 state: CO
-zip: "80124"
+zip: "80226"
 eventExtUrl: https://www.eventbrite.com/e/brews-braids-a-braiding-class-for-parents-tickets-1989784130899?aff=oddtdtcreator&fbclid=IwY2xjawR8cPdleHRuA2FlbQIxMABicmlkETF4MDVpVGJDWFpGMjh6MEdKc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHj3IMSj3ji27i4BKuP4KMcRrIufLVEvNaDD9YGyMn2yUCSBGRrQDIHzSpyil_aem_jR7qm9gBdvrhSnFaThxfkA
 googleFormUrl: <iframe
   src="https://docs.google.com/forms/d/e/1FAIpQLSf5Wm9IHWy8QW73YbPpd-Ssrd42mOp1sSOvrMpYspZEyqXA_g/viewform?embedded=true"
