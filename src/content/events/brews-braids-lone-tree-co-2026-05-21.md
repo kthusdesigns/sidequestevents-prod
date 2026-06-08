@@ -1,6 +1,6 @@
 ---
 image: /assets/images/blog/event_brews-braids_000.jpg
-title: Brews & Braids
+title: POSTPONED - Brews & Braids
 excerpt: Join us for Brews & Braids, a hands-on braiding class for parents
   taught by a licensed hair stylist, hosted at Great Divide Brewery & Roadhouse
   in Lone Tree. Whether you've always wrestled with a simple ponytail or you're
