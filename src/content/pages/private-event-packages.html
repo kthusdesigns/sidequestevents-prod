@@ -1,0 +1,276 @@
+---
+title: "Private Party Packages in Denver, CO | SideQuest Events"
+description: "Browse curated private party packages for bachelorette parties, birthdays, and group celebrations in South Metro Denver, CO. Every package is customizable! Reach out for a custom quote."
+permalink: "/private-event-packages/"
+preloadImg: '/assets/images/GRADIENT_Vendors_000-400w.jpeg'
+---
+
+{% extends "layouts/base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/assets/css/private-event-packages.css">
+
+{% include "components/local-schema.html" %}
+{% endblock %}
+
+{% block body %}
+
+<!-- ============================================ -->
+<!--                    Hero                      -->
+<!-- ============================================ -->
+
+<section id="hero" class="hero">
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <h1 class="text-align--center"><span class="pill odd center text-align--center">PRIVATE PARTIES</span>
+                        BOOK A CURATED EXPERIENCE FOR YOUR NEXT CELEBRATION</h1>
+                    <p class="text-align--center">From bachelorette parties to birthdays and girls' nights out, browse our
+                        lineup of private party packages below. Every package can be customized to fit your group, your
+                        date, and your vibe.</p>
+                    <div class="button-wrapper">
+                        {% set ctaLink = '#packages' %}
+                        {% set ctaCopy = 'View Private Party Packages' %}
+                        {% set umamiSection = 'Hero' %}
+                        {% set umamiAction = 'View Packages' %}
+                        {% include "components/cta-primary--button.html" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Packages_000.jpg', 'Grainy mesh gradient in purple and black',
+    'img-bg', 'eager', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', 'high' %}
+
+    <div class="overlay lower"></div>
+
+</section>
+
+<!-- ============================================ -->
+<!--                Packages Feed                 -->
+<!-- ============================================ -->
+
+<section id="packages" class="body">
+
+    <div class="overlay upper"></div>
+
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__packages-wrapper">
+                    {% set packages = collections.privateEventPackage %}
+
+                    {% if packages | length == 0 %}
+
+                        <div class="packages-empty">
+                            <h3 class="text-align--center">More Packages Coming Soon</h3>
+                            <p class="text-align--center">We're putting together new private party packages. Check back soon, or reach out and we'll build something custom for your group.</p>
+                        </div>
+
+                    {% else %}
+
+                        <div id="all-packages">
+
+                            {% for package in packages %}
+                            <a class="package-card" href="{{ package.url }}" data-umami-event="{{ page.url | truncate(16) }}: Package: {{ package.data.title | truncate(24) }}">
+                                {% image './src' + package.data.image, package.data.title, 'img-bg', 'lazy', '(max-width:
+                                850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+                                <div class="package-card__content">
+                                    <div class="package-card__text">
+                                        <h3>{{ package.data.title }}</h3>
+                                        <p class="package-details">
+                                            <strong>Duration: </strong>
+                                            {{ package.data.duration }} Hour{% if package.data.duration != 1 %}s{% endif %}
+                                        </p>
+                                        <p class="package-details">
+                                            <strong>Capacity: </strong>
+                                            {{ package.data.guestCapacity }}
+                                        </p>
+                                        {% if package.data.bestFor %}
+                                            <p class="package-best-for"><strong>Best For:</strong> {{ package.data.bestFor }}</p>
+                                        {% endif %}
+                                    </div>
+                                    <div class="package-card__footer">
+                                        <p class="package-price">{{ package.data.startingPrice if package.data.startingPrice else "Custom Quote" }}</p>
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M16.6667 12.4999V18.3333H15.8334V19.1666H1.66671V18.3333H0.833374V4.16659H1.66671V3.33325H9.16671V4.99992H2.50004V17.4999H15V12.4999H16.6667Z" />
+                                            <path
+                                                d="M19.1667 0.833252V7.49992H17.5V4.16659H16.6667V4.99992H15.8334V5.83325H15V6.66659H14.1667V7.49992H13.3334V8.33325H12.5V9.16659H11.6667V9.99992H10.8334V10.8333H10V11.6666H9.16671V12.4999H8.33337V13.3333H7.50004V14.1666H5.83337V12.4999H6.66671V11.6666H7.50004V10.8333H8.33337V9.99992H9.16671V9.16659H10V8.33325H10.8334V7.49992H11.6667V6.66659H12.5V5.83325H13.3334V4.99992H14.1667V4.16659H15V3.33325H15.8334V2.49992H12.5V0.833252H19.1667Z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </a>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Body.jpg', 'Grainy mesh gradient in pink and black', 'img-bg rev',
+    'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+    <div class="overlay lower"></div>
+
+</section>
+
+<!-- ============================================ -->
+<!--                 How It Works                 -->
+<!-- ============================================ -->
+
+<section id="how-it-works" class="body split-columns">
+
+    <div class="overlay upper"></div>
+
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <div class="text-wrapper">
+                        <h2><span class="pill even left">HOW IT WORKS</span> BOOKING YOUR PRIVATE PARTY PACKAGE</h2>
+                        <p>Every package below is a starting point. Browse what's available, send us an inquiry with your details, and we'll work with you to customize and confirm your booking.</p>
+                    </div>
+
+                    <div class="button-wrapper">
+                        {% set ctaLink = '#packages' %}
+                        {% set ctaCopy = 'View Private Party Packages' %}
+                        {% set umamiSection = 'How It Works' %}
+                        {% set umamiAction = 'View Packages' %}
+                        {% include "components/cta-primary--button.html" %}
+                    </div>
+                </div>
+
+                <div class="content__image-wrapper">
+                    <div class="image-wrapper">
+                        {% image './src/assets/images/PHOTO_Packages_001.jpg', 'Private event package in South Metro Denver curated by SideQuest Events with people dancing in party venue', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+                        <svg class="icon tl" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.81818 32H2.90909V29.0909H5.81818V32ZM17.4545 32H14.5455V26.1818H17.4545V32ZM2.90909 29.0909H0V26.1818H2.90909V29.0909ZM8.72727 29.0909H5.81818V26.1818H8.72727V29.0909ZM5.81818 26.1818H2.90909V23.2727H5.81818V26.1818ZM14.5455 26.1818H11.6364V20.3636H14.5455V26.1818ZM20.3636 26.1818H17.4545V20.3636H20.3636V26.1818ZM11.6364 20.3636H5.81818V17.4545H11.6364V20.3636ZM26.1818 20.3636H20.3636V17.4545H26.1818V20.3636ZM5.81818 17.4545H0V14.5455H5.81818V17.4545ZM32 17.4545H26.1818V14.5455H32V17.4545ZM11.6364 14.5455H5.81818V11.6364H11.6364V14.5455ZM26.1818 14.5455H20.3636V11.6364H26.1818V14.5455ZM14.5455 11.6364H11.6364V5.81818H14.5455V11.6364ZM20.3636 11.6364H17.4545V5.81818H20.3636V11.6364ZM29.0909 2.90909H32V5.81818H29.0909V8.72727H26.1818V5.81818H23.2727V2.90909H26.1818V0H29.0909V2.90909ZM17.4545 5.81818H14.5455V0H17.4545V5.81818Z" fill="#FF007F"/>
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Browse Packages</h3>
+                    <p>Explore the private party packages below and find the one that fits your group and your vibe.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Send an Inquiry</h3>
+                    <p>Reach out with your preferred date, headcount, and any must-haves. We'll follow up with availability and pricing.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Customize & Confirm</h3>
+                    <p>We'll work with you to finalize the details and lock in your date. After that, all that's left is showing up and having fun.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Body.jpg', 'Grainy mesh gradient in pink and black', 'img-bg rev',
+    'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+    <div class="overlay lower"></div>
+
+</section>
+
+<!-- ============================================ -->
+<!--                Follow SQEvents               -->
+<!-- ============================================ -->
+
+<section id="follow-sqe" class="body split-columns">
+
+    <div class="overlay upper"></div>
+
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__image-wrapper">
+                    <div class="image-wrapper">
+                        {% image './src/assets/images/PHOTO_Packages_002.jpg', 'Man with skateboard and woman on phone smiling at receiving notifications from SideQuest Events social media about new private event packages', 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+                        <svg class="icon tr" width="36" height="32" viewBox="0 0 36 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_17426_1002)">
+                                <path d="M14.4043 31.9999H20.8065C20.8082 30.935 20.8049 29.8653 20.8065 28.8004C18.6735 28.8053 16.5373 28.8053 14.4043 28.8004C14.4059 29.8653 14.4027 30.935 14.4043 31.9999Z" fill="#FF007F"/>
+                                <path d="M32.0083 -0.00012207H28.8071V3.19939C29.8736 3.20101 30.9418 3.19777 32.0083 3.19939C32.0066 2.13451 32.0099 1.06476 32.0083 -0.00012207Z" fill="#FF007F"/>
+                                <path d="M28.807 17.6004C28.8038 18.6653 28.8086 19.7351 28.807 20.8H6.40231C6.40069 19.7351 6.40555 18.6653 6.40231 17.6004C5.3358 17.6021 4.26768 17.5988 3.20117 17.6004V24.0011H32.0081V17.6004C30.9416 17.5988 29.8735 17.6021 28.807 17.6004Z" fill="#FF007F"/>
+                                <path d="M9.6021 6.40051C8.53559 6.40213 7.46747 6.40051 6.40096 6.40051C6.40744 10.1333 6.39286 13.8693 6.40096 17.6004C7.46747 17.5988 8.53559 17.6004 9.6021 17.6004C9.60858 13.8677 9.59237 10.1317 9.6021 6.40051Z" fill="#FF007F"/>
+                                <path d="M32.0083 3.19944C32.0099 4.26433 32.0067 5.33407 32.0083 6.39896H35.2094V3.19944C34.1429 3.19782 33.0748 3.20106 32.0083 3.19944Z" fill="#FF007F"/>
+                                <path d="M14.4043 25.5992H11.2031V28.7988C12.2696 28.8004 13.3378 28.7955 14.4043 28.7988C14.4026 27.7339 14.4059 26.6641 14.4043 25.5992Z" fill="#FF007F"/>
+                                <path d="M20.8052 28.8003C21.8717 28.7971 22.9398 28.802 24.0063 28.8003V25.6008H20.8052C20.8035 26.6657 20.8068 27.7355 20.8052 28.8003Z" fill="#FF007F"/>
+                                <path d="M25.6057 17.6004C26.6722 17.6004 27.7403 17.5972 28.8069 17.6004C28.815 13.8677 28.8004 10.1317 28.8069 6.40051C27.7403 6.40051 26.6722 6.40375 25.6057 6.40051C25.6138 10.1333 25.5992 13.8693 25.6057 17.6004Z" fill="#FF007F"/>
+                                <path d="M3.20113 3.19944C2.13463 3.20106 1.0665 3.19782 0 3.19944V6.39896H3.20113C3.20276 5.33407 3.19951 4.26433 3.20113 3.19944Z" fill="#FF007F"/>
+                                <path d="M6.40229 3.19939V-0.00012207H3.20115C3.19953 1.06476 3.20277 2.13451 3.20115 3.19939C4.26766 3.19777 5.33578 3.20101 6.40229 3.19939Z" fill="#FF007F"/>
+                                <path d="M25.6059 6.4006C25.6027 5.33571 25.6059 4.26597 25.6059 3.19946C24.5394 3.19946 23.4713 3.2027 22.4048 3.19946C22.4064 4.26597 22.4048 5.33409 22.4048 6.4006C23.4713 6.4006 24.5394 6.39736 25.6059 6.4006Z" fill="#FF007F"/>
+                                <path d="M12.8032 3.19946C11.7367 3.2027 10.6686 3.19946 9.60205 3.19946C9.60205 4.26435 9.60529 5.33409 9.60205 6.4006C10.6686 6.39898 11.7367 6.4006 12.8032 6.4006C12.8032 5.33409 12.7999 4.26597 12.8032 3.19946Z" fill="#FF007F"/>
+                                <path d="M22.4065 3.19939C22.4048 2.13451 22.4081 1.06476 22.4065 -0.00012207H12.8047C12.803 1.06476 12.8063 2.13451 12.8047 3.19939C16.0042 3.19129 19.2069 3.19129 22.4065 3.19939Z" fill="#FF007F"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="content__text-wrapper">
+                    <div class="text-wrapper">
+                        <h2><span class="pill odd left">Get the First Look</span> Follow SideQuest Events For New Event Announcements</h2>
+                        <p>New private party packages may be added throughout the year, and we often share sneak peeks on social media before they're listed here. Give us a follow so you never miss a new way to celebrate.</p>
+                    </div>
+
+                    <div class="button-wrapper">
+                        {% set umamiSection = 'Follow SQE' %}
+                        {% include "components/cta-secondary--social.html" %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Body.jpg', 'Grainy mesh gradient in pink and black', 'img-bg',
+    'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+    <div class="overlay lower"></div>
+
+</section>
+
+<!-- ============================================ -->
+<!--                   Prefooter                  -->
+<!-- ============================================ -->
+
+{% set pfPill = "Let's Plan Something Fun" %}
+{% set headingMW = '780px' %}
+{% set pfHeading = 'Your Next Celebration Deserves a SideQuest' %}
+{% set bodyMW = '760px' %}
+{% set pfCopy = "Browse the packages above or tell us what you have in mind, and we'll help you build the perfect private party experience." %}
+{% set umamiPriSection = 'Prefooter' %}
+{% set umamiPriAction = 'View Packages' %}
+{% set ctaPriCopy = 'View Private Party Packages' %}
+{% set ctaLink1 = '#packages' %}
+{% set umamiSecSection = 'Prefooter' %}
+{% set umamiSecAction = 'Contact' %}
+{% set ctaSecCopy = 'Contact SideQuest Events' %}
+{% set ctaLink2 = '/contact/' %}
+{% include "sections/prefooter.html" %}
+
+
+
+{% endblock %}

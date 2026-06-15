@@ -1,0 +1,7 @@
+{
+    "layout": "layouts/post.html",
+    "tags": "privateEventPackage",
+    "eleventyComputed": {
+        "permalink": "/private-event-packages/{{ title | slugify }}/index.html"
+    }
+}

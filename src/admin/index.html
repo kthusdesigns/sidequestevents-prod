@@ -198,9 +198,85 @@
             }
         });
 
+        const PrivateEventPackagePreview = createClass({
+            render: function () {
+                const data = this.props.entry.get("data").toJS();
+                const {
+                    title,
+                    bestFor,
+                    guestCapacity,
+                    duration,
+                    startingPrice,
+                    image
+                } = data;
+
+                const cover = this.props.getAsset(image);
+
+                return (
+                    <div className="preview">
+                        <div className="preview__hero">
+                            <span className="pill">PRIVATE EVENT PACKAGE</span>
+                            <h1 className="article-title">{title}</h1>
+
+                            <div className="event-meta">
+                                <div className="event-meta__item">
+                                    <span className="event-meta__label">GROUP SIZE & DURATION</span>
+                                    <span className="event-meta__value">
+                                        {guestCapacity} &bull; {duration} Hour{duration !== 1 ? "s" : ""}
+                                    </span>
+                                </div>
+                                {bestFor && (
+                                    <div className="event-meta__item">
+                                        <span className="event-meta__label">BEST FOR</span>
+                                        <span className="event-meta__value">{bestFor}</span>
+                                    </div>
+                                )}
+                                <div className="event-meta__item">
+                                    <span className="event-meta__label">PRICING</span>
+                                    <span className="event-meta__value">{startingPrice || "Custom Quote"}</span>
+                                </div>
+                            </div>
+
+                            <div className="button-wrapper">
+                                <a className="button primary" href="#package-inquiry">
+                                    <span className="button-tl"></span>
+                                    <span className="button-tr"></span>
+                                    INQUIRE ABOUT THIS PACKAGE
+                                    <span className="button-bl"></span>
+                                    <span className="button-br"></span>
+                                </a>
+                            </div>
+
+                            {image && (
+                                <div className="image-wrapper">
+                                    <img src={cover ? cover.toString() : ""} className="cover" alt={title || ""} />
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="preview__body">
+                            <div className="article-content markdown">
+                                {this.props.widgetFor("body")}
+                            </div>
+                            <div className="button-wrapper">
+                                <a className="button secondary" href="/private-event-packages/">
+                                    <span className="button-tl"></span>
+                                    <span className="button-tr"></span>
+                                    Go Back to All Packages
+                                    <span className="button-bl"></span>
+                                    <span className="button-br"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+        });
+
         // Register the elements and styles for the "blog" collection
         CMS.registerPreviewTemplate("news", BlogPreview);
         CMS.registerPreviewTemplate("events", EventPreview);
+        CMS.registerPreviewTemplate("privateEventPackages", PrivateEventPackagePreview);
         CMS.registerPreviewStyle("/admin/decap-preview-styles.css");
 
     </script>

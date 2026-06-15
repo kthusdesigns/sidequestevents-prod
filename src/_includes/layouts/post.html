@@ -62,6 +62,36 @@
                                         </div>
                                     {% endif %}
                                 </div>
+                            {% elif 'privateEventPackage' in tags %}
+                                <div class="event-meta">
+                                    <div class="event-meta__head">
+                                        <span class="pill odd">PRIVATE EVENT PACKAGE</span>
+                                        <h1 class="article-title">{{ title }}</h1>
+                                    </div>
+                                    <div class="event-meta__item">
+                                        <span class="event-meta__label">GROUP SIZE & DURATION</span>
+                                        <span class="event-meta__value">{{ guestCapacity }} &bull; {{ duration }} Hour{% if duration != 1 %}s{% endif %}</span>
+                                    </div>
+                                    {% if bestFor %}
+                                        <div class="event-meta__item">
+                                            <span class="event-meta__label">BEST FOR</span>
+                                            <span class="event-meta__value">{{ bestFor }}</span>
+                                        </div>
+                                    {% endif %}
+                                    <div class="event-meta__item">
+                                        <span class="event-meta__label">PRICING</span>
+                                        <span class="event-meta__value">{{ startingPrice or "Custom Quote" }}</span>
+                                    </div>
+                                    <div class="button-wrapper">
+                                        <a href="#package-inquiry" class="button primary" data-umami-event="{{ page.url | truncate(16) }}: Hero: Inquire">
+                                            <span class="button-tl"></span>
+                                            <span class="button-tr"></span>
+                                            INQUIRE ABOUT THIS PACKAGE
+                                            <span class="button-bl"></span>
+                                            <span class="button-br"></span>
+                                        </a>
+                                    </div>
+                                </div>
                             {% endif %}
 
                             <div class="image-wrapper">
@@ -106,13 +136,23 @@
                                             <span class="button-br"></span>
                                         </a>
                                     {% endif %}
-                                    <a class="button secondary" href="/events/" data-umami-event="{{ page.url | truncate(16) }}: Body: Go Back">
-                                        <span class="button-tl"></span>
-                                        <span class="button-tr"></span>
-                                        Go Back to All Events
-                                        <span class="button-bl"></span>
-                                        <span class="button-br"></span>
-                                    </a>
+                                    {% if 'privateEventPackage' in tags %}
+                                        <a class="button secondary" href="/private-event-packages/" data-umami-event="{{ page.url | truncate(16) }}: Body: Go Back">
+                                            <span class="button-tl"></span>
+                                            <span class="button-tr"></span>
+                                            Go Back to All Packages
+                                            <span class="button-bl"></span>
+                                            <span class="button-br"></span>
+                                        </a>
+                                    {% else %}
+                                        <a class="button secondary" href="/events/" data-umami-event="{{ page.url | truncate(16) }}: Body: Go Back">
+                                            <span class="button-tl"></span>
+                                            <span class="button-tr"></span>
+                                            Go Back to All Events
+                                            <span class="button-bl"></span>
+                                            <span class="button-br"></span>
+                                        </a>
+                                    {% endif %}
                                 </div>
                             </div>
                             
@@ -130,6 +170,198 @@
 
 </section>
 
+{% if 'privateEventPackage' in tags %}
+<section id="package-inquiry" class="body">
+
+    <div class="overlay upper"></div>
+
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+
+                <div class="content__text-wrapper">
+                    <div class="text-wrapper">
+                        <h2>READY TO BOOK THIS PACKAGE?</h2>
+                        <p>Fill out the form and our team will follow up to confirm availability, finalize the details, and get this package locked in for your celebration.</p>
+                    </div>
+                </div>
+
+                <div class="content__form-wrapper">
+                    <!-- Form -->
+                    <form id="package-inquiry" name="Private Event Package Inquiry" method="post" action="/thank-you/" netlify-honeypot="bot-field" data-netlify="true">
+
+                        <div class="hidden">
+                            <label>
+                                <p>Don't fill this out if you're human:</p>
+                                <input name="bot-field">
+                            </label>
+                        </div>
+
+                        <input type="hidden" name="package" value="{{ title }}">
+
+                        <div class="form-field-group">
+                            <label>
+                                <p>First Name<sup>*</sup></p>
+                                <input required type="text" id="first-name" name="firstName" placeholder="Enter your first name">
+                            </label>
+                        </div>
+
+                        <div class="form-field-group">
+                            <label>
+                                <p>Last Name<sup>*</sup></p>
+                                <input required type="text" id="last-name" name="lastName" placeholder="Enter your last name">
+                            </label>
+                        </div>
+
+                        <div class="form-field-group">
+                            <label>
+                                <p>Email Address<sup>*</sup></p>
+                                <input required type="email" id="email" name="email" placeholder="Enter your email address">
+                            </label>
+                        </div>
+
+                        <div class="form-field-group">
+                            <label>
+                                <p>Phone Number<sup>*</sup></p>
+                                <input required type="tel" id="phone-number" name="phoneNumber" placeholder="Enter your phone number">
+                            </label>
+                        </div>
+
+                        <div class="form-field-group">
+                            <label>
+                                <p>Desired Date<sup>*</sup></p>
+                                <input required type="date" id="desired-date" name="desiredDate">
+                            </label>
+                        </div>
+
+                        <div class="form-field-group">
+                            <label>
+                                <p>Desired Start Time<sup>*</sup></p>
+                                <select required id="desired-time" name="desiredTime">
+                                    <option value="">Select a start time</option>
+                                    <option value="8:00 AM">8:00 AM</option>
+                                    <option value="8:30 AM">8:30 AM</option>
+                                    <option value="9:00 AM">9:00 AM</option>
+                                    <option value="9:30 AM">9:30 AM</option>
+                                    <option value="10:00 AM">10:00 AM</option>
+                                    <option value="10:30 AM">10:30 AM</option>
+                                    <option value="11:00 AM">11:00 AM</option>
+                                    <option value="11:30 AM">11:30 AM</option>
+                                    <option value="12:00 PM">12:00 PM</option>
+                                    <option value="12:30 PM">12:30 PM</option>
+                                    <option value="1:00 PM">1:00 PM</option>
+                                    <option value="1:30 PM">1:30 PM</option>
+                                    <option value="2:00 PM">2:00 PM</option>
+                                    <option value="2:30 PM">2:30 PM</option>
+                                    <option value="3:00 PM">3:00 PM</option>
+                                    <option value="3:30 PM">3:30 PM</option>
+                                    <option value="4:00 PM">4:00 PM</option>
+                                    <option value="4:30 PM">4:30 PM</option>
+                                    <option value="5:00 PM">5:00 PM</option>
+                                    <option value="5:30 PM">5:30 PM</option>
+                                    <option value="6:00 PM">6:00 PM</option>
+                                    <option value="6:30 PM">6:30 PM</option>
+                                    <option value="7:00 PM">7:00 PM</option>
+                                    <option value="7:30 PM">7:30 PM</option>
+                                    <option value="8:00 PM">8:00 PM</option>
+                                    <option value="8:30 PM">8:30 PM</option>
+                                    <option value="9:00 PM">9:00 PM</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="form-field-group full">
+                            <label>
+                                <p>Number of Guests<sup>*</sup></p>
+                                <select required id="guest-count" name="guestCount">
+                                    <option value="">Select a guest count</option>
+                                    <option value="Up to 10 Guests">Up to 10 Guests</option>
+                                    <option value="11-20 Guests">11-20 Guests</option>
+                                    <option value="21-30 Guests">21-30 Guests</option>
+                                    <option value="31-40 Guests">31-40 Guests</option>
+                                    <option value="41-50 Guests">41-50 Guests</option>
+                                    <option value="50+ Guests">50+ Guests</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="form-field-group textarea">
+                            <label>
+                                <p>Message</p>
+                                <textarea id="message" name="message" placeholder="Share any additional details about the event that you are inquiring about."></textarea>
+                            </label>
+                        </div>
+
+                        <div data-netlify-recaptcha="true"></div>
+
+                        <div class="form-field-group submit">
+                            <button class="button primary" type="submit">
+                                <span class="button-tl"></span>
+                                <span class="button-tr"></span>
+                                Send Inquiry
+                                <span class="button-bl"></span>
+                                <span class="button-br"></span>
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% image './src/assets/images/gradients/GRADIENT_Body-Post.jpg', 'Grainy mesh gradient in pink and black', 'img-bg rev',
+    'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+
+    <div class="overlay lower"></div>
+
+</section>
+
+<script>
+(function () {
+    var form = document.getElementById('package-inquiry');
+    var dateInput = document.getElementById('desired-date');
+    if (!form || !dateInput) return;
+
+    var minDate = new Date();
+    minDate.setDate(minDate.getDate() + 7);
+
+    var yyyy = minDate.getFullYear();
+    var mm = String(minDate.getMonth() + 1).padStart(2, '0');
+    var dd = String(minDate.getDate()).padStart(2, '0');
+    var minDateString = yyyy + '-' + mm + '-' + dd;
+
+    dateInput.min = minDateString;
+
+    dateInput.addEventListener('input', function () {
+        dateInput.setCustomValidity('');
+    });
+
+    dateInput.addEventListener('keydown', function (event) {
+        if (event.key !== 'Tab') {
+            event.preventDefault();
+        }
+    });
+
+    dateInput.addEventListener('click', function () {
+        if (typeof dateInput.showPicker === 'function') {
+            dateInput.showPicker();
+        }
+    });
+
+    form.addEventListener('submit', function (event) {
+        if (dateInput.value && dateInput.value < minDateString) {
+            dateInput.setCustomValidity('Please choose a date on or after ' + minDateString + ' (at least one week out).');
+            dateInput.reportValidity();
+            event.preventDefault();
+        }
+    });
+})();
+</script>
+{% endif %}
+
+{% if googleFormEmbed %}
 <section id="vendors">
 
     <div class="overlay upper"></div>
@@ -161,5 +393,6 @@
     'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
 
 </section>
+{% endif %}
 
 {% endblock %}

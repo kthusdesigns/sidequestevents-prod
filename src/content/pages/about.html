@@ -230,11 +230,17 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
                     </div>
 
                     <div class="button-wrapper">
+                        {% set ctaLink = '/private-event-packages/' %}
+                        {% set ctaCopy = 'View Private Event Packages' %}
+                        {% set umamiSection = 'Priv Events' %}
+                        {% set umamiAction = 'Packages' %}
+                        {% include "components/cta-primary--button.html" %}
+
                         {% set ctaLink = '/contact/' %}
                         {% set ctaCopy = 'Contact SideQuest Events' %}
                         {% set umamiSection = 'Priv Events' %}
                         {% set umamiAction = 'Contact' %}
-                        {% include "components/cta-primary--button.html" %}
+                        {% include "components/cta-secondary--button.html" %}
                     </div>
                 </div>
 

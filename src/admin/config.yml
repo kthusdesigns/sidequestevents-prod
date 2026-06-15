@@ -219,6 +219,117 @@ collections:
                 hint: "Paste the full iframe embed code from Google Forms (click Send > Embed HTML)."
             }
 
+    - name: "privateEventPackages"
+      label: "Private Event Packages"
+      label_singular: "Package"
+      folder: "src/content/private-event-packages"
+      create: true
+      slug: "{{slug}}"
+      summary: "{{title}}"
+      fields:
+          - { # Featured Image
+                label: "Featured Image (required)",
+                name: "image",
+                widget: "image",
+                required: true,
+                media_folder: "/src/assets/images/private-event-packages",
+                public_folder: "/assets/images/private-event-packages",
+                default: "/assets/images/private-event-packages/blog-placeholder-image.png"
+            }
+          - { # Package Title
+                label: "Package Title (required)",
+                name: "title",
+                widget: "string",
+                required: true,
+                hint: "Input the name of this private party package, e.g. 'Coffee, Books & Thrift Bus Tour'."
+            }
+          - { # Package Excerpt
+                label: "Package Excerpt (required)",
+                name: "excerpt",
+                widget: "text",
+                required: true,
+                hint: "Write a short summary (1-2 sentences) that will be used on the Private Parties page and as this page's meta description."
+            }
+          - { # Best For
+                label: "Best For",
+                name: "bestFor",
+                widget: "string",
+                required: false,
+                hint: "Who is this package best suited for? e.g. 'Bachelorette Parties, Birthdays, Girls' Night Out'"
+            }
+          - # Guest Capacity Range
+            label: "Guest Capacity Range (required)"
+            name: "guestCapacity"
+            widget: "select"
+            required: true
+            default: "11-20 Guests"
+            options:
+              - { label: "Up to 10 Guests", value: "Up to 10 Guests" }
+              - { label: "11-20 Guests", value: "11-20 Guests" }
+              - { label: "21-30 Guests", value: "21-30 Guests" }
+              - { label: "31-40 Guests", value: "31-40 Guests" }
+              - { label: "41-50 Guests", value: "41-50 Guests" }
+              - { label: "50+ Guests", value: "50+ Guests" }
+          - { # Typical Duration
+                label: "Typical Duration in Hours (required)",
+                name: "duration",
+                widget: "number",
+                value_type: "int",
+                required: true,
+                min: 1,
+                hint: "Enter the typical length of this package in hours, e.g. enter '3' for a 3-hour experience."
+            }
+          - { # Starting Price
+                label: "Starting Price",
+                name: "startingPrice",
+                widget: "string",
+                required: false,
+                hint: "e.g. 'Starting at $250'. If you do not fill out this field, it will default to 'Custom Quote'."
+            }
+          - { # Tags (hidden — auto-set to "privateEventPackage")
+                label: "Tags",
+                name: "tags",
+                widget: "hidden",
+                default: ["privateEventPackage"]
+            }
+          - # Package Details/Body
+            label: "Package Details (required)"
+            name: "body"
+            widget: "markdown"
+            required: true
+            buttons:
+              - bold
+              - italic
+              - link
+              - heading-one
+              - heading-two
+              - heading-three
+              - heading-four
+              - heading-five
+              - heading-six
+              - bulleted-list
+              - numbered-list
+            editor_components: ["image"]
+            default: |
+              This is all placeholder text. Replace everything with the info you would like to include.
+
+              ## What's Included
+
+              - Private use of the venue/space for the duration of your event
+              - A dedicated SideQuest Events host to coordinate the experience
+              - All activity stations, games, or equipment listed for this package
+
+              ## A Typical Itinerary
+
+              - Arrival & welcome - guests check in and settle into the space
+              - Main activity - the core experience for this package
+              - Wrap-up - final games, group photo, and farewells
+
+              ## Good to Know
+
+              Replace this text with anything guests should plan for, such as parking, what to bring, age recommendations, or dietary accommodations.
+            hint: "Replace the placeholder text with your content to describe what's included in this package—itinerary, is it indoors or outdoors, available add-ons, etc."
+
     - name: "marquee"
       label: "Marquee Photos"
       label_singular: "Marquee Photo"
