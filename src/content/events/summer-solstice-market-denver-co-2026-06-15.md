@@ -13,7 +13,10 @@ zip: "80205"
 eventExtUrl: https://www.eventbrite.com/e/summer-solstice-market-free-all-ages-great-divide-brewing-tickets-1991937750433?aff=oddtdtcreator
 tags:
   - event
-googleFormEmbed: https://docs.google.com/forms/d/e/1FAIpQLSdYWSOGz6HsgMhlXrPb8qaHnv4hWGrnR9EzWSMZ_vBy9LcqyA/viewform?usp=sharing&ouid=110784176194833370126
+googleFormEmbed: <iframe
+  src="https://docs.google.com/forms/d/e/1FAIpQLSdYWSOGz6HsgMhlXrPb8qaHnv4hWGrnR9EzWSMZ_vBy9LcqyA/viewform?embedded=true"
+  width="640" height="4174" frameborder="0" marginheight="0"
+  marginwidth="0">Loading…</iframe>
 ---
 
 
