@@ -239,6 +239,10 @@
                                 <p>Desired Start Time<sup>*</sup></p>
                                 <select required id="desired-time" name="desiredTime">
                                     <option value="">Select a start time</option>
+                                    <option value="6:00 AM">6:00 AM</option>
+                                    <option value="6:30 AM">6:30 AM</option>
+                                    <option value="7:00 AM">7:00 AM</option>
+                                    <option value="7:30 AM">7:30 AM</option>
                                     <option value="8:00 AM">8:00 AM</option>
                                     <option value="8:30 AM">8:30 AM</option>
                                     <option value="9:00 AM">9:00 AM</option>
@@ -266,6 +270,10 @@
                                     <option value="8:00 PM">8:00 PM</option>
                                     <option value="8:30 PM">8:30 PM</option>
                                     <option value="9:00 PM">9:00 PM</option>
+                                    <option value="9:30 PM">9:30 PM</option>
+                                    <option value="10:00 PM">10:00 PM</option>
+                                    <option value="10:30 PM">10:30 PM</option>
+                                    <option value="11:00 PM">11:00 PM</option>
                                 </select>
                             </label>
                         </div>
@@ -325,7 +333,7 @@
     if (!form || !dateInput) return;
 
     var minDate = new Date();
-    minDate.setDate(minDate.getDate() + 7);
+    minDate.setDate(minDate.getDate() + 14);
 
     var yyyy = minDate.getFullYear();
     var mm = String(minDate.getMonth() + 1).padStart(2, '0');
@@ -352,7 +360,7 @@
 
     form.addEventListener('submit', function (event) {
         if (dateInput.value && dateInput.value < minDateString) {
-            dateInput.setCustomValidity('Please choose a date on or after ' + minDateString + ' (at least one week out).');
+            dateInput.setCustomValidity('Please choose a date on or after ' + minDateString + ' (at least two weeks out from present day).');
             dateInput.reportValidity();
             event.preventDefault();
         }
