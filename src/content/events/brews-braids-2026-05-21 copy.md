@@ -53,7 +53,7 @@ Any parent, grandparent, guardian, or caregiver who wants to feel more confident
 * Spots are limited — grab yours before they're gone
 * 21+ to drink; all ages welcome
 * Comfortable, casual atmosphere — this is meant to be fun!
-* Located at Great Divide's Lone Tree taproom near Park Meadows (9977 Sky Ridge Ave, Ste 240)
+* Located at Great Divide's BelMar Taproom and Roadhouse 7260 W Alaska Dr, Lakewood, CO 80226
 
 ## Questions?
 
