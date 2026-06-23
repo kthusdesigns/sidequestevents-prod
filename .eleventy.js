@@ -217,6 +217,11 @@ module.exports = function (eleventyConfig) {
         return DateTime.fromJSDate(date, { zone: "America/Denver" }).toFormat("cccc, MMMM d, yyyy");
     });
 
+    eleventyConfig.addFilter("isoDate", function (date) {
+        const { DateTime } = require("luxon");
+        return DateTime.fromJSDate(date, { zone: "America/Denver" }).toFormat("yyyy-MM-dd");
+    });
+
     /*
      * 🕐 Event Time Filter
      * Formats a datetime string as a readable time in Mountain Time

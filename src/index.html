@@ -96,7 +96,7 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
 
                     <div class="content__grid-wrapper" data-count="{{ upcomingEvents | length }}">
                         {% for event in upcomingEvents %}
-                        <a class="event-card" href="{{ event.url }}" data-umami-event="{{ page.url | truncate(16) }}: Event: {{ event.data.title | truncate(24) }}">
+                        <a class="event-card" href="{{ event.url }}" data-event-date="{{ event.data.date | isoDate }}" data-umami-event="{{ page.url | truncate(16) }}: Event: {{ event.data.title | truncate(24) }}">
                             {% image './src' + event.data.image, event.data.title, 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
                             <div class="event-card__content">
                                 <div class="event-card__text">
@@ -125,7 +125,7 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
                             {% for event in upcomingEvents %}
                                 {%- if loop.index <= 5 -%}
                                 <div class="keen-slider__slide">
-                                    <a class="event-card" href="{{ event.url }}" data-umami-event="{{ page.url | truncate(16) }}: Event: {{ event.data.title | truncate(24) }}">
+                                    <a class="event-card" href="{{ event.url }}" data-event-date="{{ event.data.date | isoDate }}" data-umami-event="{{ page.url | truncate(16) }}: Event: {{ event.data.title | truncate(24) }}">
                                         {% image './src' + event.data.image, event.data.title, 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
                                         <div class="event-card__content">
                                             <div class="event-card__text">
@@ -353,6 +353,48 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
 {% include "sections/prefooter.html" %}
 
 
+
+<script>
+(function () {
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    var section = document.getElementById('upcoming-events');
+    if (!section) return;
+    var cards = section.querySelectorAll('.event-card[data-event-date]');
+    cards.forEach(function (card) {
+        var p = card.getAttribute('data-event-date').split('-');
+        if (new Date(p[0], p[1] - 1, p[2]) < today) {
+            var slide = card.closest('.keen-slider__slide');
+            (slide || card).remove();
+        }
+    });
+    var grid = section.querySelector('.content__grid-wrapper');
+    if (grid) {
+        var remaining = grid.querySelectorAll('.event-card').length;
+        if (remaining === 0) {
+            grid.outerHTML = '<div class="events-empty"><h3 class="text-align--center">No Upcoming Events</h3><p class="text-align--center">Please check back soon for new events.</p></div>';
+        } else {
+            grid.setAttribute('data-count', remaining);
+        }
+    }
+    var slider = section.querySelector('.content__slider-wrapper');
+    if (slider) {
+        var slides = slider.querySelectorAll('.keen-slider__slide');
+        if (slides.length === 0) {
+            slider.outerHTML = '<div class="events-empty"><h3 class="text-align--center">No Upcoming Events</h3><p class="text-align--center">Please check back soon for new events.</p></div>';
+        } else if (slides.length <= 2) {
+            var newGrid = document.createElement('div');
+            newGrid.className = 'content__grid-wrapper';
+            newGrid.setAttribute('data-count', slides.length);
+            slides.forEach(function (s) {
+                var card = s.querySelector('.event-card');
+                if (card) newGrid.appendChild(card);
+            });
+            slider.parentNode.replaceChild(newGrid, slider);
+        }
+    }
+}());
+</script>
 
 {% if upcomingEvents | length > 2 %}
 <script>
