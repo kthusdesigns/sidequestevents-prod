@@ -5,10 +5,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
     <!--Favicons-->
     <!-- https://realfavicongenerator.net/ -->
     <link rel="icon" type="image/png" href="/assets/favicons/favicon-96x96.png" sizes="96x96"/>
@@ -27,14 +23,15 @@
     <!-- Decap CMS preview pane script -->
     <!-- Edit this script to customize the preview pane for your blog posts.  -->
     <!-- Documentation: https://decapcms.org/docs/customization/ -->
-    <script type="text/babel">
-        const BlogPreview = createClass({
+    <script>
+        var BlogPreview = createClass({
             render: function () {
-                // Get all the props from the collection
-                const data = this.props.entry.get("data").toJS();
-                const { title, author, date: rawDate, image } = data;
-                const date = typeof rawDate === "string" ? new Date(rawDate) : rawDate;
-                let formattedDate = "";
+                var data = this.props.entry.get("data").toJS();
+                var title = data.title;
+                var rawDate = data.date;
+                var image = data.image;
+                var date = typeof rawDate === "string" ? new Date(rawDate) : rawDate;
+                var formattedDate = "";
                 if (date) {
                     formattedDate = Intl.DateTimeFormat("en-US", {
                         month: "long",
@@ -43,237 +40,221 @@
                     }).format(date);
                 }
 
-                const cover = this.props.getAsset(image);
+                var cover = this.props.getAsset(image);
 
-                // Create elements for the preview pane in JSX, to be processed by Babel
-                return (
-                    <div className="blog">
-                        <span className="date">Published On: <strong>{formattedDate}</strong></span>
-                        <h1 className="title">{title}</h1>
-
-                        <img src={cover?.toString()} className="cover" alt="Cover" />
-
-                        <div className="markdown">
-                            {this.props.widgetFor("body")}
-                        </div>
-                    </div>
+                return h("div", { className: "blog" },
+                    h("span", { className: "date" }, "Published On: ", h("strong", {}, formattedDate)),
+                    h("h1", { className: "title" }, title),
+                    h("img", { src: cover ? cover.toString() : "", className: "cover", alt: "Cover" }),
+                    h("div", { className: "markdown" }, this.props.widgetFor("body"))
                 );
             }
         });
 
-        const EventPreview = createClass({
+        var EventPreview = createClass({
             render: function () {
-                const data = this.props.entry.get("data").toJS();
-                const {
-                    title,
-                    date: rawDate,
-                    startTime: rawStart,
-                    endTime: rawEnd,
-                    location,
-                    streetAddress,
-                    city,
-                    state,
-                    zip,
-                    eventExtUrl,
-                    googleFormEmbed,
-                    image
-                } = data;
+                var data = this.props.entry.get("data").toJS();
+                var title = data.title;
+                var rawDate = data.date;
+                var rawStart = data.startTime;
+                var rawEnd = data.endTime;
+                var location = data.location;
+                var streetAddress = data.streetAddress;
+                var city = data.city;
+                var state = data.state;
+                var zip = data.zip;
+                var eventExtUrl = data.eventExtUrl;
+                var googleFormEmbed = data.googleFormEmbed;
+                var image = data.image;
 
-                const date = typeof rawDate === "string" ? new Date(rawDate) : rawDate;
-                let formattedDate = "";
+                var date = typeof rawDate === "string" ? new Date(rawDate) : rawDate;
+                var formattedDate = "";
                 if (date && !isNaN(date)) {
-                    const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-                    const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-                    formattedDate = `${dayNames[date.getUTCDay()]}, ${monthNames[date.getUTCMonth()]} ${date.getUTCDate()}, ${date.getUTCFullYear()}`;
+                    var dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+                    var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+                    formattedDate = dayNames[date.getUTCDay()] + ", " + monthNames[date.getUTCMonth()] + " " + date.getUTCDate() + ", " + date.getUTCFullYear();
                 }
 
                 function formatTime(raw) {
                     if (!raw) return "";
-                    const d = new Date(raw);
+                    var d = new Date(raw);
                     if (isNaN(d)) return raw;
-                    let hours = d.getHours();
-                    const mins = d.getMinutes();
-                    const ampm = hours >= 12 ? "PM" : "AM";
+                    var hours = d.getHours();
+                    var mins = d.getMinutes();
+                    var ampm = hours >= 12 ? "PM" : "AM";
                     hours = hours % 12 || 12;
-                    return `${hours}:${mins.toString().padStart(2, "0")} ${ampm}`;
+                    return hours + ":" + mins.toString().padStart(2, "0") + " " + ampm;
                 }
 
-                const startFormatted = formatTime(rawStart);
-                const endFormatted = formatTime(rawEnd);
-                const cover = this.props.getAsset(image);
-                const cityState = [city, state].filter(Boolean).join(", ");
+                var startFormatted = formatTime(rawStart);
+                var endFormatted = formatTime(rawEnd);
+                var cover = this.props.getAsset(image);
+                var cityState = [city, state].filter(Boolean).join(", ");
 
-                return (
-                    <div className="preview">
-                        <div className="preview__hero">
-                            {cityState && (
-                                <span className="pill">{cityState} EVENT</span>
-                            )}
-                            <h1 className="article-title">{title}</h1>
+                return h("div", { className: "preview" },
+                    h("div", { className: "preview__hero" },
+                        cityState ? h("span", { className: "pill" }, cityState + " EVENT") : null,
+                        h("h1", { className: "article-title" }, title),
 
-                            <div className="event-meta">
-                                <div className="event-meta__item">
-                                    <span className="event-meta__label">DATE/TIME</span>
-                                    <span className="event-meta__value">
-                                        {formattedDate}
-                                        {(startFormatted || endFormatted) && (
-                                            <span><br />{startFormatted}{endFormatted ? ` – ${endFormatted}` : ""}</span>
-                                        )}
-                                    </span>
-                                </div>
-                                {streetAddress && (
-                                    <div className="event-meta__item">
-                                        <span className="event-meta__label">VENUE/ADDRESS</span>
-                                        {location && <span className="event-meta__value">{location}</span>}
-                                        <span className="event-meta__value">
-                                            {streetAddress}<br />{[city, state].filter(Boolean).join(", ")} {zip}
-                                        </span>
-                                    </div>
-                                )}
-                            </div>
+                        h("div", { className: "event-meta" },
+                            h("div", { className: "event-meta__item" },
+                                h("span", { className: "event-meta__label" }, "DATE/TIME"),
+                                h("span", { className: "event-meta__value" },
+                                    formattedDate,
+                                    (startFormatted || endFormatted)
+                                        ? h("span", {},
+                                            h("br"),
+                                            startFormatted,
+                                            endFormatted ? " – " + endFormatted : ""
+                                        )
+                                        : null
+                                )
+                            ),
+                            streetAddress
+                                ? h("div", { className: "event-meta__item" },
+                                    h("span", { className: "event-meta__label" }, "VENUE/ADDRESS"),
+                                    location ? h("span", { className: "event-meta__value" }, location) : null,
+                                    h("span", { className: "event-meta__value" },
+                                        streetAddress,
+                                        h("br"),
+                                        [city, state].filter(Boolean).join(", ") + " " + zip
+                                    )
+                                )
+                                : null
+                        ),
 
-                            {(eventExtUrl || googleFormEmbed) && (
-                                <div className="button-wrapper">
-                                    {eventExtUrl && (
-                                        <a className="button primary" href={eventExtUrl} target="_blank" rel="noopener noreferrer">
-                                            <span className="button-tl"></span>
-                                            <span className="button-tr"></span>
-                                            REGISTER ON EVENTBRITE
-                                            <span className="button-bl"></span>
-                                            <span className="button-br"></span>
-                                        </a>
-                                    )}
-                                    {googleFormEmbed && (
-                                        <a className="button secondary" href="#vendor-form">
-                                            <span className="button-tl"></span>
-                                            <span className="button-tr"></span>
-                                            BECOME A VENDOR
-                                            <span className="button-bl"></span>
-                                            <span className="button-br"></span>
-                                        </a>
-                                    )}
-                                </div>
-                            )}
+                        (eventExtUrl || googleFormEmbed)
+                            ? h("div", { className: "button-wrapper" },
+                                eventExtUrl
+                                    ? h("a", { className: "button primary", href: eventExtUrl, target: "_blank", rel: "noopener noreferrer" },
+                                        h("span", { className: "button-tl" }),
+                                        h("span", { className: "button-tr" }),
+                                        "REGISTER ON EVENTBRITE",
+                                        h("span", { className: "button-bl" }),
+                                        h("span", { className: "button-br" })
+                                    )
+                                    : null,
+                                googleFormEmbed
+                                    ? h("a", { className: "button secondary", href: "#vendor-form" },
+                                        h("span", { className: "button-tl" }),
+                                        h("span", { className: "button-tr" }),
+                                        "BECOME A VENDOR",
+                                        h("span", { className: "button-bl" }),
+                                        h("span", { className: "button-br" })
+                                    )
+                                    : null
+                            )
+                            : null,
 
-                            {image && (
-                                <div className="image-wrapper">
-                                    <img src={cover ? cover.toString() : ""} className="cover" alt={title || ""} />
-                                </div>
-                            )}
-                        </div>
+                        image
+                            ? h("div", { className: "image-wrapper" },
+                                h("img", { src: cover ? cover.toString() : "", className: "cover", alt: title || "" })
+                            )
+                            : null
+                    ),
 
-                        <div className="preview__body">
-                            <div className="article-content markdown">
-                                {this.props.widgetFor("body")}
-                            </div>
-                            <div className="button-wrapper">
-                                {eventExtUrl && (
-                                    <a className="button primary" href={eventExtUrl} target="_blank" rel="noopener noreferrer">
-                                        <span className="button-tl"></span>
-                                        <span className="button-tr"></span>
-                                        Register on Eventbrite
-                                        <span className="button-bl"></span>
-                                        <span className="button-br"></span>
-                                    </a>
-                                )}
-                                <a className="button secondary" href="/events/">
-                                    <span className="button-tl"></span>
-                                    <span className="button-tr"></span>
-                                    Go Back to All Events
-                                    <span className="button-bl"></span>
-                                    <span className="button-br"></span>
-                                </a>
-                            </div>
-                        </div>
+                    h("div", { className: "preview__body" },
+                        h("div", { className: "article-content markdown" }, this.props.widgetFor("body")),
+                        h("div", { className: "button-wrapper" },
+                            eventExtUrl
+                                ? h("a", { className: "button primary", href: eventExtUrl, target: "_blank", rel: "noopener noreferrer" },
+                                    h("span", { className: "button-tl" }),
+                                    h("span", { className: "button-tr" }),
+                                    "Register on Eventbrite",
+                                    h("span", { className: "button-bl" }),
+                                    h("span", { className: "button-br" })
+                                )
+                                : null,
+                            h("a", { className: "button secondary", href: "/events/" },
+                                h("span", { className: "button-tl" }),
+                                h("span", { className: "button-tr" }),
+                                "Go Back to All Events",
+                                h("span", { className: "button-bl" }),
+                                h("span", { className: "button-br" })
+                            )
+                        )
+                    ),
 
-                        {googleFormEmbed && (
-                            <div className="preview__vendors" id="vendor-form">
-                                <h2>Interested In Being a Vendor For This Event?</h2>
-                                <p>Fill out the form below to apply to become a vendor. We review applications on a rolling basis and will reach out with a decision.</p>
-                                <div ref={function(node) { if (node) node.innerHTML = googleFormEmbed || ""; }} />
-                            </div>
-                        )}
-                    </div>
+                    googleFormEmbed
+                        ? h("div", { className: "preview__vendors", id: "vendor-form" },
+                            h("h2", {}, "Interested In Being a Vendor For This Event?"),
+                            h("p", {}, "Fill out the form below to apply to become a vendor. We review applications on a rolling basis and will reach out with a decision."),
+                            h("div", { ref: function(node) { if (node) node.innerHTML = googleFormEmbed || ""; } })
+                        )
+                        : null
                 );
             }
         });
 
-        const PrivateEventPackagePreview = createClass({
+        var PrivateEventPackagePreview = createClass({
             render: function () {
-                const data = this.props.entry.get("data").toJS();
-                const {
-                    title,
-                    bestFor,
-                    guestCapacity,
-                    duration,
-                    startingPrice,
-                    image
-                } = data;
+                var data = this.props.entry.get("data").toJS();
+                var title = data.title;
+                var bestFor = data.bestFor;
+                var guestCapacity = data.guestCapacity;
+                var duration = data.duration;
+                var startingPrice = data.startingPrice;
+                var image = data.image;
 
-                const cover = this.props.getAsset(image);
+                var cover = this.props.getAsset(image);
 
-                return (
-                    <div className="preview">
-                        <div className="preview__hero">
-                            <span className="pill">PRIVATE EVENT PACKAGE</span>
-                            <h1 className="article-title">{title}</h1>
+                return h("div", { className: "preview" },
+                    h("div", { className: "preview__hero" },
+                        h("span", { className: "pill" }, "PRIVATE EVENT PACKAGE"),
+                        h("h1", { className: "article-title" }, title),
 
-                            <div className="event-meta">
-                                <div className="event-meta__item">
-                                    <span className="event-meta__label">GROUP SIZE & DURATION</span>
-                                    <span className="event-meta__value">
-                                        {guestCapacity} &bull; {duration} Hour{duration !== 1 ? "s" : ""}
-                                    </span>
-                                </div>
-                                {bestFor && (
-                                    <div className="event-meta__item">
-                                        <span className="event-meta__label">BEST FOR</span>
-                                        <span className="event-meta__value">{bestFor}</span>
-                                    </div>
-                                )}
-                                <div className="event-meta__item">
-                                    <span className="event-meta__label">PRICING</span>
-                                    <span className="event-meta__value">{startingPrice || "Custom Quote"}</span>
-                                </div>
-                            </div>
+                        h("div", { className: "event-meta" },
+                            h("div", { className: "event-meta__item" },
+                                h("span", { className: "event-meta__label" }, "GROUP SIZE & DURATION"),
+                                h("span", { className: "event-meta__value" },
+                                    guestCapacity + " • " + duration + " Hour" + (duration !== 1 ? "s" : "")
+                                )
+                            ),
+                            bestFor
+                                ? h("div", { className: "event-meta__item" },
+                                    h("span", { className: "event-meta__label" }, "BEST FOR"),
+                                    h("span", { className: "event-meta__value" }, bestFor)
+                                )
+                                : null,
+                            h("div", { className: "event-meta__item" },
+                                h("span", { className: "event-meta__label" }, "PRICING"),
+                                h("span", { className: "event-meta__value" }, startingPrice || "Custom Quote")
+                            )
+                        ),
 
-                            <div className="button-wrapper">
-                                <a className="button primary" href="#package-inquiry">
-                                    <span className="button-tl"></span>
-                                    <span className="button-tr"></span>
-                                    INQUIRE ABOUT THIS PACKAGE
-                                    <span className="button-bl"></span>
-                                    <span className="button-br"></span>
-                                </a>
-                            </div>
+                        h("div", { className: "button-wrapper" },
+                            h("a", { className: "button primary", href: "#package-inquiry" },
+                                h("span", { className: "button-tl" }),
+                                h("span", { className: "button-tr" }),
+                                "INQUIRE ABOUT THIS PACKAGE",
+                                h("span", { className: "button-bl" }),
+                                h("span", { className: "button-br" })
+                            )
+                        ),
 
-                            {image && (
-                                <div className="image-wrapper">
-                                    <img src={cover ? cover.toString() : ""} className="cover" alt={title || ""} />
-                                </div>
-                            )}
-                        </div>
+                        image
+                            ? h("div", { className: "image-wrapper" },
+                                h("img", { src: cover ? cover.toString() : "", className: "cover", alt: title || "" })
+                            )
+                            : null
+                    ),
 
-                        <div className="preview__body">
-                            <div className="article-content markdown">
-                                {this.props.widgetFor("body")}
-                            </div>
-                            <div className="button-wrapper">
-                                <a className="button secondary" href="/private-event-packages/">
-                                    <span className="button-tl"></span>
-                                    <span className="button-tr"></span>
-                                    Go Back to All Packages
-                                    <span className="button-bl"></span>
-                                    <span className="button-br"></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    h("div", { className: "preview__body" },
+                        h("div", { className: "article-content markdown" }, this.props.widgetFor("body")),
+                        h("div", { className: "button-wrapper" },
+                            h("a", { className: "button secondary", href: "/private-event-packages/" },
+                                h("span", { className: "button-tl" }),
+                                h("span", { className: "button-tr" }),
+                                "Go Back to All Packages",
+                                h("span", { className: "button-bl" }),
+                                h("span", { className: "button-br" })
+                            )
+                        )
+                    )
                 );
             }
         });
 
-        // Register the elements and styles for the "blog" collection
         CMS.registerPreviewTemplate("news", BlogPreview);
         CMS.registerPreviewTemplate("events", EventPreview);
         CMS.registerPreviewTemplate("privateEventPackages", PrivateEventPackagePreview);
