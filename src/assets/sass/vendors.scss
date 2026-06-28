@@ -96,6 +96,66 @@
 }
 
 /*========================================
+==             Testimonials              ==
+=========================================*/
+
+@media screen and (min-width: 0px) {
+    section#testimonials {
+        .container {
+            .inner {
+                .content {
+                    align-items: center;
+
+                    .content__text-wrapper {
+                        .text-wrapper {
+                            align-items: center;
+                        }
+                    }
+
+                    .testimonial-card {
+                        display: flex;
+                        flex-direction: column;
+                        gap: calc(var(--spacing--gutter-column) * 0.75);
+                        max-width: 900px;
+                        width: 100%;
+                        padding: calc(var(--spacing--gutter-column) * 1.5);
+                        background-color: var(--color--space-400-24a);
+
+                        .testimonial-stars {
+                            display: flex;
+                            gap: 0.5rem;
+
+                            svg {
+                                width: 1.5rem;
+                                height: 1.5rem;
+                            }
+                        }
+
+                        blockquote {
+                            margin: 0;
+                            padding: 0;
+
+                            p {
+                                color: var(--color--cyan-50);
+                                line-height: 1.75;
+                            }
+                        }
+
+                        cite {
+                            color: var(--color--cyan-500);
+                            font-family: var(--font--vcr-osd-mono);
+                            font-size: var(--font-size--h6);
+                            font-style: normal;
+                            text-transform: uppercase;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*========================================
 ==			   Split Columns       	    ==
 =========================================*/
 
