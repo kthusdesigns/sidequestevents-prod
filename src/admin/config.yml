@@ -69,7 +69,7 @@ collections:
                 name: "date",
                 widget: "date",
                 required: true,
-                hint: "The date the event takes place. Events are automatically hidden from the feed after this date at 11:59p PM."
+                hint: "The date the event takes place. Events are automatically hidden from the feed after this date at 11:59 PM."
             }
           - { # Start Time
                 label: "Start Time (required)",
@@ -78,7 +78,7 @@ collections:
                 date_format: false,
                 time_format: "h:mm A",
                 required: true,
-                hint: "e.g. 10:00 AM"
+                hint: "e.g. 10:00 (10 AM)"
             }
           - { # End Time
                 label: "End Time (required)",
@@ -87,7 +87,7 @@ collections:
                 date_format: false,
                 time_format: "h:mm A",
                 required: true,
-                hint: "e.g. 2:00 PM"
+                hint: "e.g. 14:00 (2 PM)"
             }
           - { # Location
                 label: "Venue Name",
