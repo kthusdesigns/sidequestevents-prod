@@ -4,7 +4,7 @@ title: Yoga in the Park
 excerpt: Move. Breathe. Feel good.
 date: 2026-08-02T16:30:34.311Z
 startTime: 2026-06-30T15:00:34.318Z
-endTime: 2026-07-01T04:00:34.324Z
+endTime: 2026-06-30T16:00:34.324Z
 location: Clement Park, near the amphitheater
 streetAddress: 7306 West Bowles Avenue
 city: Littleton
