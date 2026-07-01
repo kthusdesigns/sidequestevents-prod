@@ -243,6 +243,13 @@ collections:
                 public_folder: "/assets/images/private-event-packages",
                 default: "/assets/images/private-event-packages/blog-placeholder-image.png"
             }
+          - { # Package Type
+                label: "Package Type (required)",
+                name: "type",
+                widget: "string",
+                required: true,
+                hint: "Input the event type (e.g., 'Fundraiser', 'Class', or 'Private Tour', etc.)."
+            }
           - { # Package Title
                 label: "Package Title (required)",
                 name: "title",

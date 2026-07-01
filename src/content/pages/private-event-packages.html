@@ -81,7 +81,7 @@ preloadImg: '/assets/images/GRADIENT_Vendors_000-400w.jpeg'
                                 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
                                 <div class="package-card__content">
                                     <div class="package-card__text">
-                                        <h3>{{ package.data.title }}</h3>
+                                        <h3>{% if package.data.type %}<span class="pill event-type">{{ package.data.type | upper }}</span>{% endif %}{{ package.data.title }}</h3>
                                         <p class="package-details">
                                             <strong>Duration: </strong>
                                             {{ package.data.duration }} Hour{% if package.data.duration != 1 %}s{% endif %}

@@ -66,6 +66,7 @@
                 var eventExtUrl = data.eventExtUrl;
                 var googleFormEmbed = data.googleFormEmbed;
                 var image = data.image;
+                var type = data.type;
 
                 var date = typeof rawDate === "string" ? new Date(rawDate) : rawDate;
                 var formattedDate = "";
@@ -93,7 +94,7 @@
 
                 return h("div", { className: "preview" },
                     h("div", { className: "preview__hero" },
-                        cityState ? h("span", { className: "pill" }, cityState + " EVENT") : null,
+                        cityState ? h("span", { className: "pill event-type" }, (type ? type.toUpperCase() + " IN " : "IN ") + cityState) : null,
                         h("h1", { className: "article-title" }, title),
 
                         h("div", { className: "event-meta" },
@@ -195,12 +196,13 @@
                 var duration = data.duration;
                 var startingPrice = data.startingPrice;
                 var image = data.image;
+                var type = data.type;
 
                 var cover = this.props.getAsset(image);
 
                 return h("div", { className: "preview" },
                     h("div", { className: "preview__hero" },
-                        h("span", { className: "pill" }, "PRIVATE EVENT PACKAGE"),
+                        h("span", { className: "pill odd" }, (type ? type.toUpperCase() + " " : "") + "PACKAGE"),
                         h("h1", { className: "article-title" }, title),
 
                         h("div", { className: "event-meta" },
