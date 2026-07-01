@@ -1,5 +1,6 @@
 ---
 image: /assets/images/blog/event_coalminespringfestival_000.jpg
+type: Market
 title: Coal Mine Spring Festival
 excerpt: SideQuest Events is officially landing in Littleton for the Coal Mine
   Spring Festival — a free Saturday morning market featuring local makers,

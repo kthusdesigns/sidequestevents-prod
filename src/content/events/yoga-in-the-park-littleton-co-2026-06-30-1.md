@@ -1,5 +1,6 @@
 ---
 image: /assets/images/blog/yogainthepark.png
+type: Class
 title: Yoga in the Park
 excerpt: Move. Breathe. Feel good.
 date: 2026-07-26T16:27:40.971Z

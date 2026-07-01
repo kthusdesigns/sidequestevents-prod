@@ -1,5 +1,6 @@
 ---
 image: /assets/images/blog/img_6615.png
+type: Market
 title: Dog Days of Summer — A RiNo Block Party for Dogs & Their People
 excerpt: >-
   The sun's out, the patio's open, and your pup is officially invited. Dog Days

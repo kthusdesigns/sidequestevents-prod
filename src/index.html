@@ -72,7 +72,7 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
 
                 <div class="content__text-wrapper">
                     <div class="text-wrapper">
-                        <h2><span class="pill even left">UPCOMING EVENTS</span> WHAT’S HAPPENING IN THE COMMUNITY</h2>
+                        <h2><span class="pill even left">UPCOMING EVENTS</span> WHAT’S HAPPENING IN THE COMMUNITY</h2>
                     </div>
                     <div class="button-wrapper">
                         {% set ctaLink = '/events/' %}
@@ -100,7 +100,7 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
                             {% image './src' + event.data.image, event.data.title, 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
                             <div class="event-card__content">
                                 <div class="event-card__text">
-                                    <h3>{{ event.data.title }}</h3>
+                                    <h3>{% if event.data.type %}<span class="pill event-type">{{ event.data.type | upper }}</span>{% endif %}{{ event.data.title }}</h3>
                                     <p class="event-date">{{ event.data.date | eventDate }}</p>
                                     <p class="event-time">{{ event.data.startTime | eventTime }} – {{ event.data.endTime | eventTime }}</p>
                                 </div>
@@ -129,7 +129,7 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
                                         {% image './src' + event.data.image, event.data.title, 'img-bg', 'lazy', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
                                         <div class="event-card__content">
                                             <div class="event-card__text">
-                                                <h3>{{ event.data.title }}</h3>
+                                                <h3>{% if event.data.type %}<span class="pill event-type">{{ event.data.type | upper }}</span>{% endif %}{{ event.data.title }}</h3>
                                                 <p class="event-date">{{ event.data.date | eventDate }}</p>
                                                 <p class="event-time">{{ event.data.startTime | eventTime }} – {{ event.data.endTime | eventTime }}</p>
                                             </div>

@@ -77,7 +77,7 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
                                 850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
                                 <div class="event-card__content">
                                     <div class="event-card__text">
-                                        <h3>{{ event.data.title }}</h3>
+                                        <h3>{% if event.data.type %}<span class="pill event-type">{{ event.data.type | upper }}</span>{% endif %}{{ event.data.title }}</h3>
                                         <p class="event-date">{{ event.data.date | eventDate }}</p>
                                         <p class="event-time">{{ event.data.startTime | eventTime }} – {{ event.data.endTime | eventTime }}</p>
                                     </div>

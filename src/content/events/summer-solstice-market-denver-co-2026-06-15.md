@@ -1,5 +1,6 @@
 ---
 image: /assets/images/blog/cb2d4edb-6fda-401b-882b-5b0f00bc2a32.png
+type: Market
 title: Summer Solstice Market
 excerpt: The Longest Day of the Year. The Best Afternoon in RiNo.
 date: 2026-06-20T19:22:07.398Z

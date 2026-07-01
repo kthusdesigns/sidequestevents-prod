@@ -50,6 +50,13 @@ collections:
                 public_folder: "/assets/images/blog",
                 default: "/assets/images/blog/blog-placeholder-image.png"
             }
+          - { # Event Type
+                label: "Event Type (required)",
+                name: "type",
+                widget: "string",
+                required: true,
+                hint: "Input the event type (e.g., 'Networking', 'Class', or 'Market', etc.)."
+            }
           - { # Event Title
                 label: "Event Title (required)",
                 name: "title",
