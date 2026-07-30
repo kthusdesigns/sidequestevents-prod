@@ -1,5 +1,5 @@
 ---
-image: /assets/images/blog/brunch-and-braids.png
+image: /assets/images/blog/brunch-and-braids-no-words.png
 type: Class
 title: "Brunch, Brews & Braids "
 excerpt: Join us for Brews & Braids, a hands-on braiding class for parents
