@@ -5,7 +5,7 @@ title: Wellness Wednesday at Thrive Workplace Centennial
 excerpt: |+
   Your workday could use a wellness break.
 
-date: 2026-08-12T20:13:23.354Z
+date: 2026-08-26T20:13:23.354Z
 startTime: 2026-08-12T18:00:23.393Z
 endTime: 2026-08-12T21:00:23.415Z
 location: "Thrive Workplace Centennial "
