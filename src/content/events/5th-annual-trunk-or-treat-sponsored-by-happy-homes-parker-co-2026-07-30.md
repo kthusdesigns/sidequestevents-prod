@@ -59,11 +59,11 @@ Event Highlights
 
 Want to Participate?
 
-We’re currently accepting applications for Trunk Hosts!
+We’re currently accepting applications for Trunk Hosts and Event Sponsors!
 
-Decorating a trunk is a fun way to showcase your creativity, promote your business or organization, or simply help create a memorable experience for neighborhood families. Costumes and themed decorations are encouraged, and prizes may be awarded for standout displays.
+Sponsorship is a fun way to showcase your creativity, promote your business or organization, or simply help create a memorable experience for neighborhood families. Costumes and themed decorations are encouraged, and prizes may be awarded for standout displays.
 
-Interested in hosting a trunk? Apply today—we’d love to have you join the fun!
+Interested in Sponsorship? Apply today—we’d love to have you join the fun!
 
 ⸻
 
