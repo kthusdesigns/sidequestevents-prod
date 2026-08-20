@@ -1,7 +1,7 @@
 ---
 image: /assets/images/blog/dry-creek-fall-festival-ig-.png
 type: Market
-title: Dry Creek fall festival
+title: Dry Creek Fall Festival
 excerpt: Dry Creek Fall Festival
 date: 2026-10-04T16:42:54.155Z
 startTime: 2026-08-20T16:00:54.164Z
