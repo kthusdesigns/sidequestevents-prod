@@ -1,5 +1,5 @@
 ---
-image: /assets/images/blog/dry-creek-fall-festival-public-.png
+image: /assets/images/blog/dry-creek-fall-festival-ig-.png
 type: Market
 title: Dry Creek fall festival
 excerpt: Dry Creek Fall Festival
