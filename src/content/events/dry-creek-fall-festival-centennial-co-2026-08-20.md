@@ -13,10 +13,7 @@ state: CO
 zip: "80112"
 tags:
   - event
-googleFormEmbed: <iframe
-  src="https://docs.google.com/forms/d/e/1FAIpQLSd7uDBGQ5ElVnf_Ddl0VkAKSDxuV3fQNWgn8LoA2DUDBnbgLQ/viewform?embedded=true"
-  width="640" height="3825" frameborder="0" marginheight="0"
-  marginwidth="0">Loading…</iframe>
+googleFormEmbed: ""
 ---
 **Dry Creek Fall Festival!**
 
@@ -28,11 +25,7 @@ Browse a thoughtfully curated market featuring talented Colorado artists, makers
 
 With activities for the kids, entertainment, local vendors, and plenty to explore, the Dry Creek Fall Festival is the perfect excuse to get outside, connect with neighbors, and support the incredible small businesses that make our community thrive.
 
-
-
 Whether you’re looking for handcrafted gifts, unique home décor, artisan goods, something tasty to eat, or simply a fun way to spend a fall Sunday in Centennial, you’ll find plenty to enjoy.
-
-
 
 What You’ll Find:
 
@@ -52,6 +45,8 @@ Family-friendly event
 
 Free admission
 
-
-
 Bring your family, invite your friends, shop local, and join us as we celebrate another beautiful Colorado autumn together at the Dry Creek Fall Festival in Centennial.
+
+
+
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd7uDBGQ5ElVnf_Ddl0VkAKSDxuV3fQNWgn8LoA2DUDBnbgLQ/viewform?embedded=true" width="640" height="3825" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
