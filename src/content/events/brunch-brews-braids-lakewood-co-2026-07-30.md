@@ -15,7 +15,7 @@ streetAddress: 7260 W Alaska Dr
 city: Lakewood
 state: CO
 zip: "80226"
-eventExtUrl: ""
+eventExtUrl: https://www.eventbrite.com/e/brunch-brews-braids-a-braiding-class-for-parents-tickets-2001023935457?aff=oddtdtcreator
 googleFormUrl: <iframe
   src="https://docs.google.com/forms/d/e/1FAIpQLSf5Wm9IHWy8QW73YbPpd-Ssrd42mOp1sSOvrMpYspZEyqXA_g/viewform?embedded=true"
   width="640" height="2827" frameborder="0" marginheight="0"
