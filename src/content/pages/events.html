@@ -59,47 +59,102 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
 
                 <div class="content__events-wrapper">
                     {% set upcomingEvents = collections.event | upcomingOnly %}
+                    {% set pastEvents = collections.event | pastOnly %}
 
-                    {% if upcomingEvents | length == 0 %}
+                    <div class="events-tabs" role="tablist" aria-label="Event categories">
+                        <button class="button secondary events-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="events-panel-upcoming" id="events-tab-upcoming" data-tab="upcoming">
+                            <span class="button-tl"></span>
+                            <span class="button-tr"></span>
+                            Upcoming Events
+                            <span class="button-bl"></span>
+                            <span class="button-br"></span>
+                        </button>
+                        <button class="button secondary events-tab" type="button" role="tab" aria-selected="false" aria-controls="events-panel-past" id="events-tab-past" data-tab="past">
+                            <span class="button-tl"></span>
+                            <span class="button-tr"></span>
+                            Past Events
+                            <span class="button-bl"></span>
+                            <span class="button-br"></span>
+                        </button>
+                    </div>
 
-                        <div class="events-empty">
-                            <h3 class="text-align--center">No Upcoming Events</h3>
-                            <p class="text-align--center">Please check back soon for new events.</p>
-                        </div>
+                    <div class="events-panel is-active" id="events-panel-upcoming" role="tabpanel" aria-labelledby="events-tab-upcoming">
+                        {% if upcomingEvents | length == 0 %}
 
-                    {% else %}
+                            <div class="events-empty">
+                                <h3 class="text-align--center">No Upcoming Events</h3>
+                                <p class="text-align--center">Please check back soon for new events.</p>
+                            </div>
 
-                        <div id="upcoming-events">
+                        {% else %}
 
-                            {% for event in upcomingEvents %}
-                            <a class="event-card" href="{{ event.url }}" data-event-date="{{ event.data.date | isoDate }}" data-umami-event="{{ page.url | truncate(16) }}: Event: {{ event.data.title | truncate(24) }}">
-                                {% image './src' + event.data.image, event.data.title, 'img-bg', 'lazy', '(max-width:
-                                850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
-                                <div class="event-card__content">
-                                    <div class="event-card__text">
-                                        <h3>{% if event.data.type %}<span class="pill event-type">{{ event.data.type | upper }}</span>{% endif %}{{ event.data.title }}</h3>
-                                        <p class="event-date">{{ event.data.date | eventDate }}</p>
-                                        <p class="event-time">{{ event.data.startTime | eventTime }} – {{ event.data.endTime | eventTime }}</p>
+                            <div class="events-list" data-events-category="upcoming" data-page-size="9">
+                                {% for event in upcomingEvents %}
+                                <a class="event-card" href="{{ event.url }}" data-event-date="{{ event.data.date | isoDate }}" data-umami-event="{{ page.url | truncate(16) }}: Event: {{ event.data.title | truncate(24) }}">
+                                    {% image './src' + event.data.image, event.data.title, 'img-bg', 'lazy', '(max-width:
+                                    850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+                                    <div class="event-card__content">
+                                        <div class="event-card__text">
+                                            <h3>{% if event.data.type %}<span class="pill event-type">{{ event.data.type | upper }}</span>{% endif %}{{ event.data.title }}</h3>
+                                            <p class="event-date">{{ event.data.date | eventDate }}</p>
+                                            <p class="event-time">{{ event.data.startTime | eventTime }} – {{ event.data.endTime | eventTime }}</p>
+                                        </div>
+                                        <div class="event-card__footer">
+                                            <p class="event-location">{{ event.data.city }}, {{ event.data.state }}</p>
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M16.6667 12.4999V18.3333H15.8334V19.1666H1.66671V18.3333H0.833374V4.16659H1.66671V3.33325H9.16671V4.99992H2.50004V17.4999H15V12.4999H16.6667Z" />
+                                                <path
+                                                    d="M19.1667 0.833252V7.49992H17.5V4.16659H16.6667V4.99992H15.8334V5.83325H15V6.66659H14.1667V7.49992H13.3334V8.33325H12.5V9.16659H11.6667V9.99992H10.8334V10.8333H10V11.6666H9.16671V12.4999H8.33337V13.3333H7.50004V14.1666H5.83337V12.4999H6.66671V11.6666H7.50004V10.8333H8.33337V9.99992H9.16671V9.16659H10V8.33325H10.8334V7.49992H11.6667V6.66659H12.5V5.83325H13.3334V4.99992H14.1667V4.16659H15V3.33325H15.8334V2.49992H12.5V0.833252H19.1667Z" />
+                                            </svg>
+                                        </div>
                                     </div>
-                                    <div class="event-card__footer">
-                                        <p class="event-location">{{ event.data.city }}, {{ event.data.state }}</p>
-                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M16.6667 12.4999V18.3333H15.8334V19.1666H1.66671V18.3333H0.833374V4.16659H1.66671V3.33325H9.16671V4.99992H2.50004V17.4999H15V12.4999H16.6667Z" />
-                                            <path
-                                                d="M19.1667 0.833252V7.49992H17.5V4.16659H16.6667V4.99992H15.8334V5.83325H15V6.66659H14.1667V7.49992H13.3334V8.33325H12.5V9.16659H11.6667V9.99992H10.8334V10.8333H10V11.6666H9.16671V12.4999H8.33337V13.3333H7.50004V14.1666H5.83337V12.4999H6.66671V11.6666H7.50004V10.8333H8.33337V9.99992H9.16671V9.16659H10V8.33325H10.8334V7.49992H11.6667V6.66659H12.5V5.83325H13.3334V4.99992H14.1667V4.16659H15V3.33325H15.8334V2.49992H12.5V0.833252H19.1667Z" />
-                                        </svg>
+                                </a>
+                                {% endfor %}
+                            </div>
+
+                        {% endif %}
+                    </div>
+
+                    <div class="events-panel" id="events-panel-past" role="tabpanel" aria-labelledby="events-tab-past" hidden>
+                        {% if pastEvents | length == 0 %}
+
+                            <div class="events-empty">
+                                <h3 class="text-align--center">No Past Events</h3>
+                                <p class="text-align--center">There aren’t any recaps to display yet.</p>
+                            </div>
+
+                        {% else %}
+
+                            <div class="events-list" data-events-category="past" data-page-size="9">
+                                {% for event in pastEvents %}
+                                <a class="event-card" href="{{ event.url }}" data-event-date="{{ event.data.date | isoDate }}" data-umami-event="{{ page.url | truncate(16) }}: Event: {{ event.data.title | truncate(24) }}">
+                                    {% image './src' + event.data.image, event.data.title, 'img-bg', 'lazy', '(max-width:
+                                    850px) 720px, (min-width: 601px) 1680px, 1920px', '' %}
+                                    <div class="event-card__content">
+                                        <div class="event-card__text">
+                                            <h3>{% if event.data.type %}<span class="pill event-type">{{ event.data.type | upper }}</span>{% endif %}{{ event.data.title }}</h3>
+                                            <p class="event-date">{{ event.data.date | eventDate }}</p>
+                                            <p class="event-time">{{ event.data.startTime | eventTime }} – {{ event.data.endTime | eventTime }}</p>
+                                        </div>
+                                        <div class="event-card__footer">
+                                            <p class="event-location">{{ event.data.city }}, {{ event.data.state }}</p>
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M16.6667 12.4999V18.3333H15.8334V19.1666H1.66671V18.3333H0.833374V4.16659H1.66671V3.33325H9.16671V4.99992H2.50004V17.4999H15V12.4999H16.6667Z" />
+                                                <path
+                                                    d="M19.1667 0.833252V7.49992H17.5V4.16659H16.6667V4.99992H15.8334V5.83325H15V6.66659H14.1667V7.49992H13.3334V8.33325H12.5V9.16659H11.6667V9.99992H10.8334V10.8333H10V11.6666H9.16671V12.4999H8.33337V13.3333H7.50004V14.1666H5.83337V12.4999H6.66671V11.6666H7.50004V10.8333H8.33337V9.99992H9.16671V9.16659H10V8.33325H10.8334V7.49992H11.6667V6.66659H12.5V5.83325H13.3334V4.99992H14.1667V4.16659H15V3.33325H15.8334V2.49992H12.5V0.833252H19.1667Z" />
+                                            </svg>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                                {% endfor %}
+                            </div>
 
-                            {% endfor %}
-
-                        </div>
-
-                    {% endif %}
-
+                        {% endif %}
+                    </div>
                 </div>
 
             </div>
@@ -239,18 +294,163 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
 
 <script>
 (function () {
-    var today = new Date();
-    today.setHours(0, 0, 0, 0);
-    var container = document.getElementById('upcoming-events');
-    if (!container) return;
-    var cards = container.querySelectorAll('.event-card[data-event-date]');
-    cards.forEach(function (card) {
-        var p = card.getAttribute('data-event-date').split('-');
-        if (new Date(p[0], p[1] - 1, p[2]) < today) card.remove();
-    });
-    if (container.children.length === 0) {
-        container.outerHTML = '<div class="events-empty"><h3 class="text-align--center">No Upcoming Events</h3><p class="text-align--center">Please check back soon for new events.</p></div>';
+    function getPageSize() {
+        return window.matchMedia('(max-width: 991px)').matches ? 6 : 9;
     }
+
+    function scrollToEvents() {
+        var eventsSection = document.getElementById('events');
+        if (!eventsSection) return;
+
+        var siteHeader = document.getElementById('navigation');
+        var offset = siteHeader ? siteHeader.offsetHeight + 20 : 74;
+        var top = eventsSection.getBoundingClientRect().top + window.scrollY - offset;
+
+        window.scrollTo({
+            top: top,
+            behavior: 'smooth'
+        });
+    }
+
+    function updateTabs(targetTab) {
+        var tabs = document.querySelectorAll('.events-tab');
+        var panels = document.querySelectorAll('.events-panel');
+
+        tabs.forEach(function (tab) {
+            var isActive = tab === targetTab;
+            tab.classList.toggle('is-active', isActive);
+            tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            tab.tabIndex = isActive ? 0 : -1;
+        });
+
+        panels.forEach(function (panel) {
+            var isActive = panel.id === 'events-panel-' + targetTab.dataset.tab;
+            panel.classList.toggle('is-active', isActive);
+            panel.hidden = !isActive;
+        });
+
+        scrollToEvents();
+    }
+
+    function buildPagination(listEl, pageCount) {
+        var pageSize = getPageSize();
+
+        if (pageCount <= 1) {
+            var existing = listEl.parentElement.querySelector('.events-pagination');
+            if (existing) existing.remove();
+            return;
+        }
+
+        var existing = listEl.parentElement.querySelector('.events-pagination');
+        if (existing) existing.remove();
+
+        var pagination = document.createElement('div');
+        pagination.className = 'events-pagination';
+        pagination.setAttribute('aria-label', 'Event pagination');
+
+        var prevButton = document.createElement('button');
+        prevButton.type = 'button';
+        prevButton.className = 'events-pagination__nav events-pagination__nav--prev';
+        prevButton.setAttribute('aria-label', 'Previous page');
+        prevButton.innerHTML = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.1666 9.16671V10.8334H4.16665V11.6667H4.99998V12.5H5.83331V13.3334H6.66665V14.1667H7.49998V15H8.33331V15.8334H9.16665V16.6667H9.99998V17.5H10.8333V18.3334H9.99998V19.1667H9.16665V18.3334H8.33331V17.5H7.49998V16.6667H6.66665V15.8334H5.83331V15H4.99998V14.1667H4.16665V13.3334H3.33331V12.5H2.49998V11.6667H1.66665V10.8334H0.833313V9.16671H1.66665V8.33337H2.49998V7.50004H3.33331V6.66671H4.16665V5.83337H4.99998V5.00004H5.83331V4.16671H6.66665V3.33337H7.49998V2.50004H8.33331V1.66671H9.16665V0.833374H9.99998V1.66671H10.8333V2.50004H9.99998V3.33337H9.16665V4.16671H8.33331V5.00004H7.49998V5.83337H6.66665V6.66671H5.83331V7.50004H4.99998V8.33337H4.16665V9.16671H19.1666Z" /></svg>';
+
+        var nextButton = document.createElement('button');
+        nextButton.type = 'button';
+        nextButton.className = 'events-pagination__nav events-pagination__nav--next';
+        nextButton.setAttribute('aria-label', 'Next page');
+        nextButton.innerHTML = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.1666 9.16671V10.8334H18.3333V11.6667H17.5V12.5H16.6666V13.3334H15.8333V14.1667H15V15H14.1666V15.8334H13.3333V16.6667H12.5V17.5H11.6666V18.3334H10.8333V19.1667H9.99998V18.3334H9.16665V17.5H9.99998V16.6667H10.8333V15.8334H11.6666V15H12.5V14.1667H13.3333V13.3334H14.1666V12.5H15V11.6667H15.8333V10.8334H0.833313V9.16671H15.8333V8.33337H15V7.50004H14.1666V6.66671H13.3333V5.83337H12.5V5.00004H11.6666V4.16671H10.8333V3.33337H9.99998V2.50004H9.16665V1.66671H9.99998V0.833374H10.8333V1.66671H11.6666V2.50004H12.5V3.33337H13.3333V4.16671H14.1666V5.00004H15V5.83337H15.8333V6.66671H16.6666V7.50004H17.5V8.33337H18.3333V9.16671H19.1666Z" /></svg>';
+
+        pagination.appendChild(prevButton);
+
+        for (var page = 1; page <= pageCount; page += 1) {
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'events-pagination__button';
+            button.textContent = page;
+            button.setAttribute('aria-label', 'Go to page ' + page);
+            button.dataset.page = String(page);
+            if (page === 1) button.classList.add('is-current');
+            pagination.appendChild(button);
+        }
+
+        pagination.appendChild(nextButton);
+        listEl.parentElement.appendChild(pagination);
+
+        function updatePageState(currentPage) {
+            var cards = listEl.querySelectorAll('.event-card');
+            cards.forEach(function (card, index) {
+                var pageStart = (currentPage - 1) * pageSize;
+                var pageEnd = pageStart + pageSize;
+                card.hidden = index < pageStart || index >= pageEnd;
+            });
+
+            pagination.querySelectorAll('.events-pagination__button').forEach(function (pageButton) {
+                var isCurrent = Number(pageButton.dataset.page) === currentPage;
+                pageButton.classList.toggle('is-current', isCurrent);
+                pageButton.setAttribute('aria-current', isCurrent ? 'page' : 'false');
+            });
+
+            prevButton.disabled = currentPage === 1;
+            nextButton.disabled = currentPage === pageCount;
+            listEl.dataset.page = String(currentPage);
+            scrollToEvents();
+        }
+
+        pagination.querySelectorAll('.events-pagination__button').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var currentPage = Number(button.dataset.page);
+                updatePageState(currentPage);
+            });
+        });
+
+        prevButton.addEventListener('click', function () {
+            var currentPage = Number(listEl.dataset.page || 1);
+            if (currentPage > 1) {
+                currentPage -= 1;
+                updatePageState(currentPage);
+            }
+        });
+
+        nextButton.addEventListener('click', function () {
+            var currentPage = Number(listEl.dataset.page || 1);
+            if (currentPage < pageCount) {
+                currentPage += 1;
+                updatePageState(currentPage);
+            }
+        });
+
+        updatePageState(1);
+    }
+
+    document.querySelectorAll('.events-list').forEach(function (listEl) {
+        var cards = Array.from(listEl.querySelectorAll('.event-card'));
+        if (!cards.length) return;
+
+        var pageSize = getPageSize();
+        var totalPages = Math.ceil(cards.length / pageSize);
+        var currentPage = 1;
+
+        cards.forEach(function (card, index) {
+            card.hidden = index >= pageSize;
+        });
+
+        if (totalPages > 1) {
+            buildPagination(listEl, totalPages);
+            var paginationButtons = listEl.parentElement.querySelectorAll('.events-pagination__button');
+            if (paginationButtons.length) {
+                paginationButtons[0].classList.add('is-current');
+                paginationButtons[0].setAttribute('aria-current', 'page');
+            }
+        }
+
+        listEl.dataset.page = String(currentPage);
+    });
+
+    document.querySelectorAll('.events-tab').forEach(function (tab) {
+        tab.addEventListener('click', function () {
+            updateTabs(tab);
+        });
+    });
 }());
 </script>
 

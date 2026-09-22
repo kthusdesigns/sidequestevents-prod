@@ -243,6 +243,14 @@ module.exports = function (eleventyConfig) {
             .sort((a, b) => new Date(a.data.date) - new Date(b.data.date));
     });
 
+    eleventyConfig.addFilter("pastOnly", function (collection) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return collection
+            .filter(item => new Date(item.data.date) < today)
+            .sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+    });
+
     /*
     * 📅 Is Future Date Filter
     * Checks if a date is in the future (not expired)
