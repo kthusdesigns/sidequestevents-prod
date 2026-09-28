@@ -294,10 +294,61 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
 
 <script>
 (function () {
+    /**
+     * =========================================================================
+     * SIDEQUEST EVENTS: CLIENT-SIDE EVENT SORTING & PAGINATION
+     * =========================================================================
+     * Background:
+     * 11ty statically builds the upcoming and past event lists at deploy time.
+     * Between builds/pushes, events whose dates have passed will linger in the
+     * "Upcoming" tab on static HTML.
+     *
+     * This script runs immediately on DOM load to:
+     * 1. Detect any upcoming events whose date is prior to today (Mountain Time).
+     * 2. Move expired event cards from the Upcoming tab to the Past tab.
+     * 3. Re-sort the Past tab in descending chronological order (newest first).
+     * 4. Dynamically compute and initialize responsive pagination on both tabs.
+     * 5. Manage tab switching and empty state views without layout shift.
+     * =========================================================================
+     */
+
+    /**
+     * Returns today's date formatted as 'YYYY-MM-DD' in Mountain Time (America/Denver).
+     * Using Mountain Time ensures that events expire consistently based on Denver local
+     * time, regardless of the visitor's local device timezone.
+     * Locale 'en-CA' natively produces standard ISO YYYY-MM-DD output.
+     */
+    function getMountainDateString() {
+        try {
+            return new Intl.DateTimeFormat('en-CA', {
+                timeZone: 'America/Denver',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            }).format(new Date());
+        } catch (e) {
+            // Fallback for older environments without Intl timeZone support
+            var d = new Date();
+            var year = d.getFullYear();
+            var month = String(d.getMonth() + 1).padStart(2, '0');
+            var day = String(d.getDate()).padStart(2, '0');
+            return year + '-' + month + '-' + day;
+        }
+    }
+
+    /**
+     * Determines how many event cards to show per page based on viewport width:
+     * - Mobile / Tablet (< 992px): 6 cards per page
+     * - Desktop (>= 992px): 9 cards per page
+     */
     function getPageSize() {
         return window.matchMedia('(max-width: 991px)').matches ? 6 : 9;
     }
 
+    /**
+     * Smoothly scrolls the viewport to the top of the #events feed section,
+     * accounting for the sticky navigation bar height.
+     */
     function scrollToEvents() {
         var eventsSection = document.getElementById('events');
         if (!eventsSection) return;
@@ -312,10 +363,15 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
         });
     }
 
+    /**
+     * Handles tab switching between "Upcoming Events" and "Past Events".
+     * Updates ARIA roles, active classes, and panel visibility.
+     */
     function updateTabs(targetTab) {
         var tabs = document.querySelectorAll('.events-tab');
         var panels = document.querySelectorAll('.events-panel');
 
+        // Toggle active button states and ARIA attributes
         tabs.forEach(function (tab) {
             var isActive = tab === targetTab;
             tab.classList.toggle('is-active', isActive);
@@ -323,6 +379,7 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
             tab.tabIndex = isActive ? 0 : -1;
         });
 
+        // Toggle active tab panel visibility
         panels.forEach(function (panel) {
             var isActive = panel.id === 'events-panel-' + targetTab.dataset.tab;
             panel.classList.toggle('is-active', isActive);
@@ -332,15 +389,21 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
         scrollToEvents();
     }
 
+    /**
+     * Constructs pagination controls (Prev, numbered buttons, Next) for a given list.
+     * Also controls which cards are displayed vs hidden via the HTML `hidden` attribute.
+     */
     function buildPagination(listEl, pageCount) {
         var pageSize = getPageSize();
 
+        // If all cards fit on a single page, remove any stale pagination and exit
         if (pageCount <= 1) {
             var existing = listEl.parentElement.querySelector('.events-pagination');
             if (existing) existing.remove();
             return;
         }
 
+        // Clean up previous pagination elements before rebuilding
         var existing = listEl.parentElement.querySelector('.events-pagination');
         if (existing) existing.remove();
 
@@ -348,12 +411,14 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
         pagination.className = 'events-pagination';
         pagination.setAttribute('aria-label', 'Event pagination');
 
+        // Previous page button (with retro pixel arrow SVG)
         var prevButton = document.createElement('button');
         prevButton.type = 'button';
         prevButton.className = 'events-pagination__nav events-pagination__nav--prev';
         prevButton.setAttribute('aria-label', 'Previous page');
         prevButton.innerHTML = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.1666 9.16671V10.8334H4.16665V11.6667H4.99998V12.5H5.83331V13.3334H6.66665V14.1667H7.49998V15H8.33331V15.8334H9.16665V16.6667H9.99998V17.5H10.8333V18.3334H9.99998V19.1667H9.16665V18.3334H8.33331V17.5H7.49998V16.6667H6.66665V15.8334H5.83331V15H4.99998V14.1667H4.16665V13.3334H3.33331V12.5H2.49998V11.6667H1.66665V10.8334H0.833313V9.16671H1.66665V8.33337H2.49998V7.50004H3.33331V6.66671H4.16665V5.83337H4.99998V5.00004H5.83331V4.16671H6.66665V3.33337H7.49998V2.50004H8.33331V1.66671H9.16665V0.833374H9.99998V1.66671H10.8333V2.50004H9.99998V3.33337H9.16665V4.16671H8.33331V5.00004H7.49998V5.83337H6.66665V6.66671H5.83331V7.50004H4.99998V8.33337H4.16665V9.16671H19.1666Z" /></svg>';
 
+        // Next page button (with retro pixel arrow SVG)
         var nextButton = document.createElement('button');
         nextButton.type = 'button';
         nextButton.className = 'events-pagination__nav events-pagination__nav--next';
@@ -362,6 +427,7 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
 
         pagination.appendChild(prevButton);
 
+        // Numbered page buttons
         for (var page = 1; page <= pageCount; page += 1) {
             var button = document.createElement('button');
             button.type = 'button';
@@ -369,14 +435,23 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
             button.textContent = page;
             button.setAttribute('aria-label', 'Go to page ' + page);
             button.dataset.page = String(page);
-            if (page === 1) button.classList.add('is-current');
+            if (page === 1) {
+                button.classList.add('is-current');
+                button.setAttribute('aria-current', 'page');
+            } else {
+                button.setAttribute('aria-current', 'false');
+            }
             pagination.appendChild(button);
         }
 
         pagination.appendChild(nextButton);
         listEl.parentElement.appendChild(pagination);
 
-        function updatePageState(currentPage) {
+        /**
+         * Slices visible cards for `currentPage`, updates button states,
+         * and optionally scrolls to the top of the events feed on user interaction.
+         */
+        function updatePageState(currentPage, shouldScroll) {
             var cards = listEl.querySelectorAll('.event-card');
             cards.forEach(function (card, index) {
                 var pageStart = (currentPage - 1) * pageSize;
@@ -384,44 +459,139 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
                 card.hidden = index < pageStart || index >= pageEnd;
             });
 
+            // Update active state on pagination buttons
             pagination.querySelectorAll('.events-pagination__button').forEach(function (pageButton) {
                 var isCurrent = Number(pageButton.dataset.page) === currentPage;
                 pageButton.classList.toggle('is-current', isCurrent);
                 pageButton.setAttribute('aria-current', isCurrent ? 'page' : 'false');
             });
 
+            // Disable prev/next when hitting bounds
             prevButton.disabled = currentPage === 1;
             nextButton.disabled = currentPage === pageCount;
             listEl.dataset.page = String(currentPage);
-            scrollToEvents();
+
+            // Only scroll when triggered by explicit user interaction, avoiding scroll jumps on load
+            if (shouldScroll) {
+                scrollToEvents();
+            }
         }
 
+        // Attach click handlers to page number buttons
         pagination.querySelectorAll('.events-pagination__button').forEach(function (button) {
             button.addEventListener('click', function () {
                 var currentPage = Number(button.dataset.page);
-                updatePageState(currentPage);
+                updatePageState(currentPage, true);
             });
         });
 
+        // Attach click handler to Previous button
         prevButton.addEventListener('click', function () {
             var currentPage = Number(listEl.dataset.page || 1);
             if (currentPage > 1) {
                 currentPage -= 1;
-                updatePageState(currentPage);
+                updatePageState(currentPage, true);
             }
         });
 
+        // Attach click handler to Next button
         nextButton.addEventListener('click', function () {
             var currentPage = Number(listEl.dataset.page || 1);
             if (currentPage < pageCount) {
                 currentPage += 1;
-                updatePageState(currentPage);
+                updatePageState(currentPage, true);
             }
         });
 
-        updatePageState(1);
+        // Set initial view to page 1 without triggering an unwanted scroll
+        updatePageState(1, false);
     }
 
+    /**
+     * Checks for events in the "Upcoming Events" panel whose date has passed.
+     * Moves them to the "Past Events" panel and re-sorts all past events descending.
+     */
+    function movePastEvents() {
+        var todayStr = getMountainDateString();
+        var upcomingPanel = document.getElementById('events-panel-upcoming');
+        var pastPanel = document.getElementById('events-panel-past');
+
+        if (!upcomingPanel || !pastPanel) return;
+
+        var upcomingList = upcomingPanel.querySelector('.events-list');
+        if (!upcomingList) return;
+
+        var upcomingCards = Array.from(upcomingList.querySelectorAll('.event-card'));
+        var cardsToMove = [];
+
+        // Identify cards in Upcoming where date < today's date in Denver
+        upcomingCards.forEach(function (card) {
+            var eventDate = card.getAttribute('data-event-date');
+            if (eventDate && eventDate < todayStr) {
+                cardsToMove.push(card);
+            }
+        });
+
+        // If no events have expired, upcoming list is already current
+        if (cardsToMove.length === 0) return;
+
+        // Ensure the past events list container exists (creates one if site had 0 past events at build)
+        var pastList = pastPanel.querySelector('.events-list');
+        if (!pastList) {
+            pastList = document.createElement('div');
+            pastList.className = 'events-list';
+            pastList.setAttribute('data-events-category', 'past');
+            pastList.setAttribute('data-page-size', '9');
+            pastPanel.appendChild(pastList);
+        }
+
+        // If the past panel had an empty state message ("No Past Events"), remove it
+        var pastEmpty = pastPanel.querySelector('.events-empty');
+        if (pastEmpty) {
+            pastEmpty.remove();
+        }
+
+        // Move expired event cards into the past events list
+        cardsToMove.forEach(function (card) {
+            pastList.appendChild(card);
+        });
+
+        // Re-sort all cards in the Past tab in descending order (most recent past event first)
+        var allPastCards = Array.from(pastList.querySelectorAll('.event-card'));
+        allPastCards.sort(function (a, b) {
+            var dateA = a.getAttribute('data-event-date') || '';
+            var dateB = b.getAttribute('data-event-date') || '';
+            return dateB.localeCompare(dateA);
+        });
+        allPastCards.forEach(function (card) {
+            pastList.appendChild(card);
+        });
+
+        // If no upcoming events remain, display the "No Upcoming Events" empty state
+        var remainingUpcoming = upcomingList.querySelectorAll('.event-card');
+        if (remainingUpcoming.length === 0) {
+            upcomingList.remove();
+            var existingPag = upcomingPanel.querySelector('.events-pagination');
+            if (existingPag) existingPag.remove();
+
+            var upcomingEmpty = upcomingPanel.querySelector('.events-empty');
+            if (!upcomingEmpty) {
+                upcomingEmpty = document.createElement('div');
+                upcomingEmpty.className = 'events-empty';
+                upcomingEmpty.innerHTML = '<h3 class="text-align--center">No Upcoming Events</h3><p class="text-align--center">Please check back soon for new events.</p>';
+                upcomingPanel.appendChild(upcomingEmpty);
+            }
+        }
+    }
+
+    // =========================================================================
+    // EXECUTION PIPELINE (Runs synchronously on DOM load before first paint)
+    // =========================================================================
+
+    // 1. Move any expired events from Upcoming to Past and sort Past descending
+    movePastEvents();
+
+    // 2. Initialize pagination and card slicing on both event lists
     document.querySelectorAll('.events-list').forEach(function (listEl) {
         var cards = Array.from(listEl.querySelectorAll('.event-card'));
         if (!cards.length) return;
@@ -430,22 +600,20 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
         var totalPages = Math.ceil(cards.length / pageSize);
         var currentPage = 1;
 
+        // Hide cards beyond page 1
         cards.forEach(function (card, index) {
             card.hidden = index >= pageSize;
         });
 
+        // Build pagination controls if there are multiple pages
         if (totalPages > 1) {
             buildPagination(listEl, totalPages);
-            var paginationButtons = listEl.parentElement.querySelectorAll('.events-pagination__button');
-            if (paginationButtons.length) {
-                paginationButtons[0].classList.add('is-current');
-                paginationButtons[0].setAttribute('aria-current', 'page');
-            }
         }
 
         listEl.dataset.page = String(currentPage);
     });
 
+    // 3. Attach click event listeners for tab switching
     document.querySelectorAll('.events-tab').forEach(function (tab) {
         tab.addEventListener('click', function () {
             updateTabs(tab);
