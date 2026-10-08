@@ -1,7 +1,7 @@
 ---
 image: /assets/images/blog/singlesmixer.png
 type: Networking
-title: POSTPONED - Singles Mixer
+title: Singles Mixer
 excerpt: Join SideQuest Events for a Singles Mixer designed to make meeting new
   people easy, natural, and genuinely enjoyable.
 date: 2026-06-15T22:45:33.002Z
