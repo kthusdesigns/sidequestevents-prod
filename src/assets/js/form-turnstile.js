@@ -6,7 +6,7 @@
 
   // Paste the PUBLIC site key of your SideQuest Turnstile widget here.
   // The PRIVATE secret key belongs only in the Cloudflare dashboard.
-  const SITE_KEY = "REPLACE_WITH_SIDEQUEST_TURNSTILE_SITE_KEY";
+  const SITE_KEY = "0x4AAAAAAF3CS8LERoyBuHI5";
   let loaded = false;
 
   function loadTurnstile() {

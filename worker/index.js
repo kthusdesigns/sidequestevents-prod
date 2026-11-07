@@ -2,7 +2,7 @@
 // Handles both Contact Us and CMS-generated Private Event Package Inquiry forms.
 // Email subjects, field order and labels match the supplied Netlify notifications.
 const SUCCESS_PATH = "/thank-you/";
-const NOTIFICATION_TO = ["hello@sidequesteventsco.com"];
+// const NOTIFICATION_TO = ["hello@sidequesteventsco.com"];
 const NOTIFICATION_BCC = ["hello@kthusdesigns.com"];
 const FROM = "sidequesteventsco.com <forms@notifications.kthusdesigns.com>";
 const TURNSTILE_ACTION = "sidequest_form";
