@@ -19,7 +19,7 @@ backend:
 logo_url: https://res.cloudinary.com/dxave0gy0/image/upload/v1779471546/CMS_Identity__Portal_Logo_mkvebi.png
 
 # Add site links in Decap CMS (optional)
-site_url: https://sidequesteventsco-prod.netlify.app
+site_url: https://sidequesteventsco.com
 
 # Keep this to allow you to edit the cms locally
 local_backend: true

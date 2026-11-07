@@ -3,6 +3,10 @@
 {% block head %}
     <link rel="stylesheet" href="/assets/css/events.css">
 
+    {% if 'privateEventPackage' in tags %}
+        <script defer src="/assets/js/form-turnstile.js"></script>
+    {% endif %}
+
     {% if 'event' in tags %}
         {% include "components/event-schema.html" %}
     {% endif %}
@@ -188,7 +192,8 @@
 
                 <div class="content__form-wrapper">
                     <!-- Form -->
-                    <form id="package-inquiry" name="Private Event Package Inquiry" method="post" action="/thank-you/" netlify-honeypot="bot-field" data-netlify="true">
+                    <form id="package-inquiry" name="Private Event Package Inquiry" method="post" action="/thank-you/">
+                        <input type="hidden" name="form-name" value="Private Event Package Inquiry">
 
                         <div class="hidden">
                             <label>
@@ -300,7 +305,9 @@
                             </label>
                         </div>
 
-                        <div data-netlify-recaptcha="true"></div>
+                        <div class="form-field-group">
+                            <div data-sidequest-turnstile></div>
+                        </div>
 
                         <div class="form-field-group submit">
                             <button class="button primary" type="submit">

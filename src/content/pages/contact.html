@@ -10,6 +10,7 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
 
 {% block head %}
     <link rel="stylesheet" href="/assets/css/contact.css">
+    <script defer src="/assets/js/form-turnstile.js"></script>
 
     {% include "components/local-schema.html" %}
 {% endblock %}
@@ -75,7 +76,8 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
 
                 <div class="content__form-wrapper">
                     <!-- Form -->
-                    <form id="contact" name="Contact Us" method="post" action="/thank-you/" netlify-honeypot="bot-field" data-netlify="true">
+                    <form id="contact" name="Contact Us" method="post" action="/thank-you/">
+                        <input type="hidden" name="form-name" value="Contact Us">
 
                         <div class="hidden">
                             <label>
@@ -133,7 +135,9 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
                             </label>
                         </div>
 
-                        <div data-netlify-recaptcha="true"></div>
+                        <div class="form-field-group">
+                            <div data-sidequest-turnstile></div>
+                        </div>
 
                         <div class="form-field-group submit">
                             <button class="button primary" type="submit">

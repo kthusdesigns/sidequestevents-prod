@@ -1,0 +1,43 @@
+---
+title: "Page Not Found | SideQuest Events | Centennial, CO"
+description: "This page could not be found. Return to the SideQuest Events homepage."
+permalink: "/404.html"
+eleventyExcludeFromCollections: true
+tags: []
+---
+
+{% extends "layouts/base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/assets/css/thank-you.css">
+{% endblock %}
+{% block body %}
+
+<!-- ============================================ -->
+<!--                Hero: 404 Page                -->
+<!-- ============================================ -->
+
+<section id="hero" class="hero">
+    <div class="container">
+        <div class="inner">
+            <div class="content">
+                <div class="content__text-wrapper">
+                    <h1 class="text-align--center"><span class="pill odd center">LOST YOUR WAY?</span> PAGE NOT FOUND</h1>
+                    <p class="text-align--center">Looks like this page doesn't exist or has moved. Head back to the homepage to continue your SideQuest!</p>
+                    <div class="button-wrapper">
+                        {% set ctaCopy = 'Return to Homepage' %}
+                        {% set ctaLink = '/' %}
+                        {% set umamiSection = 'Hero' %}
+                        {% set umamiAction = 'Go Home' %}
+                        {% include "components/cta-secondary--button.html" %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% image './src/assets/images/gradients/GRADIENT_Contact_000.jpg', 'Grainy mesh gradient in purple and black', 'img-bg', 'eager', '(max-width: 850px) 720px, (min-width: 601px) 1680px, 1920px', 'high' %}
+
+</section>
+
+{% endblock %}

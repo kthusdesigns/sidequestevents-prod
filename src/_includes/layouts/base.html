@@ -11,7 +11,7 @@
     <meta name="description" content="{{ excerpt or description }}">
     <link rel="canonical" href="{{ client.domain }}{{ page.url }}">
     <meta name="generator" content="{{ eleventy.generator }}">
-    {% if page.url == '/thank-you/' %}
+    {% if page.url == '/thank-you/' or page.url == '/404.html' %}
         <meta name="robots" content="noindex">
     {% endif %}
 

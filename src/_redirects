@@ -1,12 +1,6 @@
-# -------------------------
-# FORCE HTTPS + CANONICAL DOMAIN
-# -------------------------
-
-https://sidequesteventsco-prod.netlify.app/*  https://sidequesteventsco.com/:splat  301!
-http://sidequesteventsco.com/*               https://sidequesteventsco.com/:splat  301!
-
-# -------------------------
-# SPA CATCH-ALL (keeps Eleventy pages working)
-# -------------------------
-
-/*  /index.html  200
+# ============================================
+# SideQuest Events page-level redirects
+# ============================================
+# Format: /old-path/ /new-path/ 301
+# Canonical host / HTTPS redirects belong in Cloudflare Domains > Rules > Redirect Rules.
+# Do not add a catch-all here; the Worker serves a branded HTTP 404 page.
