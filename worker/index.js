@@ -3,6 +3,7 @@
 // Email subjects, field order and labels match the supplied Netlify notifications.
 const SUCCESS_PATH = "/thank-you/";
 const NOTIFICATION_TO = ["hello@sidequesteventsco.com"];
+
 const NOTIFICATION_BCC = ["hello@kthusdesigns.com"];
 const FROM = "sidequesteventsco.com <forms@notifications.kthusdesigns.com>";
 const TURNSTILE_ACTION = "sidequest_form";
@@ -134,11 +135,12 @@ async function verifyTurnstile(request, env, token) {
   if (!response.ok) throw new Error("Turnstile validation service unavailable");
   const result = await response.json();
   return result.success === true &&
-    result.hostname === new URL(request.url).hostname &&
-    result.action === TURNSTILE_ACTION;
+    ["sidequesteventsco.com", "www.sidequesteventsco.com", "sidequesteventsco-prod.netlify.app"].includes(result.hostname) &&
+    (!request.headers.get("Origin") || new URL(request.headers.get("Origin")).hostname === result.hostname) &&
+    result.action === TURNSTILE_ACTION ? result.hostname : false;
 }
 
-const redirectToSuccess = (request) => Response.redirect(new URL(SUCCESS_PATH, request.url), 303);
+const redirectToSuccess = () => Response.redirect("https://sidequesteventsco.com/thank-you/", 303);
 
 export default {
   async fetch(request, env) {
@@ -148,7 +150,12 @@ export default {
     }
 
     const origin = request.headers.get("Origin");
-    if (origin && origin !== url.origin) return new Response("Forbidden", { status: 403 });
+    const allowedOrigins = [
+      "https://sidequesteventsco.com",
+      "https://www.sidequesteventsco.com",
+      "https://sidequesteventsco-prod.netlify.app"
+    ];
+    if (origin && !allowedOrigins.includes(origin)) return new Response("Forbidden", { status: 403 });
 
     const contentType = (request.headers.get("Content-Type") || "").toLowerCase();
     if (!contentType.includes("application/x-www-form-urlencoded")) {
@@ -188,11 +195,12 @@ export default {
       return new Response("Security verification expired or failed. Please refresh and try again.", { status: 403 });
     }
 
+    const isPreviewTest = verified === "sidequesteventsco-prod.netlify.app";
     const notification = formatNotification(fields, FORMS[formName].entries);
     const email = {
       from: FROM,
-      to: NOTIFICATION_TO,
-      bcc: NOTIFICATION_BCC,
+      to: isPreviewTest ? ["hello@kthusdesigns.com"] : NOTIFICATION_TO,
+      bcc: isPreviewTest ? [] : NOTIFICATION_BCC,
       reply_to: fields.email,
       subject: FORMS[formName].subject,
       text: notification.text,

@@ -2,5 +2,5 @@
 # SideQuest Events page-level redirects
 # ============================================
 # Format: /old-path/ /new-path/ 301
-# Canonical host / HTTPS redirects belong in Cloudflare Domains > Rules > Redirect Rules.
-# Do not add a catch-all here; the Worker serves a branded HTTP 404 page.
+# Netlify Domain management handles HTTPS and www-to-apex redirects.
+# Netlify serves /404.html with an HTTP 404. Do not add SPA catch-alls.
