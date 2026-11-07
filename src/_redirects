@@ -4,3 +4,6 @@
 # Format: /old-path/ /new-path/ 301
 # Netlify Domain management handles HTTPS and www-to-apex redirects.
 # Netlify serves /404.html with an HTTP 404. Do not add SPA catch-alls.
+
+https://sidequesteventsco-prod.netlify.app/* https://sidequesteventsco.com/:splat 301!
+https://sidequesteventsco-prod.netlify.app/* https://sidequesteventsco.com/:splat 301!
