@@ -1,7 +1,7 @@
 ---
 image: /assets/images/private-event-packages/img_7412.png
 type: Fundraiser
-title: SideQuest Events Fundraisers - Every Cause Has a Quest. Let's Level It Up.
+title: "SideQuest Events Fundraisers: Every Cause Has a Quest. Let's Level It Up."
 excerpt: >-
   Every Cause Has a Quest. Let's Level It Up.
 
