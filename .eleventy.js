@@ -74,7 +74,10 @@ async function imageShortcode(
 		</picture>`;
 }
 
+const cloudflareForms = require("./src/config/processors/cloudflareForms");
+
 module.exports = function (eleventyConfig) {
+    eleventyConfig.addTransform("cloudflareForms", cloudflareForms);
     // adds the navigation plugin for easy navs
     eleventyConfig.addPlugin(eleventyNavigationPlugin);
 

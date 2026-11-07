@@ -1,229 +1,251 @@
-// SideQuest Events — Cloudflare form handler.
-// Handles both Contact Us and CMS-generated Private Event Package Inquiry forms.
-// Email subjects, field order and labels match the supplied Netlify notifications.
-const SUCCESS_PATH = "/thank-you/";
-const NOTIFICATION_TO = ["hello@sidequesteventsco.com"];
+/**
+ * Shared form-to-email Worker (v1.3 — dynamic forms, Git-controlled notification routing).
+ * Keep this file IDENTICAL across sites. All site differences belong in site-config.js.
+ * New form names and new fields require no Worker changes.
+ * Do not use for card details, bank data, PHI, or other regulated data.
+ */
+import { SITE } from './site-config.js';
 
-const NOTIFICATION_BCC = ["hello@kthusdesigns.com"];
-const FROM = "sidequesteventsco.com <forms@notifications.kthusdesigns.com>";
-const TURNSTILE_ACTION = "sidequest_form";
+const LABELS_FIELD = 'form-field-labels';
+const OMIT = new Set(['form-name', 'form-subject', 'form-success', 'bot-field', 'cf-turnstile-response', 'form-reply-to-field', LABELS_FIELD]);
+const MAX_BODY_BYTES = 7 * 1024 * 1024;
+const MAX_FIELD_COUNT = 80;
+const MAX_TEXT_BYTES = 32_000;
+const MAX_FILE_COUNT = 3;
+const MAX_FILE_BYTES = 5 * 1024 * 1024;
+const MAX_ALL_FILES_BYTES = 5 * 1024 * 1024;
+const FILE_TYPES = new Set(['pdf', 'doc', 'docx', 'txt', 'rtf', 'jpg', 'jpeg', 'png', 'webp', 'csv', 'xlsx']);
 
-const FORMS = {
-  "Contact Us": {
-    subject: "Form Submission | Contact Us | sidequesteventsco.com",
-    entries: [
-      ["First Name", "firstName"],
-      ["Last Name", "lastName"],
-      ["Email", "email"],
-      ["Phone Number", "phoneNumber"],
-      ["Topic", "topic"],
-      ["Message", "message"]
-    ]
-  },
-  "Private Event Package Inquiry": {
-    subject: "Private Event Package Inquiry | sidequesteventsco.com",
-    entries: [
-      ["Package", "package"],
-      ["First Name", "firstName"],
-      ["Last Name", "lastName"],
-      ["Email", "email"],
-      ["Phone Number", "phoneNumber"],
-      ["Desired Date", "desiredDate"],
-      ["Desired Time", "desiredTime"],
-      ["Guest Count", "guestCount"],
-      ["Message", "message"]
-    ]
+const fail = (message, status) => new Response(message, {
+  status,
+  headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' }
+});
+
+const escaped = value => String(value).replace(/[&<>"']/g, c => ({
+  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+})[c]);
+
+const safeName = value => typeof value === 'string' &&
+  value.length > 0 && value.length <= 100 &&
+  !/[\r\n\x00-\x1F\x7F<>]/.test(value) &&
+  /^[\p{L}\p{N}]/u.test(value);
+
+const byteLength = s => new TextEncoder().encode(s).byteLength;
+
+// Labels are optional display metadata sent by the single reusable browser helper.
+// They never control recipients, sender, redirects, headers, or verified field values.
+function readLabels(formData) {
+  const raw = formData.get(LABELS_FIELD);
+  const labels = new Map();
+  if (raw == null) return labels;
+  if (typeof raw !== 'string' || raw.length > 12_000 || !raw) return null;
+  let parsed;
+  try { parsed = JSON.parse(raw); } catch { return null; }
+  if (!parsed || Array.isArray(parsed) || typeof parsed !== 'object') return null;
+  const items = Object.entries(parsed);
+  if (items.length > MAX_FIELD_COUNT) return null;
+  for (const [key, val] of items) {
+    if (!/^[A-Za-z][A-Za-z0-9_.\[\]-]{0,79}$/.test(key) || OMIT.has(key) ||
+      typeof val !== 'string' || val.length > 120 || val.length === 0 ||
+      val.trim() !== val || !/^[\p{L}\p{N}]/u.test(val) ||
+      /[\x00-\x1F\x7F<>]/.test(val)) return null;
+    labels.set(key, val);
   }
-};
-
-function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, (character) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-  })[character]);
+  return labels;
 }
 
-function formatNotification(fields, entries) {
-  const text = entries
-    .map(([label, key]) => `${label}:\n${fields[key] || ""}`)
-    .join("\n\n");
+function niceLabel(key) {
+  // Generic fallback, with no per-field names to maintain.
+  const original = key.replace(/\[\]$/, '');
+  return original.replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
+    .replace(/([a-z\d])([A-Z])/g, '$1 $2')
+    .replace(/[_.-]+/g, ' ').replace(/\s+/g, ' ').trim()
+    .replace(/^./, c => c.toUpperCase());
+}
 
-  const htmlContent = entries.map(([label, key]) => {
-    const value = fields[key] || "";
-    let formatted = escapeHtml(value).replace(/\r?\n/g, "<br>");
+function notification(entries, attachments, labels) {
+  const labelFor = key => labels.get(key) || niceLabel(key);
+  const itemTexts = entries.map(([name, values]) => [labelFor(name),
+    name.endsWith('[]') || values.length > 1 ? JSON.stringify(values.filter(Boolean)) : (values[0] || '')]);
+  const fileNotes = attachments.map(file => [`Attachment: ${labelFor(file.field)}`, file.filename]);
+  const all = [...itemTexts, ...fileNotes];
+  const text = all.map(([label, value]) => `${label}:\n${value}`).join('\n\n');
+  const htmlRows = all.map(([label, value]) =>
+    `<div style="margin:0 0 24px"><div style="font-weight:600">${escaped(label)}</div>` +
+    `<div style="white-space:pre-wrap">${escaped(value)}</div></div>`).join('');
+  return { text,
+    html: '<!doctype html><html lang="en"><head><meta charset="utf-8"></head>' +
+      `<body style="margin:0;padding:24px;color:#222;font:14px/1.5 Arial,Helvetica,sans-serif">${htmlRows}</body></html>`
+  };
+}
 
-    if (key === "email") {
-      formatted = `<a href="mailto:${escapeHtml(value)}" style="color:#1a73e8;text-decoration:underline;">${escapeHtml(value)}</a>`;
-    } else if (key === "phoneNumber") {
-      const phoneHref = value.replace(/[^\d+]/g, "");
-      formatted = `<a href="tel:${escapeHtml(phoneHref)}" style="color:#1a73e8;text-decoration:underline;">${escapeHtml(value)}</a>`;
+function safeRedirect(formData) {
+  const path = String(formData.get('form-success') || SITE.successPath);
+  // On-site paths only. An external target or //host must NEVER be accepted.
+  if (!/^\/(?!\/)[A-Za-z0-9_\/.-]*\/?$/.test(path) || path.includes('..') || path.includes('\\')) return null;
+  return new URL(path, `https://${SITE.domain}`).href;
+}
+
+function validOrigin(request) {
+  const raw = request.headers.get('Origin');
+  if (!raw) return { ok: true, hostname: null }; // Siteverify hostname remains mandatory.
+  try {
+    const parsed = new URL(raw);
+    if (parsed.protocol !== 'https:' || parsed.port ||
+        !SITE.allowedHosts.includes(parsed.hostname) || parsed.origin !== raw) {
+      return { ok: false };
     }
-
-    return `<div style="margin:0 0 28px;"><div>${escapeHtml(label)}:</div><div>${formatted}</div></div>`;
-  }).join("");
-
-  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"></head>
-<body style="margin:0;padding:24px;background:#fff;color:#202124;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.5;">${htmlContent}</body></html>`;
-  return { text, html };
+    return { ok: true, hostname: parsed.hostname };
+  } catch { return { ok: false }; }
 }
 
-function denverDatePlus14() {
-  // Calendar-day comparison in the business's local timezone, including DST.
-  const parts = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/Denver", year: "numeric", month: "2-digit", day: "2-digit"
-  }).formatToParts(new Date());
-  const part = (type) => Number(parts.find((item) => item.type === type).value);
-  const minimumDate = new Date(Date.UTC(part("year"), part("month") - 1, part("day") + 14));
-  return minimumDate.toISOString().slice(0, 10);
-}
-
-function getFields(form, formName) {
-  const fields = {};
-  for (const [, key] of FORMS[formName].entries) {
-    fields[key] = (form.get(key) || "").trim();
-  }
-  return fields;
-}
-
-function validateFields(fields, formName) {
-  const required = ["firstName", "lastName", "email", "phoneNumber"];
-  if (formName === "Contact Us") required.push("topic", "message");
-  else required.push("package", "desiredDate", "desiredTime", "guestCount");
-
-  if (required.some((key) => !fields[key])) return false;
-  if (fields.firstName.length > 120 || fields.lastName.length > 120) return false;
-  if (fields.email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email)) return false;
-  if (fields.phoneNumber.length > 50 || !/^[\d\s()+.\-]+$/.test(fields.phoneNumber)) return false;
-  if (fields.message.length > 5000) return false;
-
-  if (formName === "Contact Us") {
-    return [
-      "Vendor application", "Private event inquiry", "Event sponsorship",
-      "General question", "Other"
-    ].includes(fields.topic);
-  }
-
-  if (fields.package.length > 300) return false;
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(fields.desiredDate)) return false;
-  const selectedDate = new Date(`${fields.desiredDate}T00:00:00Z`);
-  if (!Number.isFinite(selectedDate.valueOf())) return false;
-  if (selectedDate.toISOString().slice(0, 10) !== fields.desiredDate) return false;
-  // ISO date strings sort chronologically and this enforces the existing 14-day rule.
-  if (fields.desiredDate < denverDatePlus14()) return false;
-  if (!["Up to 10 Guests", "11-20 Guests", "21-30 Guests", "31-40 Guests", "41-50 Guests", "50+ Guests"].includes(fields.guestCount)) return false;
-  const validTimes = [];
-  for (let minutes = 6 * 60; minutes <= 23 * 60; minutes += 30) {
-    const hour = Math.floor(minutes / 60);
-    const minute = String(minutes % 60).padStart(2, "0");
-    validTimes.push(`${hour % 12 || 12}:${minute} ${hour < 12 ? "AM" : "PM"}`);
-  }
-  return validTimes.includes(fields.desiredTime);
-}
-
-async function verifyTurnstile(request, env, token) {
-  if (!token || token.length > 2048) return false;
-
-  const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+async function verifyTurnstile(request, env, token, originHostname) {
+  if (typeof token !== 'string' || !token || token.length > 2048) return false;
+  const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      secret: env.TURNSTILE_SECRET_KEY,
-      response: token,
-      remoteip: request.headers.get("CF-Connecting-IP") || undefined
+      secret: env.TURNSTILE_SECRET_KEY, response: token,
+      remoteip: request.headers.get('CF-Connecting-IP') || undefined
     })
   });
-
-  if (!response.ok) throw new Error("Turnstile validation service unavailable");
-  const result = await response.json();
-  return result.success === true &&
-    ["sidequesteventsco.com", "www.sidequesteventsco.com", "sidequesteventsco-prod.netlify.app"].includes(result.hostname) &&
-    (!request.headers.get("Origin") || new URL(request.headers.get("Origin")).hostname === result.hostname) &&
-    result.action === TURNSTILE_ACTION ? result.hostname : false;
+  if (!res.ok) throw new Error('Turnstile service unavailable');
+  const data = await res.json();
+  return data.success === true && data.action === SITE.turnstileAction &&
+    SITE.allowedHosts.includes(data.hostname) &&
+    (!originHostname || data.hostname === originHostname);
 }
 
-const redirectToSuccess = () => Response.redirect("https://sidequesteventsco.com/thank-you/", 303);
+function asBase64(bytes) {
+  let result = '';
+  const size = 0x8000;
+  for (let i = 0; i < bytes.length; i += size) {
+    result += String.fromCharCode(...bytes.subarray(i, i + size));
+  }
+  return btoa(result);
+}
+
+function emailField(entries, requestedField) {
+  // The shared browser script selects the first <input type="email">, regardless of name.
+  // Fall back to conventional field names for existing native / non-JS forms.
+  const field = requestedField || entries.find(([key]) => /email/i.test(key))?.[0];
+  if (!field) return {};
+  if (!/^[A-Za-z][A-Za-z0-9_.\[\]-]{0,79}$/.test(field)) return { invalid: true };
+  const values = entries.find(([key]) => key === field)?.[1];
+  if (!values) return { invalid: true };
+  const value = values.find(Boolean) || '';
+  if (!value) return {};
+  if (value.length > 254 || !/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(value)) return { invalid: true };
+  return { value };
+}
+
+function safeSubject(formData, formName) {
+  const rawPrefix = formData.get('form-subject');
+  if (rawPrefix !== null && typeof rawPrefix !== 'string') return null;
+  const prefix = rawPrefix === null ? 'Form Submission' : rawPrefix.trim();
+  // Exactly three segments. Disallow separators inside the user-supplied segments.
+  if (!safeName(prefix) || prefix.includes('|') || formName.includes('|')) return null;
+  return `${prefix} | ${formName} | ${SITE.domain}`;
+}
 
 export default {
   async fetch(request, env) {
-    const url = new URL(request.url);
-    if (url.pathname !== SUCCESS_PATH || request.method !== "POST") {
-      return env.ASSETS.fetch(request);
+    const requestUrl = new URL(request.url);
+    if (requestUrl.pathname !== SITE.postPath || request.method !== 'POST') return fail('Not found', 404);
+    const origin = validOrigin(request);
+    if (!origin.ok) return fail('Forbidden', 403);
+    const type = (request.headers.get('Content-Type') || '').toLowerCase();
+    if (!type.includes('application/x-www-form-urlencoded') && !type.includes('multipart/form-data')) {
+      return fail('Unsupported form submission', 415);
     }
+    const declared = Number(request.headers.get('Content-Length') || '0');
+    if (declared > MAX_BODY_BYTES) return fail('Submission too large', 413);
+    let form;
+    try {
+      const body = await request.arrayBuffer();
+      if (body.byteLength > MAX_BODY_BYTES) return fail('Submission too large', 413);
+      form = await new Request(request.url, {
+        method: 'POST', headers: { 'Content-Type': request.headers.get('Content-Type') }, body
+      }).formData();
+    } catch { return fail('Invalid form data', 400); }
 
-    const origin = request.headers.get("Origin");
-    const allowedOrigins = [
-      "https://sidequesteventsco.com",
-      "https://www.sidequesteventsco.com",
-      "https://sidequesteventsco-prod.netlify.app"
-    ];
-    if (origin && !allowedOrigins.includes(origin)) return new Response("Forbidden", { status: 403 });
+    // Honeypot: return the ordinary success destination without delivering email.
+    const successUrl = safeRedirect(form);
+    if (!successUrl) return fail('Invalid success destination', 400);
+    if (form.get('bot-field')) return Response.redirect(successUrl, 303);
+    const formName = String(form.get('form-name') || '').trim();
+    if (!safeName(formName)) return fail('Invalid form name', 400);
+    const subject = safeSubject(form, formName);
+    if (!subject) return fail('Invalid form subject', 400);
+    const labels = readLabels(form);
+    if (!labels) return fail('Invalid field label metadata', 400);
 
-    const contentType = (request.headers.get("Content-Type") || "").toLowerCase();
-    if (!contentType.includes("application/x-www-form-urlencoded")) {
-      return new Response("Unsupported form submission", { status: 415 });
+    const values = new Map();
+    const files = [];
+    let count = 0, textBytes = 0, fileBytes = 0;
+    for (const [field, value] of form.entries()) {
+      if (OMIT.has(field)) continue;
+      if (!/^[A-Za-z][A-Za-z0-9_.\[\]-]{0,79}$/.test(field)) return fail('Invalid field name', 400);
+      if (++count > MAX_FIELD_COUNT) return fail('Too many fields', 413);
+      if (typeof value !== 'string') {
+        if (value.size === 0 && !value.name) continue;
+        const filename = (value.name || '').split(/[\\/]/).pop();
+        const ext = filename.split('.').pop().toLowerCase();
+        if (!filename || filename.length > 140 || /[\x00-\x1F\x7F<>]/.test(filename) ||
+            !FILE_TYPES.has(ext) || value.size === 0 || value.size > MAX_FILE_BYTES) {
+          return fail('Unsupported attachment', 400);
+        }
+        fileBytes += value.size;
+        if (files.length >= MAX_FILE_COUNT || fileBytes > MAX_ALL_FILES_BYTES) return fail('Attachments too large', 413);
+        files.push({ field, filename, file: value });
+      } else {
+        const val = value.trim();
+        textBytes += byteLength(val);
+        if (byteLength(val) > 10_000 || textBytes > MAX_TEXT_BYTES) return fail('Form text too large', 413);
+        if (!values.has(field)) values.set(field, []);
+        values.get(field).push(val);
+      }
     }
-
-    const declaredLength = Number(request.headers.get("Content-Length") || "0");
-    if (declaredLength > 12000) return new Response("Submission too large", { status: 413 });
-    const raw = await request.text();
-    if (new TextEncoder().encode(raw).length > 12000) {
-      return new Response("Submission too large", { status: 413 });
+    if (!values.size && !files.length) return fail('Please complete the form', 400);
+    const replyToField = form.get('form-reply-to-field');
+    if (replyToField !== null && (typeof replyToField !== 'string' || replyToField.length > 80)) {
+      return fail('Invalid reply-to field', 400);
     }
-    const form = new URLSearchParams(raw);
-    if (form.get("bot-field")) return redirectToSuccess(request);
-
-    const formName = form.get("form-name");
-    if (!Object.hasOwn(FORMS, formName || "")) {
-      return new Response("Unknown form", { status: 400 });
-    }
-
-    const fields = getFields(form, formName);
-    if (!validateFields(fields, formName)) {
-      return new Response("Please check your form fields.", { status: 400 });
-    }
-    if (!env.RESEND_API_KEY || !env.TURNSTILE_SECRET_KEY) {
-      return new Response("Form service not configured", { status: 503 });
-    }
+    const email = emailField([...values], replyToField);
+    if (email.invalid) return fail('Invalid email address', 400);
+    if (!env.RESEND_API_KEY || !env.TURNSTILE_SECRET_KEY) return fail('Form service not configured', 503);
 
     let verified;
-    try {
-      verified = await verifyTurnstile(request, env, form.get("cf-turnstile-response"));
-    } catch {
-      console.error("Turnstile verification request failed");
-      return new Response("Verification is temporarily unavailable. Please try again.", { status: 502 });
-    }
-    if (!verified) {
-      return new Response("Security verification expired or failed. Please refresh and try again.", { status: 403 });
-    }
+    try { verified = await verifyTurnstile(request, env, form.get('cf-turnstile-response'), origin.hostname); }
+    catch { console.error('Turnstile verification failed'); return fail('Security verification unavailable', 502); }
+    if (!verified) return fail('Security verification failed or expired', 403);
 
-    const isPreviewTest = verified === "sidequesteventsco-prod.netlify.app";
-    const notification = formatNotification(fields, FORMS[formName].entries);
-    const email = {
-      from: FROM,
-      to: isPreviewTest ? ["hello@kthusdesigns.com"] : NOTIFICATION_TO,
-      bcc: isPreviewTest ? [] : NOTIFICATION_BCC,
-      reply_to: fields.email,
-      subject: FORMS[formName].subject,
-      text: notification.text,
-      html: notification.html
+    const attachmentPayload = [];
+    for (const item of files) {
+      attachmentPayload.push({ filename: item.filename,
+        content: asBase64(new Uint8Array(await item.file.arrayBuffer())) });
+    }
+    const content = notification([...values], files, labels);
+    // Agency-only testing MUST NEVER send or BCC a client.
+    const testMode = SITE.testMode !== false; // Git-controlled. Dashboard TEST_MODE is intentionally ignored.
+    const payload = {
+      from: SITE.from,
+      to: testMode ? [SITE.agency] : SITE.recipients,
+      ...(testMode ? {} : { bcc: [SITE.agency] }),
+      ...(email.value ? { reply_to: email.value } : {}),
+      subject, text: content.text, html: content.html,
+      ...(attachmentPayload.length ? { attachments: attachmentPayload } : {})
     };
-
     try {
-      const response = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${env.RESEND_API_KEY}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(email)
+      const res = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
       });
-      if (!response.ok) {
-        console.error("Resend email failed:", response.status);
-        return new Response("Unable to send your request. Please try again later.", { status: 502 });
-      }
-      return redirectToSuccess(request);
+      if (!res.ok) { console.error('Resend rejected submission', res.status); return fail('Unable to send your request', 502); }
+      return Response.redirect(successUrl, 303);
     } catch {
-      console.error("Resend request failed");
-      return new Response("Unable to send your request. Please try again later.", { status: 502 });
+      console.error('Resend request failed');
+      return fail('Unable to send your request', 502);
     }
   }
 };

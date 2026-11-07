@@ -1,0 +1,5 @@
+{
+  "workerUrl": "https://sidequestevents-prod.kthusdesigns.workers.dev/thank-you/",
+  "siteKey": "0x4AAAAAAF3CS8LERoyBuHI5",
+  "turnstileAction": "sidequest_form"
+}

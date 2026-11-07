@@ -1,468 +1,393 @@
-Clear Stale State
-rm -rf public && rm -rf .cache && npx @11ty/eleventy
+# Website development and maintenance
 
+A shared guide for developing, maintaining, and deploying websites built with Eleventy (11ty), Nunjucks, and Node.js. The websites are hosted on Netlify. Where forms are enabled, Cloudflare Workers process submissions, Cloudflare Turnstile provides bot verification, and Resend delivers email notifications. Some projects also use Decap CMS for editable content.
 
-<p align="center">
-  <a href="https://codestitch.app/">
-    <img src="https://codestitch.app/frontend/images/icon.png" alt="Logo" width="80" height="80">
-  </a>
+**This README is intentionally identical across repositories.** It describes shared conventions and workflows, not site-specific credentials or assumptions. Always inspect the current repository's files and service dashboards before changing a configuration. Optional features and file paths may vary by project.
 
-  <h3 align="center">Intermediate Starter Kit (SASS)</h3>
+## Contents
 
-  <p align="center">
-    Introducing the Intermediate Website Kit, presented by CodeStitch. This kit includes a pre-configured Eleventy environment with Nunjucks templating, along with seamless integration of Decap CMS. This setup allows you to quickly start a project while providing your client with a blog for content management. Everything is ready to go right from the start, offering a fantastic introduction to the advantages of a Static Site Generator, complete with SASS preprocessing.
-    <br/>
-    <br/>
-    <a href="https://github.com/CodeStitchOfficial/Intermediate-Website-Kit-LESS">LESS Starter Kit</a>
-    .
-    <a href="https://codestitch-intermediate.netlify.app/">View Live Result</a>
-    .
-    <a href="https://www.youtube.com/watch?v=0BNCYM4InT0&t">Watch Video</a>
-    .
-    <a href="https://codestitch.app/contact">Report Bug</a>
-  </p>
-</p>
+- [Requirements](#requirements)
+- [Get started](#get-started)
+- [Daily development workflow](#daily-development-workflow)
+- [Project structure](#project-structure)
+- [Pages, templates, and content](#pages-templates-and-content)
+- [Assets and styling](#assets-and-styling)
+- [Decap CMS (where enabled)](#decap-cms-where-enabled)
+- [Deployment and hosting](#deployment-and-hosting)
+- [Cloudflare Worker form handling](#cloudflare-worker-form-handling)
+- [Adding or changing a form](#adding-or-changing-a-form)
+- [Testing form notifications safely](#testing-form-notifications-safely)
+- [Redirects, domains, and 404 pages](#redirects-domains-and-404-pages)
+- [Troubleshooting](#troubleshooting)
+- [Security and maintenance](#security-and-maintenance)
+- [References](#references)
 
-## Table of Contents
+## Requirements
 
--   <a href="#overview">Overview</a>
--   <a href="#prerequisites">Prerequisites</a>
-    -   <a href="#must-knows">Must Knows</a>
-    -   <a href="#good-to-knows">Good-to-knows</a>
--   <a href="#quick-start-guide">Quick Start Guide</a>
--   <a href="#explanation-of-file-structure">Explanation of File Structure</a>
-    -   <a href="#root-files">Root Files</a>
-        -   <a href="#eleventyjs">.eleventy.js</a>
-        -   <a href="#netlifytoml">netlify.toml</a>
-        -   <a href="#packagejson-and-package-lockjson">package.json and package-lock.json</a>
-    -   <a href="#nodemodules">node_modules/</a>
-    -   <a href="#public">public/</a>
-    -   <a href="#src">src/</a>
-        -   <a href="#_data">\_data/</a>
-        -   <a href="#_includes">\_includes</a>
-            -   <a href="#nav-auto">Navigations \- Rendering Automatically</a>
-            -   <a href="#nav-manual">Navigations \- Rendering Manually</a>
-    -   <a href="#admin">admin/</a>
-    -   <a href="#assets">assets/</a>
-    -   <a href="#config">config/</a>
-    -   <a href="#content">content/</a>
-    -   <a href="#root-src-files">Root src/ Files</a>
-        -   <a href="#redirects">\_redirects</a>
-        -   <a href="#indexhtml">index.html</a>
-        -   <a href="#robotshtml">robots.html</a>
-        -   <a href="#sitemaphtml">sitemap.html</a>
--   <a href="#deployment">Deployment</a>
+- Git and access to the relevant GitHub repository.
+- Node.js and npm, using a version compatible with the repository's `package.json` and any `.nvmrc`/`engines` settings.
+- A code editor and basic familiarity with HTML, CSS, JavaScript, and Git.
+- Basic familiarity with Eleventy, Nunjucks, and front matter.
+- Access to the project's Netlify account; Cloudflare and Resend access when maintaining form submissions.
+- Decap CMS access only for projects that use it.
 
-<a name="overview"></a>
+Do **not** put production API keys, login credentials, or Turnstile secret keys in source code, the README, or Git commits.
 
-## Overview
+## Get started
 
-The Intermediate Website Kit builds off the beginner kits, mainly by including a pre-configured [Eleventy](https://www.11ty.dev) environment. This setup allows for reusable components, centralized data, and greater scalability as your clients grow. Additionally, a blog has been provided through [Decap CMS](https://decapcms.org/), enabling your clients to manage their own content. This can easily be adapted to various use cases, such as menus, job listing boards, portfolios, and more. A few additional plugins have also been included to enhance the developer experience, offering HTML/CSS minification, JS bundling/minification, and automatic sitemap generation.
+These commands run in the **repository root** (the folder containing `package.json`).
 
-An example website is also provided, with easy substitution of website sections through the use of [CodeStitch's vanilla component library](https://codestitch.app/). This kit aims to get any project off the ground as quickly as possible, with deployment achievable in as little as two minutes, including CMS hosting.
+```bash
+# Clone an existing project (replace the URL with this repository's Git URL).
+git clone <REPOSITORY_URL>
+cd <REPOSITORY_FOLDER>
 
-<a name="prerequisites"></a>
+# See which scripts this specific repository provides.
+npm run
 
-## Prerequisites
+# Install exact dependencies when package-lock.json is present.
+npm ci
 
-<a name="must-knows"></a>
-
-### Must Knows
-
-_Knowledge requirements before using the kit_
-
--   HTML/CSS
--   Beginner-level JS
--   Familiarity with working in a NodeJS-powered project (handling dependencies with npm, source vs built files, etc)
--   Familiarity with templating languages (this kit uses Nunjucks)
-
-<a name="good-to-knows"></a>
-
-### Good-to-knows
-
-_Not required for light-medium kit usage, but helpful if you want to customise the kit beyond base functionality_
-
--   Nunjucks ([Docs found here](https://mozilla.github.io/nunjucks/))
-    -   If you've never used Nunjucks before, [this excellent article by Hyunbin](https://hyunbinseo.medium.com/nunjucks-settings-for-vs-code-a0da0dc66b95) explains how to set up VSCode to best support Nunjucks, including formatting, syntax highlighting and Emmet.
--   Eleventy ([Docs found here](https://www.11ty.dev/docs/)). Key topics include:
-    -   [The Data Cascade](https://www.11ty.dev/docs/data-cascade/)
-    -   [Layouts](https://www.11ty.dev/docs/layouts/)
-    -   [Permalinks](https://www.11ty.dev/docs/permalinks/)
-    -   [Passthroughs](https://www.11ty.dev/docs/copy/)
--   Decap CMS ([Docs found here](https://decapcms.org/docs/intro/))
-
-<a name="quick-start-guide"></a>
-
-## Quick Start Guide
-
-1.  At the top of this repository page, click the **Use This Template** button to create a new repository.
-2.  Follow the instructions to create a new repository from the starter kit.
-3.  Clone the repository locally to your computer and open it in VS Code.
-4.  Run `npm install` to install all dependencies.
-5.  After the installation is complete, run `npm start` to start the development server.
-6.  Fill out the `./src/_data/client.js` file with the appropriate information for your client.
-7.  Adjust the `:root` variables in `./src/assets/[sass or less]/root.[scss or less]`
-8.  Modify the website files (use `./src`, NOT `./public`) as needed. Use the template file in `content/pages/_template.txt` to get started, or modify the existing pages.
-9.  Deploy using your preferred hosting provider.
-
-<a name="explanation-of-file-structure"></a>
-
-## Explaination of File Structure
-
-This documentation will explain all the files and directories in the starter kit, from root inwards, top to bottom. By the end, you should have a full understanding of all files and directories, and be fully equipped to adapt the kit to your needs.
-
+# Start local development if this repository defines a start script.
+npm start
 ```
+
+If `npm start` is not defined, use the appropriate local command shown by `npm run`. Many projects run Eleventy in watch/serve mode, sometimes alongside asset compilation or a local Decap server.
+
+Create a production build using the script defined by this repository:
+
+```bash
+npm run build
+```
+
+Some builds set `ELEVENTY_ENV=PROD` internally and minify styles, scripts, and markup. The exact build steps are controlled by `package.json` and the Eleventy configuration.
+
+## Daily development workflow
+
+1. Pull the latest changes before starting: `git pull --ff-only origin main` (if the working tree is clean).
+2. Edit **source files**, generally under `src/`. Do not manually edit generated files in `public/`.
+3. Use shared layouts/components rather than copying common markup into many pages.
+4. Run the local development command and check the affected pages at desktop and mobile sizes.
+5. Run `npm run build`, review warnings/errors, and inspect generated output when needed.
+6. Check changes with `git diff --check` and `git status`.
+7. Commit and push. For internal changes, use `YYYYMMDD: Int: Description` (for example, `20261107: Int: Update contact form`).
+8. Confirm Netlify has **published** the intended deployment, not merely built it. Check Cloudflare deployments separately when Worker files change.
+
+Example:
+
+```bash
+git status
+git diff --check
+git add -A
+git commit -m "YYYYMMDD: Int: Describe change"
+git push origin main
+```
+
+Avoid including `.DS_Store`, generated caches, API secrets, or unrelated modifications in commits. Never force-push to resolve an ordinary branch mismatch; reconcile remote changes first.
+
+## Project structure
+
+These are **common** paths, not a promise that every repository uses every file:
+
+```text
 .
-├── public/
 ├── src/
-│ ├── _data/
-│ │ └── client.js
-│ ├── _includes/
-│ │ ├── components/
-│ │ └── layouts/
-│ ├── admin/
-│ │ └── config.yml
-│ ├── assets/
-│ │ ├── css/
-│ │ ├── favicons/
-│ │ ├── fonts/
-│ │ ├── images/
-│ │ ├── js/
-│ │ ├── sass or less/
-│ │ └── svgs/
-| ├── config/
-│ ├── content/
-│ │ ├── blog/
-│ │ └── pages/
-│ ├── _redirects
-│ ├── index.html
-│ ├── robots.txt
-├── .eleventy.js
-└── netlify.toml
+│   ├── _data/                 Shared data, when used
+│   ├── _includes/             Nunjucks layouts, sections, components
+│   ├── admin/                 Decap CMS config and UI, when enabled
+│   ├── assets/                Source styles, scripts, images, fonts
+│   ├── config/                Eleventy helpers, including conditional forms
+│   ├── content/               Pages and CMS-managed content
+│   ├── _redirects             Netlify redirect rules, when present
+│   ├── index.html             Common homepage entry
+│   ├── robots.html            Common robots.txt template
+│   └── sitemap.html           Common sitemap.xml template
+├── worker/
+│   ├── index.js               Reusable Cloudflare form handler, when enabled
+│   └── site-config.js         Site-specific Worker settings, when standardized
+├── public/                    Generated site output (do not edit)
+├── netlify.toml               Netlify build/deploy config, when present
+├── wrangler.jsonc             Cloudflare Worker config, when enabled
+├── package.json
 └── package-lock.json
-└── package.json
 ```
 
-<a name="root-files"></a>
-
-### Root Files
-
-<a name="eleventyjs"></a>
-
-#### .eleventy.js
-
-The heart of the kit, the `.eleventy.js` file configures the Eleventy static site generator to work as needed. Here, we're able to define settings that control how files are processed, set up filters/shortcodes to modify data at build time, define which languages are used, and set up third-party plugins to add additional functionality to the kit.
-
-The `.eleventy.js` file is well-documented, with all necessary extra documentation provided for extra reading if desired. A full list of functionalities added via `.eleventy.js` is given below:
-
--   Sets up CSS and JS as template languages, allowing modification at build time by Eleventy. JS is bundled and minified by esbuild.
--   Adds the following plugins:
-    -   [Eleventy Navigation](https://github.com/11ty/eleventy-navigation) - Allows the option to define navigation data within the template front matter.
-    -   [Eleventy Sitemap](https://www.npmjs.com/package/@quasibit/eleventy-plugin-sitemap) - Automatically generates a sitemap from all files in `./src/content`.
-    -   [Eleventy Minification](https://github.com/benjaminrancourt/eleventy-plugin-files-minifier) - Minifies HTML and CSS (only run in production - when `npm run build` is executed).
--   Passes through all assets (in `./src/assets`) without modification by Eleventy.
--   Adds date formatting filters and a year shortcode.
--   Sets some basic server options.
-
-<a name="netlifytoml"></a>
-
-#### netlify.toml
-
-The kit is made to support deployment to Netlify out-of-the-box, enabled through this `netlify.toml` file. Here, some basic configuration is used to define the `public/` directory as serving the built website files, as well as adding a Google Lighthouse plugin to show Lighthouse scores in Netlify.
-
-<a name="packagejson-and-package-lockjson"></a>
-
-#### package.json and package-lock.json
-
-Standard NodeJS package files, containing the dependencies needed for the project to work. The only things worth noting are the `watch:eleventy` and `build:eleventy` scripts in `package.json`. When `npm start` is used, the `watch:eleventy` script is run, which contains an environment variable (`ELEVENTY_ENV=DEV`). When `npm run build` is used, the `ELEVENTY_ENV` variable is set to `PROD`.
-
-You may notice around the project (e.g., `./src/config/server.js` and `.eleventy.js`) that there is reference to an `isProduction` variable. This is used to control some functionality that is only run while the website is "in production". For example, when `npm run build` is used, we can assume the website is deployed to a live domain, so we can do things like minify the code. This allows comments to be shown in the dev tools while you're actively working on the site but have them removed, and the code minified, for the smallest file sizes and most efficiency when you deploy it.
-
-You shouldn't have to worry about this, however, as all the initial setup has been done for you. It's still good to know if you wish to expand the kit to add production-only functionality.
-
-<a name="nodemodules"></a>
-
-### node_modules/
-
-This directory contains the code for all the dependencies that power this kit. It comes as standard with any NodeJS-powered project, much like the `package.json` and `package-lock.json` files. You can safely ignore this directory in your day-to-day work.
-
-<a name="public"></a>
-
-### public/
-
-All files that have been processed and built by Eleventy are stored here. These are the files that your users will be served and see when they visit the website. It's helpful to look into this directory to debug any issues that may appear in your project, but take care not to actively work in this directory. Any changes you make here will be overwritten the next time the project is run with what's contained in `src/`.
-
-It's also good to understand how it works when a user goes to a domain. If a user goes to [www.example.com](http://www.example.com), the server will look for an `index.html` file at the root of the directory. If they then navigate to [www.example.com/about](http://www.example.com/about), the server will serve the `index.html` file in the /about directory. This is why you'll see a number of directories, all with "index.html" files contained within. If you're expecting a file to be present but you're getting 404 errors when navigating to the appropriate path, check to see if the correct directory/file is being written.
-
-<a name="src"></a>
-
-### src/
-
-<a name="_data"></a>
-
-#### \_data/
-
-This directory contains data files that are accessible within any template throughout the project. Out of the box, the kit only contains a `client.js` file, which holds some information you may wish to define for a client. It's important to fill this file out with the correct information for your client, as many HTML meta tags, the sitemap, and robots.txt all use data from this file.
-
-Consider adding the client's contact details, address, and social media information to this file. Examples have been provided in the kit. This way, you can access the client's information from a single source of truth. If a client changes their email address, you can update it in the `client.js` file and have it reflect across the website without needing to search through multiple files or use Find and Replace.
-
-As an example, we have defined the client's email address under the `email` key. In the footer (`./src/_includes/components/footer.html`), we can use `{{ client.email }}` to access this value and output "help@codestitch.app". The format for outputting the data is `{{ [FILENAME].[KEY] }}`. If we wanted to add another file for pricing information, we could create a file (`_data/pricing.json`), then use `{{ pricing.price }}` to render the price.
-
-In Eleventy, this is known as "Global Data". You can read more about Global Data [here](https://www.11ty.dev/docs/data-global/), with more information about how this works in the context of the Data Cascade [here](https://www.11ty.dev/docs/data-cascade/).
-
-<a name="_includes"></a>
-
-#### \_includes
-
-The `_includes` directory contains pieces of HTML code that you want to share between multiple pages. This code could be small components (a button or a loading spinner), larger sections (header, footer, or a stitch from [CodeStitch](https://codestitch.app/)), or a layout containing a reusable `<head>` element with all necessary meta tags.
-
-By default, the kit has two sub-directories in `_includes` - one for components and one for layouts.
-
-Components can be used on one, none, or many pages. For example, we've set up a header and a footer that we load on all pages (through `_includes/layouts/base.html`). If you want to make a change to the header or footer, you can do so within `_includes/components`, and this change will be reflected across all pages. This is done by using `{% include "components/header.html" %}`. If you want to adjust some of the data within the component (e.g., a button that has the same structure/core styles but different CTA text), you should look into using a [Nunjucks Macro](https://mozilla.github.io/nunjucks/templating#macro), which you can [import](https://mozilla.github.io/nunjucks/templating#import) where needed.
-
-Layouts define the wider page structure. The main one used in this kit is `base.html`, which contains the document type declaration, `<head>` tag with associated `<meta>` tags (using data in `_data/client.js` and the page front matter), a `<body>` with a `<main>` tag and skip-to-content link, and calls to the header and footer. All pages use `base.html`. This has been configured to work automatically, so you shouldn't need much additional work. For the blog, we have also created a `post.html` layout (which also uses the `base.html` file, through Nunjucks' `{% extends %}`) that we use to render the blog article pages.
-
-<a name="nav-auto"></a>
-
-##### Navigations - Rendering Automatically
-
-One thing you may notice in the `\_includes/header.html` file is the vast amount of Nunjucks code in the `cs-ul-wrapper` element. This is code that makes use of the `eleventyNavigation` object and keys in the frontmatter of all pages that are, by default, added to the kit. This is part of the Eleventy Navigation plugin, which allows us to create scalable navigation menus without having to constantly add new list items and dropdowns to the header whenever a new page is made. If you make a new page using the `\_template.txt` file in `content/pages`, you will be guided to add this information into the front matter, where the navigation will be remade with the new page data automatically.
-
-If you wish to use this kit, and benefit from this way of doing navigations but want to swap out the navigation for another one in the CodeStitch template library, you can copy the `cs-ul-wrapper` `<div>` element that's found in the kit and replace the `cs-ul-wrapper` in the new stitch. As the class system is the same with all Stitches, the auto-rendering functionality, including the application of active-style classes and dropdowns (if a "dropdown" Stitch is used) will remain the same.
-
-<a name="nav-manual"></a>
-
-##### Navigations - Rendering Manually
-
-Some developers may wish to continue with the "old school" way of rendering navigations and add the HTML for new navigation links to the header individually. This is fine to do too.
-
-One issue that you may run into, however, is the addition of the `cs-active` class to the page that the user is currently on. As the same navigation element is being rendered on all pages, manually adding the `cs-active` class to one of the navigation items will cause that item to be "activated" between all pages.
-
-To get around this, you will need to manually add some Nunjucks code to each of the navigation items to check the page the user is on and add `cs-active` if that particular page is being viewed. That code would look like this:
-
-```
-<a href="/contact" class="cs-li-link {% if page.url == '/contact/' %} cs-active {% endif %}">
-    Contact
-</a>
-```
-
-Note the if-check in the `class` attribute of the anchor element. Here, we're checking if `page.url` (the page we're currently on) matches the permalink of the navigation item. Make sure both leading and trailing slashes are used. If this were for the home page, we'd just check for "/", like so:
-
-```
-<a href="/" class="cs-li-link {% if page.url == '/' %} cs-active {% endif %}">
-    Home
-</a>
-```
-
-<a name="admin"></a>
-
-#### admin/
-
-The `admin/` directory sets up [Decap CMS](https://decapcms.org/) to be used within the project. It's configured as a blog that a client can access by navigating to the `/admin/` path on the deployed site, where they can create, update, and delete blog posts whenever they want. This modifies the markdown files in the source code, which will trigger a rebuild in Netlify, incorporating the new blog data. After about one minute, the client can see the new blog post on the website.
-
-Decap CMS has been chosen due to its open-source nature, good UX/DX, and stability. Very little training is required on the client's end to get it to work - the interface is clean and operates without trouble. It works through an `index.html` file in the `admin/`. This `index.html` file is processed as an Eleventy template, added to `/public/admin`, and the CMS is loaded when navigating to the `/admin` path. This kit uses DecapBridge for authentication as the Netlify Identity feature has been deprecated. Visit [Decapbridge Discord](<(https://discord.com/channels/1257728522361901219/1257728681380417600)>) and their [open-sources repos](https://github.com/decapbridge) for more information and support.
-
-The CMS is configured through a `config.yml` file, as per the Decap documentation. If you wish to use the blog as-is, you shouldn't need to make any changes here. If you want to extend the kit and modify the CMS for your own needs, we recommend referring to the Decap documentation for guidance on how to do so.
-
-Styling the Decap preview pane This template includes custom styles for the Decap CMS preview pane, so that blog posts in the admin dashboard look similar to the live site.
-
-1. How it works:
-
-The preview styles are defined in /admin/decap-preview-styles.css. The CMS preview script in /admin/index.html:
-
--   pulls the props from the collection
--   creates the DOM elements
--   registers these elements and styles for the preview panel to use
-
-2. How to update or customize:
-
-Edit /admin/decap-preview-styles.css and the preview pane script in /admin/index.html to match your site's branding or layout changes. Use Decap's documentation on [customizing the preview pane](https://decapcms.org/docs/customization/)
-
-3.Notes
-
--   The style sheet must be a CSS file
--   The style sheet does not support nested CSS.
-
-<a name="assets"></a>
-
-#### assets/
-
-All other non-content files are stored in `assets/`, which is set up in `.eleventy.js` to be passed through to `public/`. A brief overview of each of the folders within `assets/`, and any relevant notes, is provided below:
-
--   `css/` - SASS/LESS files from the `less/` or `sass/` directories are built into `css/`. From here, the CSS is processed as an Eleventy template, where we minify the code (production only), and pass it through to `public/`. **Do not** make CSS changes here - instead, use the SASS or LESS asset directory (depending on which kit you're using).
--   `favicons/` - Any favicon files can be stored here. We recommend using [this tool](https://realfavicongenerator.net/) to generate favicons for all devices.
--   `fonts/` - If you have any non-standard fonts you wish to locally host, you can put the files here. You can use [this tool](https://gwfh.mranftl.com/fonts) to download font files to be stored in `fonts/`, as well as generate the code to be put in your `root.scss` or `root.less` file.
--   `images/` - Any images can go here. No processing will occur.
--   `js/` - Put any JavaScript in this directory. It will be processed, bundled, and minified by esbuild.
--   `sass/` or `less/` - Depending on whether you're using the SASS or LESS version of the kit, you'll find your preprocessor files in one of these directories. Make your changes to styling here, not in `assets/css`
--   `svgs/` - A separate directory for SVGs. This makes it easier to bulk-compress SVGs separate from `images/` if you're using a tool like [compressor.io](https://compressor.io/).
-
-<a name="config"></a>
-
-#### config/
-
-All configurations for Eleventy are held in this directory. This includes settings for plugins, extensions, filters, and shortcodes, among other things.
-
-Unless you are confident in your Eleventy abilities, we recommend not making any changes to the files in this directory, as they have all been carefully configured to work without modification. If you are confident enough to make changes, you likely don't need a README to tell you what you're doing!
-
-<a name="content"></a>
-
-#### content/
-
-Any files that are built into HTML pages are held in `content/`. This includes standalone informational pages (held in `pages/`) and the blog markdown posts, which use the `post.html` layout (that in turn uses `base.html` through [Eleventy layout chaining](https://www.11ty.dev/docs/layout-chaining/) and [Nunjucks template inheritance](https://mozilla.github.io/nunjucks/templating#block)) to form the blog posts controlled by the CMS.
-
-You're welcome to modify any of these pages or create your own. If you wish to create your own pages, a template can be found in `pages/content/_template.txt`. Copy this file, paste it, rename it to an HTML file, and follow the structure shown in the template. This template contains some code at the top, wrapped between "---"s, which is called the front matter. This contains data specific to this page, which is used within the layout to set the `<title>` tag, `<meta>` description tag, among other things. This data will overwrite any data contained elsewhere in the [Eleventy Data Cascade](https://www.11ty.dev/docs/data-cascade/).
-
-A copy of the default front matter can be found below:
-
-```
+Check the actual structure before following a path. Some projects use a different Eleventy configuration filename, CMS collection directory, or stylesheet layout.
+
+### Key configuration files
+
+| File or directory | Purpose |
+| --- | --- |
+| `package.json` | npm scripts, dependencies, and build commands. |
+| Eleventy configuration (`.eleventy.js`, `eleventy.config.*`, or equivalent) | Inputs, outputs, templating, filters, collections, and passthrough assets. |
+| `netlify.toml` | Netlify build/publish settings, plugins, and sometimes redirects. |
+| `src/_data/` | Reusable client/site data, if implemented. |
+| `src/_includes/` | Shared templates and page layouts. |
+| `src/content/` | Pages, posts, or structured content. |
+| `src/assets/` | Source assets and compiled intermediates. |
+| `src/admin/` | Decap CMS UI and configuration, if installed. |
+| `src/_redirects` | Human-authored Netlify redirects; typically copied to `public/_redirects`. |
+| `worker/index.js` | Shared form parsing, validation, dynamic display labels, and Resend calls. |
+| `worker/site-config.js` | Site-specific domain, approved recipients, sender, endpoint, Turnstile action, and redirect. |
+| `src/assets/js/cloudflare-forms.js` | Shared browser integration: automatic Worker endpoint, Turnstile widget and optional field-label metadata. **Loaded only on form pages.** |
+| `src/config/cloudflare-forms.json` | Public Worker URL, public Turnstile Site Key, and Turnstile action—configured once per website. |
+| `src/config/processors/cloudflareForms.js` | Build-time HTML transform that detects marked forms and injects the shared form script only on those pages. |
+| Eleventy configuration file | Registers the `cloudflareForms` transform during site builds. |
+| `wrangler.jsonc` | Cloudflare Worker name, entry point, compatibility settings, bindings, and variables. |
+| `public/` | Output served by Netlify after a successful build. |
+
+## Pages, templates, and content
+
+Most sites use Nunjucks (`.njk` or `.html` templates) through Eleventy.
+
+- Add a page in the existing `src/content/pages/` convention, with the front matter and layout used by that project.
+- Reuse the site's Nunjucks layouts and components. Typical syntax includes `{% extends "layouts/base.html" %}` and `{% include "components/example.html" %}`.
+- Set a meaningful `title`, description, and permalink. Add navigation and sitemap metadata using the conventions already present.
+- Keep shared client information in data files where possible, so contact details and metadata aren't duplicated.
+- Use Eleventy collections or directory data for CMS-generated pages, when applicable.
+
+An illustrative page (adjust keys and paths for the repository):
+
+```njk
 ---
-title: 'Page title for <title> and OG tags'
-description: 'Description for <meta> description and OG tags'
-preloadImg: '/assets/images/imagename.format'
-permalink: 'page-path/'
-eleventyNavigation:
-    key: Name to appear in navigation
-    order: 1000
-    parent: Optional - Put another page's "key" here to create a dropdown
-    hideOnMobile: Optional - set to "true" to hide on devices from, and below, 1023px
-    hideOnDesktop: Optional - set to "true" to hide on devices above, and including, 1024px
+title: Example page
+description: A short description of this page.
+permalink: /example/
 ---
-```
 
-Under the front matter, there is some more code:
-
-```
 {% extends "layouts/base.html" %}
 
-{% block head %}
-    <!-- Any page-specific tags that belong in the <head>, such as a page-specific stylesheet -->
-{% endblock %}
-
 {% block body %}
-    <!-- Page HTML goes here, without a <main> wrapper -->
+  <h1>Example page</h1>
 {% endblock %}
 ```
 
-The first line, `{% extends "layouts/base.html" %}`, denotes the layout we should use. In the case of this kit, we're using the layout in `_includes/layouts/base.html`. Any code between the `{% block head %} ... {% endblock %}` will be inserted in the `<head>` of the document. This can be useful to insert stylesheets and scripts which you only want to load on this particular page. The page HTML content can be provided within the `{% block body %} ... {% endblock %}`. This will be inserted in the `<body>` of the HTML document, within a `<main>` tag.
+Do not assume that every site uses automatic navigation or the same `eleventyNavigation` configuration. Inspect existing pages before adding a new one.
 
-Blocks are a Nunjucks feature, which you can read more about [here](https://mozilla.github.io/nunjucks/templating#block).
+## Assets and styling
 
-As mentioned, blog files are held in `content/blog`, with the CMS configured to add new posts as markdown files to this directory. As we can't define things like the layout, tags, permalink, or CSS preloads in the individual markdown files, a [directory data file](https://www.11ty.dev/docs/data-template-dir/) is used in `/blog/` to define this.
+- Edit the source stylesheet (`.scss`, `.sass`, or the existing source CSS), **not** generated/minified CSS.
+- Keep images, icons, fonts, and scripts in the paths used by that repository's build configuration.
+- Prefer site-wide variables/tokens and reusable component styles for consistency.
+- When changing templates, check script/CSS imports, accessibility labels, responsive behavior, and the production build.
+- `public/` is generated output. Rebuilding can overwrite manual changes there.
 
-A similar directory data file (`content.json`) is used in the `content/` directory to define a "sitemap" tag. This adds all pages in `content/` to the sitemap [collection](https://www.11ty.dev/docs/collections/), which renders our sitemap automatically for us.
+If an Eleventy build appears stale, inspect the current scripts and then, when appropriate, clear generated state and rebuild:
 
-<a name="root-src-files"></a>
-
-#### Root src/ Files
-
-<a name="redirects"></a>
-
-##### \_redirects
-
-Set up any redirect rules here. More information can be found in the [Netlify Docs](https://docs.netlify.com/routing/redirects/).
-
-<a name="indexhtml"></a>
-
-##### index.html
-
-The home page. Treat it as if it were any other page in `content/pages`.
-
-<a name="robotshtml"></a>
-
-##### robots.html
-
-Set up as an HTML file so we can use the domain in `_data/client.js` to automatically create a `robots.txt` file in `/public`. We do this by setting the permalink to `/robots.txt`. Unless you need to block crawlers from other pages (we've already blocked `/admin` for you), you shouldn't need to touch this file.
-
-<a name="sitemaphtml"></a>
-
-##### sitemap.html
-
-Similar to `robots.html`, a `.html` file is used to generate a `sitemap.xml` file. It uses all HTML files that have a "sitemap" tag applied, which should be all pages in `content/`.
-
-<a name="deployment"></a>
-
-## Deployment
-
-When you're happy with your website, you can deploy it to your hosting provider of choice. As this kit uses Netlify, we have outlined some instructions below:
-
-1.  Sign in to or create an account with [Netlify](https://www.netlify.com/).
-2.  Go to [https://app.netlify.com](https://app.netlify.com), click **Sites** on the left-hand navigation, then click **Add new site**, and choose **Import an existing project**.
-3.  Choose to deploy your project with GitHub. Follow the steps to link Netlify and GitHub.
-4.  Find your project in the list of repositories.
-5.  Everything should be already configured, thanks to the `netlify.toml` file. Click **Deploy [PROJECT NAME]**.
-6.  Check to see if your site deploys without error. The site should be live, but we still need to set up the CMS.
-
-With slight modifications for usage with 11ty, this setup guide for DecapBridge was written by Geoffrey on the [Intermediate Astro Decap kit](https://github.com/CodeStitchOfficial/Intermediate-Astro-Decap-CMS/blob/main/README.md?plain=1#deployment)
-
-> [!IMPORTANT] This kit now uses decapbridge.com for its authentication solution. If you still use Netlify Identity, please refer to [the Netlify Identity branch](https://github.com/CodeStitchOfficial/Intermediate-Website-Kit-LESS/tree/deprecated---using-Netlify-Identity)
-
-> [!TIP] If you are updating your kit from Netlify Identity to decapbridge.com:
->
-> 1. Login to your Netlify account
-> 2. Navigate to Projects/Your-Site
-> 3. Navigate to Project Configuration/Identity and delete the Netlify Identity instance. This will delete your users as well. They will have to be re-created in decapbridge later.
-> 4. Delete the Netlify Identity script in src/index.html and in src/admin/index.html
-
-### On decapbridge.com:
-
-1. Make sure that your repo is on Github and your site is deployed (doesn’t have to be Netlify) before moving on to the next step.
-2. Navigate to https://decapbridge.com/ and create an account. It’s free.
-3. Navigate to the dashboard and Create New Site. You see this screen:
-
-![decapbridge.com dashboard](github/decapbridge-dashboard.png)
-
-Fill in the 3 input fields:
-
--   Github repository: it has to be in a `user-or-org/repository-name` format. e.g. `BuckyBuck135/testing-decapbridge`
--   Github access token. To create a personal access token in GitHub, follow these steps:
-
-    1. Log into your Github account.
-    2. Click on your profile picture (top right) (not the repository profile), and click the “Settings” link.
-    3. Scroll down and click the “Developer Settings” link.
-    4. Click the GitHub “Personal access tokens” link and choose `fine-grained tokens`
-    5. Click the “Generate new token” button and provide your password again if required.
-    6. Provide a name for the GitHub personal access token in the “Note” field.
-    7. Set the access token’s “expiration” timeout to “No expiration.”
-    8. Set the “Repository access” to the desired repository only.
-    9. Set the “Permissions / Repository permissions” to **read-write access** for this repository's **Contents** and **Pull requests**. (This is needed by DecapCMS to read your markdown, and write new content via Pull Requests.)
-    10. Click “Generate token.”, double check the permissions and click the Generate Token button
-    11. **Make sure to copy your GitHub Personal Access Token now as you will not be able to see this again.**
-
-        ![The Permissions settings](github/github-permissions.png)
-
-    12. Double check your permissions before generating the token. It must have read and write access to Contents and Pull Requests.
-
--   Decap CMS URL: provide the (deployed) URL of the Decap CMS dashboard. e.g [`https://testing-decapbridge.netlify.app/admin/#/`](https://testing-decapbridge.netlify.app/admin/#/)
-
-### On your CS Decap kit:
-
-1. In `/src/admin/config.yml`, edit the `backend` Decap config to paste in the snippet provided by the [DecapBridge.com](http://DecapBridge.com) dashboard. It should look something like this:
-
-```yaml
-# Use DecapBridge auth (required)
-backend:
-    name: git-gateway
-    repo: BuckyBuck135/testing-decapbridge # provided by decapbridge
-    branch: main
-    identity_url: https://auth.decapbridge.com/sites/5605bbe7-08f2-4ce5-bce2-7d97def08bed # provided by decapbridge
-    gateway_url: https://gateway.decapbridge.com # provided by decapbridge
-
-    # Quickly see who did what (optional)
-    commit_messages:
-        create: Create {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
-        update: Update {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
-        delete: Delete {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
-        uploadMedia: Upload “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge
-        deleteMedia: Delete “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge
-        openAuthoring: Message {{message}} - {{author-name}} <{{author-login}}> via DecapBridge
-
-# Better Decap + Bridge logo (optional)
-logo_url: https://decapbridge.com/decapcms-with-bridge.svg
-
-# Add site links in DecapCMS (optional)
-site_url: https://testing-decapbridge.netlify.app
+```bash
+rm -rf public .cache
+npm run build
 ```
 
-2. Push changes to the repo and test the authentication system. As the admin of the site, your login credentials to access the Decap dashboard are the same as your decapbridge.com credentials.
-3. Invite your client from your decapbridge dashboard. This will create a decapbridge collaborator account for them. From there, they will be able to access their Decap dashboard, reset their password etc.
+Only remove directories that are actually generated in that project; do not delete source content or uploaded assets.
+
+## Decap CMS (where enabled)
+
+Decap CMS is an **optional** content editing interface, commonly available at `/admin/`. It may manage posts, jobs, menus, images, or other collections; do not assume every site has a blog.
+
+- The CMS collection definitions usually live in `src/admin/config.yml` or an equivalent configured path.
+- The CMS dashboard may be served from `src/admin/index.html`.
+- Authentication depends on the project's existing configuration (for example, an approved Git-based gateway); inspect it rather than replacing it with a generic setup.
+- Content edits can create commits in GitHub and trigger Netlify deployments. Confirm the new deployment is published.
+- If previews or uploads are customized, inspect the corresponding local scripts/styles before editing them.
+- **Do not commit** authentication tokens or service credentials to `config.yml` or other source files.
+
+When a CMS edit does not appear on the live site, check the GitHub commit, Netlify build result, and whether **automatic publishing is unlocked**. Re-enable a paused/disabled Netlify project if needed.
+
+## Deployment and hosting
+
+### Netlify: public website
+
+Netlify is the canonical **website host**. Its production deployment is built from GitHub using the repository's `netlify.toml` and/or dashboard configuration. The publish directory is commonly `public/`.
+
+1. Push website changes to the configured production branch.
+2. In Netlify, confirm the build succeeded **and the correct deploy is Published**.
+3. If updates are not appearing, check whether the project is paused or **automatic publishing is locked**; restore it when appropriate.
+4. Verify the primary domain, `www` behavior, key pages, `/admin/` when relevant, and any custom 404 behavior.
+5. Preserve existing DNS, mail records, and SSL settings unless a migration specifically calls for changing them.
+
+Do not assume a successful Git push means the current live deployment changed.
+
+### Cloudflare: form processing only
+
+A Cloudflare Worker handles submissions without hosting the website. New Worker-only projects typically use:
+
+- No website build command in Cloudflare.
+- Deploy command: `npx wrangler deploy`.
+- A `wrangler.jsonc` pointing `main` to `./worker/index.js`, without a static `assets.directory` binding.
+- A reachable `<WORKER_NAME>.<ACCOUNT_SUBDOMAIN>.workers.dev` endpoint referenced by forms.
+
+**Older projects may still have Cloudflare Static Assets configured** from a previous website-hosting experiment. Those are transitional implementations, not the desired standard. Do not remove `env.ASSETS` or its binding until the Worker fallback and deployment have been updated together. A legacy Cloudflare deployment may use `npm run build` and `rm -f public/_redirects && npx wrangler deploy` to keep Netlify-specific redirect syntax out of Cloudflare's asset upload.
+
+A Cloudflare deployment and a Netlify deployment are separate. Confirm both as applicable.
+
+## Cloudflare Worker form handling
+
+Forms use a **single dynamic Worker** per website. The shared handler (`worker/index.js`) and browser script (`src/assets/js/cloudflare-forms.js`) are intended to remain identical across websites. The site-specific, server-side details belong in `worker/site-config.js` (apex domain, recipients, agency BCC, permitted HTTPS hostnames, sender, default success path, Turnstile action, and `testMode`). **The routing switch is Git-controlled to prevent Cloudflare dashboard variable edits from accidentally activating an older Worker version.**
+
+### Conditional script inclusion — no per-page work
+
+**Only pages that actually render `<form data-cloudflare-form>` download the Cloudflare form script.** During each Eleventy build, `src/config/processors/cloudflareForms.js` inspects the finished HTML and automatically adds the configured script tag just before `</body>` if such a form exists. Pages without a marked form get no form script tag and make no browser request for it.
+
+The public browser settings are in `src/config/cloudflare-forms.json`:
+
+```json
+{
+  "workerUrl": "https://WORKER-NAME.ACCOUNT.workers.dev/submit/",
+  "siteKey": "PUBLIC_TURNSTILE_SITE_KEY",
+  "turnstileAction": "example_form"
+}
+```
+
+Set this up **once per new site**. These values are public; this is **not** where secrets go. There is no site key, Worker URL, or form-related script tag in the base Nunjucks layout and none are required on individual forms. The transform is registered once in the site's Eleventy config (`.eleventy.js` or equivalent). Nunjucks alone cannot automatically inspect its own final rendered page body, which is why Eleventy's HTML transform is used.
+
+### Secrets and routing
+
+Cloudflare → Workers & Pages → site Worker → Settings → Variables and Secrets:
+
+| Variable | Type | Meaning |
+| --- | --- | --- |
+| `RESEND_API_KEY` | Secret | Authenticates Resend email delivery. |
+| `TURNSTILE_SECRET_KEY` | Secret | Server verifies the Turnstile token and the permitted hostname/action. |
+**Do not use the dashboard's legacy `TEST_MODE` variable to switch routing.** The shared Worker deliberately ignores it. The per-site, Git-controlled setting is a **single** `"testMode": true` or `false` immediately below `export const SITE = {` at the **top** of `worker/site-config.js`:
+
+```javascript
+export const SITE = {
+  "testMode": true, // true = testing (agency only); false = production emails
+  // Other site-specific settings...
+};
+```
+
+- `"testMode": true` → **agency inbox only; no client recipients or BCC**.
+- `"testMode": false` → configured client recipient(s), with agency BCC.
+- If the setting is absent, the shared Worker defaults safely to agency-only.
+
+To set **agency-only test mode** from the repository root (without modifying other files):
+
+```bash
+python3 "$HOME/Downloads/dynamic_forms_standard_v7_2/apply_to_repo.py" . --test-only
+git add -A && git commit -m "YYYYMMDD: Int: Enable agency-only form testing" && git push origin main
+```
+
+After testing, to restore **production notifications**:
+
+```bash
+python3 "$HOME/Downloads/dynamic_forms_standard_v7_2/apply_to_repo.py" . --production
+git add -A && git commit -m "YYYYMMDD: Int: Enable production form notifications" && git push origin main
+```
+
+**Wait for the GitHub-triggered Worker deployment before expecting a mode change.** The Cloudflare dashboard may still show an old `TEST_MODE` text variable; it is intentionally ignored. Leave it unchanged—do not delete or edit it just to clean up the UI, since dashboard variable changes create new Worker versions. This procedure changes one site config file per mode switch, not `worker/index.js`, and does not affect new-form HTML-only authoring. Do not commit secrets, `.dev.vars`, or personal data. Keep `"keep_vars": true` where required to preserve existing dashboard-managed nonsecret bindings; encrypted secrets are preserved by deployments. Verify the active code after Cloudflare dashboard updates to secrets or bindings.
+
+Standard subject: **`[form-subject] | [form-name] | [apex domain]`**. With a hidden value `Form Submission` and form name `Contact Us`, the BM1GC example is `Form Submission | Contact Us | bm1gc.com`. If the hidden prefix is omitted it defaults to `Form Submission`; if the hidden form name is omitted, the browser uses the form's HTML `name` attribute.
+
+The Worker dynamically reads field names, safely escapes values, handles repeated fields/checkbox arrays, formats labels, accepts allowed attachments, and verifies Turnstile server-side. New ordinary forms need **no Worker code edits and no form registration**. Email recipients are never chosen from submitted HTML; they remain server-configured.
+
+## Adding or changing a form
+
+Create ordinary accessible HTML and add **`data-cloudflare-form`** to its `<form>` tag. No `action`, `method`, `enctype`, `data-turnstile-sitekey`, or manually loaded Turnstile script is needed; the reusable browser helper supplies the endpoint, POST and multipart encoding, and injects a Turnstile widget automatically. Existing `[data-turnstile-container]` placeholders are optional and can remain to preserve layout.
+
+```html
+<form name="Contact Us" data-cloudflare-form>
+  <input type="hidden" name="form-name" value="Contact Us">
+  <input type="hidden" name="form-subject" value="Form Submission">
+
+  <label for="contact-name">Your name</label>
+  <input id="contact-name" name="fullName" data-email-label="Full name" required>
+
+  <label for="contact-email">Email</label>
+  <input id="contact-email" type="email" name="email" data-email-label="Email address" required>
+
+  <label for="contact-message">Message</label>
+  <textarea id="contact-message" name="message" data-email-label="Your message" required></textarea>
+
+  <button type="submit">Send</button>
+</form>
+```
+
+- Every field needs an ordinary `name` to appear in notifications. New names are supported automatically.
+- **`data-email-label="Exact email label"` is optional** on inputs, selects, textareas and file inputs. When missing, the Worker makes a human-readable label from the field's `name`. This is *display metadata*, not a field allowlist.
+- **Reply-To already works automatically** with the first enabled email input, whatever its `name`; use `data-email-reply-to` on a particular email input only when a form has multiple email addresses.
+- Repeated checkbox names (e.g., `interests[]`) are collected without requiring custom JS. Existing checkbox value formatting is preserved.
+- For an alternative same-site thank-you page, add `data-cloudflare-success-path="/application-received/"` to the form. The Worker rejects external destinations.
+- An optional `[data-turnstile-container]` element allows precise widget placement; otherwise JavaScript inserts a widget container automatically.
+- The only settings requiring action for a **new website** are its Worker, domain/host allowlist, sender/recipients, public Turnstile Site Key and action, and Cloudflare secrets. Those are **one-time site setup**, not per-form updates.
+- For a form with uploads, add `<input type="file" name="resume" data-email-label="Résumé">`. The shared JS automatically sets multipart form encoding. The Worker validates attachment types and size limits (currently up to three files, 5 MB total) before delivery; test the relevant file type.
+
+**Limitations:** Do not use this generic email form for payment/banking credentials, passwords, PHI, or other regulated data. Required fields rely on browser HTML validation unless a project adds server-side field-specific checks; they cannot be considered protected merely by `required`. Custom server-side validation or different client recipients still requires intentional configuration/code work. No shared error UI is included; on a failed native submission the browser may display the Worker's error response.
+
+### Deploy and test safely
+
+1. Run **the same** `dynamic_forms_standard_v7_2/apply_to_repo.py . --apply` from the repository root. This installs or refreshes the standardized handler, migrates current Worker-backed HTML forms, updates this identical README and sets **one `SITE.testMode=true` at the top of `worker/site-config.js`**. This is agency-only without changing Cloudflare dashboard variables.
+2. Run `npm run build`, `git diff --check`, and `git status`. Confirm the expected forms and generated HTML. Then commit/push **all intended local repo changes**: `git add -A`, `git commit -m "YYYYMMDD: Int: Standardize dynamic Cloudflare forms"`, `git push origin main`.
+3. Confirm both Netlify website deploy and Cloudflare Worker deploy are successful. On Cloudflare's **Deployments** page, ensure the latest Git build is the active Worker—not merely Ready in history.
+4. Submit a live test for **each** form, including lightboxes, checkbox arrays, and uploads. Agency should receive it; **no client To/BCC**. Verify the three-part subject, Reply-To, labels, Turnstile, attachments, and redirect.
+5. Run `python3 "$HOME/Downloads/dynamic_forms_standard_v7_2/apply_to_repo.py" . --production` and push another Git commit. This changes **only** `worker/site-config.js` to `"testMode": false`. Confirm GitHub deployed the current source version; production To is the approved client and BCC is agency.
+6. Do **not** toggle `TEST_MODE` in Cloudflare's dashboard. Dashboard variable edits create separate Worker versions and have caused source/version mismatches during migrations. The dashboard's existing `TEST_MODE` entry is ignored by this version of the handler. Leave it alone.
+7. Disable Netlify Form detection only if no forms still rely on Netlify; preserve historical submissions. Do not change Netlify, DNS, or Decap just because of this form change.
+
+## Testing form notifications safely
+
+The agency-only mode takes effect **after its Worker Git deployment**. Real leads submitted during that test window route to the agency instead of the client, so complete testing promptly. If a previous live deployment is still active, do not presume agency-only safety until the new Worker is confirmed active.
+
+A `415 Unsupported form submission` on a normal browser submission with `multipart/form-data` often indicates the *old Worker code* is active. Check **Cloudflare → Worker → Edit code** for `multipart/form-data` and `form-field-labels`; the new shared Worker recognizes both. Inspect deployment history if GitHub built new code but a dashboard settings change made an older version active. Rollback is a recovery tool, not the normal deployment workflow.
+
+Site owners may have independent inbox automation (for example, a Gmail Apps Script that filters notifications by sender, subject, or Reply-To). Migrating from Netlify emails to Resend changes the notification sender/subject. Audit and update those integrations before enabling client notifications; do not assume an email delivery test also proves auto-replies are working. An automation should process each notification message once, avoid replying to internal senders, and never fall back to the notification sender when Reply-To is missing.
+
+## Redirects, domains, and 404 pages
+
+Netlify rules generally live in `src/_redirects` and are published as `public/_redirects`. Preserve existing SEO redirects and any legacy-domain rules.
+
+- A `301` is a permanent redirect; Netlify's `301!` forces it even if the source URL would otherwise resolve.
+- For sites requiring a Netlify preview-domain redirect, add a host-specific rule redirecting `<SITE>.netlify.app/*` to the production apex. The live site's primary-domain setting alone may not reproduce a previously custom-configured redirect.
+- Keep existing `www`/apex rules and external legacy-domain redirects, where applicable.
+- A catch-all `/* /index.html 200` is an **SPA rewrite**, not a custom 404 rule. Use it only if the site's routing architecture requires it.
+- If the build publishes `public/404.html`, Netlify can serve it automatically for nonexistent URLs with HTTP 404; the browser URL generally remains the missing URL.
+- Do not blindly replace `_redirects` when adding a domain rule. Redirect order matters.
+- Cloudflare Static Assets does **not** accept all Netlify `_redirects` syntax. Keep these rules in Netlify's output, not a legacy Cloudflare static-asset upload.
+
+Domain DNS and registrar settings are separate from form handling. **Do not change DNS or nameservers merely to connect a Worker through `workers.dev`.** Preserve mail-related records.
+
+## Troubleshooting
+
+| Symptom | Check first |
+| --- | --- |
+| Git push succeeds but live site is unchanged | Netlify latest deploy, **Published** status, automatic publishing lock, project paused/disabled. |
+| Netlify deploy builds but a page is 404 | Front matter, permalink, Eleventy output, `public/` contents, and `_redirects`. |
+| Missing page returns homepage with HTTP 200 | Look for an unintended `/* /index.html 200` SPA catch-all. |
+| Preview domain does not redirect to apex | Check host-specific rules in `_redirects` and published deploy. |
+| Form says `403 Forbidden` | Worker origin allowlist; Turnstile site key/secret, verified hostname/action, expired token. |
+| Form returns `415 Unsupported form submission` | Check submitted `Content-Type` in browser network headers. If it is `multipart/form-data`, verify the **active** Worker code is the new shared handler, not an older version restored by a dashboard configuration change. |
+| Form returns 502 or email is absent | Check Cloudflare Worker logs, Resend API response/status, and secrets; do not log submitted private data. |
+| Turnstile shows widget but Siteverify warning | Confirm the live Worker calls Siteverify on a completed submission; inspect Turnstile analytics and deployed code. |
+| Emails reach agency but not client | Check Git-controlled `worker/site-config.js` `testMode`, latest active Cloudflare deployment, and Resend recipient/BCC fields. |
+| Cloudflare deploy rejects `_redirects` | Legacy static-assets build is reading Netlify redirect rules; review the deployed build command and remove `public/_redirects` from Cloudflare's temporary build output only. |
+| CMS edits don't appear | CMS commit, GitHub branch, Netlify build/publish status, and authentication configuration. |
+| Stale local pages/styles | Confirm you're editing `src/`, clear generated output/cache if appropriate, and rebuild. |
+
+## Security and maintenance
+
+- Keep dependencies current through controlled updates and testing; do not blindly update all packages during an urgent production fix.
+- Review security headers, accessible labels, validation, spam controls, and rate limits when adding forms.
+- Keep approved hostnames, request methods, and endpoint paths restricted in Workers.
+- Always validate Turnstile tokens server-side; frontend completion alone is insufficient.
+- Never commit `.env`, `.dev.vars`, API keys, passwords, or sensitive submissions. Check `.gitignore` and Git history before pushing.
+- Avoid logging full form payloads, résumés, sensitive details, or credentials in Worker logs.
+- Preserve historical Netlify submissions, legitimate DNS records, and CMS configuration when retiring unused functionality.
+- Verify Netlify HTTPS/SSL and domain behavior periodically, including renewal warnings.
+- Record external service ownership and access outside this generic README (for example, in the team's private password manager or project inventory).
+
+## References
+
+- [Eleventy documentation](https://www.11ty.dev/docs/)
+- [Nunjucks templating](https://mozilla.github.io/nunjucks/templating.html)
+- [Decap CMS documentation](https://decapcms.org/docs/intro/)
+- [Netlify documentation](https://docs.netlify.com/)
+- [Netlify redirects](https://docs.netlify.com/manage/routing/redirects/overview/)
+- [Cloudflare Workers documentation](https://developers.cloudflare.com/workers/)
+- [Cloudflare Wrangler configuration](https://developers.cloudflare.com/workers/wrangler/configuration/)
+- [Cloudflare Turnstile server-side validation](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/)
+- [Resend documentation](https://resend.com/docs/)
+
+---
+
+**Maintenance rule:** Keep this README consistent across repositories. Document truly site-specific values (domains, recipients, form subjects, and special integrations) in a private project inventory or a separately maintained project-specific file. Never assume that updating this README changes deployed Worker or form behavior.

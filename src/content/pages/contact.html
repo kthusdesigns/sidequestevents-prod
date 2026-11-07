@@ -10,7 +10,6 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
 
 {% block head %}
     <link rel="stylesheet" href="/assets/css/contact.css">
-    <script defer src="/assets/js/form-turnstile.js"></script>
 
     {% include "components/local-schema.html" %}
 {% endblock %}
@@ -76,7 +75,8 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
 
                 <div class="content__form-wrapper">
                     <!-- Form -->
-                    <form id="contact" name="Contact Us" method="post" action="https://sidequestevents-prod.kthusdesigns.workers.dev/thank-you/">
+                    <form id="contact" name="Contact Us" data-cloudflare-form>
+    <input type="hidden" name="form-subject" value="Form Submission">
                         <input type="hidden" name="form-name" value="Contact Us">
 
                         <div class="hidden">
@@ -136,7 +136,7 @@ tags: "sitemap" # content/content.json will make sure that all pages in content/
                         </div>
 
                         <div class="form-field-group">
-                            <div data-sidequest-turnstile></div>
+                            <div data-turnstile-container></div>
                         </div>
 
                         <div class="form-field-group submit">

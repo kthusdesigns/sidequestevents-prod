@@ -4,7 +4,6 @@
     <link rel="stylesheet" href="/assets/css/events.css">
 
     {% if 'privateEventPackage' in tags %}
-        <script defer src="/assets/js/form-turnstile.js"></script>
     {% endif %}
 
     {% if 'event' in tags %}
@@ -192,7 +191,8 @@
 
                 <div class="content__form-wrapper">
                     <!-- Form -->
-                    <form id="package-inquiry" name="Private Event Package Inquiry" method="post" action="https://sidequestevents-prod.kthusdesigns.workers.dev/thank-you/">
+                    <form id="package-inquiry" name="Private Event Package Inquiry" data-cloudflare-form>
+    <input type="hidden" name="form-subject" value="Form Submission">
                         <input type="hidden" name="form-name" value="Private Event Package Inquiry">
 
                         <div class="hidden">
@@ -306,7 +306,7 @@
                         </div>
 
                         <div class="form-field-group">
-                            <div data-sidequest-turnstile></div>
+                            <div data-turnstile-container></div>
                         </div>
 
                         <div class="form-field-group submit">
