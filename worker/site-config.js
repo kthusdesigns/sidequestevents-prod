@@ -1,6 +1,6 @@
 // Site-specific settings. No registration of individual forms required.
 export const SITE = {
-  "testMode": true, // true = testing (agency only); false = production emails
+  "testMode": false, // true = testing (agency only); false = production emails
   "domain": "sidequesteventsco.com",
   "postPath": "/thank-you/",
   "successPath": "/thank-you/",
