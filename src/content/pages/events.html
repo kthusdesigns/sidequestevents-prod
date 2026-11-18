@@ -460,10 +460,41 @@ image: "OPTIONAL - If an image path is specified here, it will be used for that 
             });
 
             // Update active state on pagination buttons
+            
+            // Show three page numbers maximum when there are 4+ pages
+            var visiblePages = pageCount <= 3
+                ? Array.from({ length: pageCount }, function (_, i) { return i + 1; })
+                : currentPage <= 2
+                    ? [1, 2, pageCount]
+                    : currentPage >= pageCount - 1
+                        ? [1, pageCount - 1, pageCount]
+                        : [1, currentPage, pageCount];
+
+            pagination.querySelectorAll('.events-pagination__ellipsis').forEach(function (el) {
+                el.remove();
+            });
+
+            var previousVisiblePage = 0;
+
             pagination.querySelectorAll('.events-pagination__button').forEach(function (pageButton) {
-                var isCurrent = Number(pageButton.dataset.page) === currentPage;
+                var page = Number(pageButton.dataset.page);
+                var isCurrent = page === currentPage;
+                var isVisible = visiblePages.includes(page);
+
                 pageButton.classList.toggle('is-current', isCurrent);
                 pageButton.setAttribute('aria-current', isCurrent ? 'page' : 'false');
+                pageButton.style.display = isVisible ? '' : 'none';
+
+                if (isVisible) {
+                    if (previousVisiblePage && page - previousVisiblePage > 1) {
+                        var ellipsis = document.createElement('span');
+                        ellipsis.className = 'events-pagination__ellipsis';
+                        ellipsis.textContent = '…';
+                        ellipsis.setAttribute('aria-hidden', 'true');
+                        pageButton.before(ellipsis);
+                    }
+                    previousVisiblePage = page;
+                }
             });
 
             // Disable prev/next when hitting bounds

@@ -357,6 +357,16 @@
                     margin-top: var(--spacing--gutter-column);
                     margin-bottom: 0;
 
+                    .events-pagination__ellipsis {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        min-width: 1.5rem;
+                        color: var(--color--cyan-500);
+                        font-family: var(--font--space-grotesk);
+                        font-weight: var(--font-weight--bold);
+                    }
+
                     .events-pagination__nav,
                     .events-pagination__button {
                         display: inline-flex;
